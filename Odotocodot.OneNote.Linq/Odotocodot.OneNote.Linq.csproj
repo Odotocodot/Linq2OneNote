@@ -6,6 +6,7 @@
 		<Title>Linq for OneNote</Title>
 		<Authors>Odotocodot</Authors>
 		<PackageReadmeFile>Readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/Odotocodot/Odotocodot.OneNote.Linq</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
