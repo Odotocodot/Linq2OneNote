@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34018.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Odotocodot.OneNote.Linq", "Odotocodot.OneNote.Linq\Odotocodot.OneNote.Linq.csproj", "{C0344F62-79EA-44E1-A74B-D88C4645EC05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0344F62-79EA-44E1-A74B-D88C4645EC05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0344F62-79EA-44E1-A74B-D88C4645EC05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0344F62-79EA-44E1-A74B-D88C4645EC05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0344F62-79EA-44E1-A74B-D88C4645EC05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDB792C5-E0E1-446B-8D83-A5E6A65C0184}
+	EndGlobalSection
+EndGlobal
