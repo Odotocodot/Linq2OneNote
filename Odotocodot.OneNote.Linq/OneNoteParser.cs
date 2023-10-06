@@ -330,14 +330,14 @@ namespace Odotocodot.OneNote.Linq
         /// </summary>
         /// <param name="oneNote"><inheritdoc cref="GetNotebooks(IApplication)" path="/param[@name='oneNote']"/></param>
         /// <param name="item"><inheritdoc cref="OpenInOneNote(IApplication, IOneNoteItem)" path="/param[@name='item']"/></param>
-        public static void DeleteItem(IApplication oneNote, IOneNoteItem item) => oneNote.DeleteHierarchy(item.ID);
+        internal static void DeleteItem(IApplication oneNote, IOneNoteItem item) => oneNote.DeleteHierarchy(item.ID);
 
         /// <summary>
         /// Closes the <paramref name="notebook"/>.
         /// </summary>
         /// <param name="oneNote"><inheritdoc cref="GetNotebooks(IApplication)" path="/param[@name='oneNote']"/></param>
         /// <param name="notebook">The specified OneNote notebook.</param>
-        public static void CloseNotebook(IApplication oneNote, OneNoteNotebook notebook) => oneNote.CloseNotebook(notebook.ID);
+        internal static void CloseNotebook(IApplication oneNote, OneNoteNotebook notebook) => oneNote.CloseNotebook(notebook.ID);
 
         //TODO: Works but UpdateHierarchy takes A LONG TIME!
         internal static void RenameItem(IApplication oneNote, IOneNoteItem item, string newName)
@@ -376,13 +376,13 @@ namespace Odotocodot.OneNote.Linq
         //TODO: change to return ID
 
         /// <summary>
-        /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="pageTitle"/> located in the specified <paramref name="section"/>.
+        /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="section"/>.
         /// </summary>
         /// <param name="oneNote"><inheritdoc cref="GetNotebooks(IApplication)" path="/param[@name='oneNote']"/></param>
         /// <param name="section">The section to create the page in.</param>
-        /// <param name="pageTitle">The title of the page.</param>
+        /// <param name="name">The title of the page.</param>
         /// <param name="openImmediately">Whether to open the newly created page in OneNote immediately.</param>
-        public static void CreatePage(IApplication oneNote, OneNoteSection section, string pageTitle, bool openImmediately)
+        public static void CreatePage(IApplication oneNote, OneNoteSection section, string name, bool openImmediately)
         {
             oneNote.GetHierarchy(null, HierarchyScope.hsNotebooks, out string oneNoteXMLHierarchy);
             var one = XElement.Parse(oneNoteXMLHierarchy).GetNamespaceOfPrefix(NamespacePrefix);
@@ -392,7 +392,7 @@ namespace Odotocodot.OneNote.Linq
 
             XDocument doc = XDocument.Parse(xml);
             XElement xTitle = doc.Descendants(one + "T").First();
-            xTitle.Value = pageTitle;
+            xTitle.Value = name;
 
             oneNote.UpdatePageContent(doc.ToString());
 

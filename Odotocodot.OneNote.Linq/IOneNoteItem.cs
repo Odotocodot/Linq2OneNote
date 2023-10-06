@@ -27,7 +27,7 @@ namespace Odotocodot.OneNote.Linq
         DateTime LastModified { get; }
         /// <summary>
         /// The direct children of the OneNote hierarchy <see cref="IOneNoteItem">item</see>, e.g. for a <see cref="OneNoteNotebook">notebook</see> it would be <see cref="OneNoteSection">sections</see> and/or <see cref="OneNoteSectionGroup">section groups</see>. <br/>
-        /// If the <see cref="IOneNoteItem">item</see> has no children an empty <see cref="IEnumerable{T}"/> (where <typeparamref name="T"/> is <see cref="IOneNoteItem"/>) is returned.
+        /// If the <see cref="IOneNoteItem">item</see> has no children an empty <see cref="IEnumerable{T}">IEnumerable</see>&lt;<see cref="IOneNoteItem"/>&gt; is returned.
         /// </summary>
         IEnumerable<IOneNoteItem> Children { get; }
         /// <summary>

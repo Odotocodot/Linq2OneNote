@@ -8,8 +8,8 @@ namespace Odotocodot.OneNote.Linq
 {
     /// <summary>
     /// A static wrapper class around the <see cref="Application"/> class, allowing for <see cref="Lazy{T}">lazy</see> acquirement and
-    /// release of a OneNote COM object. In addition to exposing the 
-    /// <see href="https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote">OneNote's API</see>
+    /// release of a OneNote COM object. In addition to exposing the
+    /// <see href="https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote"> OneNote's API</see>
     /// </summary>
     /// <remarks>A <see cref="Application">OneNote COM object</see> is required to access any of the OneNote API.</remarks>
     public static class OneNoteApplication
@@ -79,7 +79,7 @@ namespace Odotocodot.OneNote.Linq
         public static void CreateSectionGroup(OneNoteNotebook parent, string name) => OneNoteParser.CreateSectionGroup(OneNote, parent, name, true);
 
         /// <inheritdoc cref="OneNoteParser.CreateNotebook(IApplication, string, bool)"/>
-        public static void CreateNotebook(string notebookName) => OneNoteParser.CreateNotebook(OneNote, notebookName, true);
+        public static void CreateNotebook(string name) => OneNoteParser.CreateNotebook(OneNote, name, true);
 
         /// <summary>
         /// Releases the <see cref="Application">OneNote COM object</see> freeing memory.
