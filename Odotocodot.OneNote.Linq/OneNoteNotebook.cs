@@ -8,7 +8,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a notebook in OneNote.
     /// </summary>
-    public record OneNoteNotebook : IOneNoteItem
+    public class OneNoteNotebook : IOneNoteItem
     {
         internal OneNoteNotebook() { }
         /// <inheritdoc/>

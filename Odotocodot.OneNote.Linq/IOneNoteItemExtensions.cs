@@ -120,5 +120,24 @@ namespace Odotocodot.OneNote.Linq
         /// <inheritdoc cref="GetPages(IOneNoteItem)"/>
         public static IEnumerable<OneNotePage> GetPages(this IEnumerable<IOneNoteItem> source)
             => source.Traverse(i => i is OneNotePage).Cast<OneNotePage>();
+
+        /// <summary>
+        /// Checks if two <see cref="IOneNoteItem"/>s are equal in OneNote.<br/>
+        /// Shorthand for comparing the <see cref="IOneNoteItem.ID">ID</see> of OneNote hierarchy items. E.g.
+        /// <code>
+        /// if(left.ID == right.ID)
+        /// {
+        ///     Console.WriteLine("Equal")
+        /// }
+        /// </code>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool ItemEquals<T>(this T left, T right) where T : IOneNoteItem
+        {
+            return left.ID == right.ID;
+        }
     }
 }

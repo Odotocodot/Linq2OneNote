@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section in OneNote.
     /// </summary>
-    public record OneNoteSection : IOneNoteItem
+    public class OneNoteSection : IOneNoteItem
     {
         internal OneNoteSection() { }
         /// <inheritdoc/>

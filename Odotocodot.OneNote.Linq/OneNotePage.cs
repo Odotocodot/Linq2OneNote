@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a page in OneNote.
     /// </summary>
-    public record OneNotePage : IOneNoteItem
+    public class OneNotePage : IOneNoteItem
     {
         internal OneNotePage() { }
         /// <inheritdoc/>
