@@ -46,6 +46,17 @@
       }
     ],
     "output": "_site",
+    "globalMetadata": {
+      "_appTitle": "LINQ to OneNote",
+      "_appName": "LINQ to OneNote",
+      "_enableSearch": true,
+      "_disableSideFilter": false,
+      "_disableNavbar" : false,
+      "_disableAffix" : false,
+      "_enableNewTab": true,
+      "_disableContribution": true,
+      "_disableBreadcrumb": false
+    },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
