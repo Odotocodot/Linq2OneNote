@@ -49,10 +49,11 @@
     "globalMetadata": {
       "_appTitle": "LINQ to OneNote",
       "_appName": "LINQ to OneNote",
+      "_appFooter": "© 2023 Odotocodot",
       "_enableSearch": true,
       "_disableSideFilter": false,
-      "_disableNavbar" : false,
-      "_disableAffix" : false,
+      "_disableNavbar": false,
+      "_disableAffix": false,
       "_enableNewTab": true,
       "_disableContribution": true,
       "_disableBreadcrumb": false
