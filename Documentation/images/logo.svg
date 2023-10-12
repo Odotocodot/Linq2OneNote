@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5" id="gradient_1">
+      <stop offset="0%" stop-color="#C965EB" />
+      <stop offset="100%" stop-color="#C767E5" />
+    </linearGradient>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0.5" y1="1" x2="0.5" y2="0" id="gradient_2">
+      <stop offset="0%" stop-color="#7819A2" />
+      <stop offset="100%" stop-color="#771AA9" />
+    </linearGradient>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0.49999988" x2="1" y2="0.49999988" id="gradient_3">
+      <stop offset="0%" stop-color="#AE4CD5" />
+      <stop offset="100%" stop-color="#AC4AD5" />
+    </linearGradient>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0.50000024" x2="1" y2="0.50000024" id="gradient_4">
+      <stop offset="0%" stop-color="#912FBD" />
+      <stop offset="100%" stop-color="#9332BF" />
+    </linearGradient>
+    <linearGradient gradientUnits="objectBoundingBox" x1="0.029300004" y1="0.029300034" x2="0.97069997" y2="0.9707001" id="gradient_5">
+      <stop offset="0%" stop-color="#8521B0" />
+      <stop offset="100%" stop-color="#64129A" />
+    </linearGradient>
+    <path d="M48 0L48 0L48 48L0 48L0 0L48 0Z" id="path_1" />
+    <path d="M30 0L2 0C0.895 0 0 0.895 0 2L0 34C0 35.105 0.895 36 2 36L23 36L23 9.003L32 9.003L32 2C32 0.895 31.105 0 30 0L30 0Z" id="path_2" />
+    <path d="M4 17L4 27L6 27L6 20L10 27L12 27L12 17L10 17L10 24L6 17L4 17Z" id="path_3" />
+    <path d="M15 22C15 19.2386 16.7909 17 19 17C21.2091 17 23 19.2386 23 22C23 24.7614 21.2091 27 19 27C16.7909 27 15 24.7614 15 22Z" id="path_4" />
+    <path d="M15 4L23 4L23 6L20 6L20 12L23 12L23 14L15 14L15 12L18 12L18 6L15 6L15 4Z" id="path_5" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" clip-rule="evenodd" fill-rule="evenodd" />
+    </clipPath>
+    <clipPath id="clip_2">
+      <use xlink:href="#path_2" clip-rule="evenodd" fill-rule="evenodd" />
+    </clipPath>
+    <clipPath id="clip_3">
+      <use xlink:href="#path_3" />
+    </clipPath>
+    <clipPath id="clip_4">
+      <use xlink:href="#path_4" />
+    </clipPath>
+    <clipPath id="clip_5">
+      <use xlink:href="#path_5" />
+    </clipPath>
+  </defs>
+  <g id="Linq to OneNote V2" clip-path="url(#clip_1)">
+    <path d="M48 0L48 0L48 48L0 48L0 0L48 0Z" id="Linq-to-OneNote-V2" fill="none" stroke="none" />
+    <g id="Shape-+-Shape-+-Shape-Mask" transform="translate(12 6)">
+      <path d="M30 0L2 0C0.895 0 0 0.895 0 2L0 34C0 35.105 0.895 36 2 36L23 36L23 9.003L32 9.003L32 2C32 0.895 31.105 0 30 0L30 0Z" id="Mask" fill="url(#gradient_1)" stroke="none" />
+      <g clip-path="url(#clip_2)">
+        <path d="M15.4785 1L0 1L0 36L15.4785 36C18.528 36 21 33.5967 21 30.6319L21 6.36812C21 3.40333 18.528 1 15.4785 1L15.4785 1Z" id="Shape" fill="#000000" fill-opacity="0.05" stroke="none" />
+        <path d="M15.5715 35L0 35L0 1.32999L15.5715 1.32999C18.2 1.32999 20.33 3.40512 20.33 5.96598L20.33 30.364C20.3285 32.9249 18.1985 35 15.5715 35L15.5715 35Z" id="Shape" fill="#000000" fill-opacity="0.07" stroke="none" />
+        <path d="M15.6944 34L0 34L0 1.67001L15.6944 1.67001C17.8903 1.67001 19.67 3.40677 19.67 5.54967L19.67 30.1204C19.6716 32.2633 17.8903 34 15.6944 34L15.6944 34Z" id="Shape" fill="#000000" fill-opacity="0.09" stroke="none" />
+      </g>
+    </g>
+    <path d="M35 33.054L35 42L42 42C43.105 42 44 41.105 44 40L44 33.055L35 33.054L35 33.054L35 33.054Z" id="Shape" fill="url(#gradient_2)" stroke="none" />
+    <path d="M35 15.003L44 15.003L44 24.005L35 24.005L35 15.003L35 15.003Z" id="Shape" fill="url(#gradient_3)" stroke="none" />
+    <path d="M35 24.005L44 24.005L44 33.055L35 33.055L35 24.005L35 24.005Z" id="Shape" fill="url(#gradient_4)" stroke="none" />
+    <g id="Group" transform="translate(4 8)">
+      <path d="M24.3 31L2.7 31C1.20825 31 0 29.6127 0 27.9L0 3.1C0 1.38725 1.20825 0 2.7 0L24.3 0C25.7917 0 27 1.38725 27 3.1L27 27.9C27 29.6127 25.7917 31 24.3 31L24.3 31Z" id="Shape-3" fill="url(#gradient_5)" stroke="none" />
+      <path d="M23 27L19 22" id="Vector-10" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" />
+      <g id="Vector-9">
+        <g clip-path="url(#clip_3)">
+          <use xlink:href="#path_3" fill="none" stroke="#FFFFFF" stroke-width="4" />
+        </g>
+      </g>
+      <g id="Oval-2">
+        <use stroke="none" fill="#FF2222" fill-opacity="0" xlink:href="#path_4" fill-rule="evenodd" />
+        <g clip-path="url(#clip_4)">
+          <use xlink:href="#path_4" fill="none" stroke="#FFFFFF" stroke-width="4" />
+        </g>
+      </g>
+      <g id="Vector-8">
+        <g clip-path="url(#clip_5)">
+          <use xlink:href="#path_5" fill="none" stroke="#FFFFFF" stroke-width="4" />
+        </g>
+      </g>
+      <path d="M5 5L5 13L11 13" id="Vector-5" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>
