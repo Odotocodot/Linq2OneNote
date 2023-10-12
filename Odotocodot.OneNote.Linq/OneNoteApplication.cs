@@ -27,7 +27,7 @@ namespace Odotocodot.OneNote.Linq
         /// Indicates whether the class has a usable <see cref="Application">COM Object instance</see>.
         /// </summary>
         /// <remarks>When <see langword="true"/> a "Microsoft OneNote" process should be visible in the Task Manager.</remarks>
-        /// <seealso cref="Init"/>
+        /// <seealso cref="InitComObject"/>
         /// <seealso cref="ReleaseComObject"/>
         public static bool HasComObject => lazyOneNote.IsValueCreated;
         #endregion
@@ -88,7 +88,7 @@ namespace Odotocodot.OneNote.Linq
         /// so exceeded the limit.</exception>
         /// <seealso cref="HasComObject"/>
         /// <seealso cref="ReleaseComObject"/>
-        public static void Init()
+        public static void InitComObject()
         {
             if (!lazyOneNote.IsValueCreated)
             {
@@ -99,7 +99,7 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// Releases the <see cref="Application">OneNote COM object</see> freeing memory.
         /// </summary>
-        /// <seealso cref="Init"/>
+        /// <seealso cref="InitComObject"/>
         /// <seealso cref="HasComObject"/>
         public static void ReleaseComObject()
         {
