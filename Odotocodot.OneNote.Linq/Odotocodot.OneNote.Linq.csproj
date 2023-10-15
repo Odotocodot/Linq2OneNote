@@ -3,10 +3,12 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Title>Linq for OneNote</Title>
+		<Title>Linq to OneNote</Title>
 		<Authors>Odotocodot</Authors>
 		<PackageReadmeFile>Readme.md</PackageReadmeFile>
-		<RepositoryUrl>https://github.com/Odotocodot/Odotocodot.OneNote.Linq</RepositoryUrl>
+		<RepositoryUrl>https://github.com/Odotocodot/Linq2OneNote</RepositoryUrl>
+		<Description>A helper library for dealing with the OneNote interop API.</Description>
+		<Copyright>MIT</Copyright>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
