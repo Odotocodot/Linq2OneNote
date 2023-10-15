@@ -5,10 +5,17 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Linq to OneNote</Title>
 		<Authors>Odotocodot</Authors>
-		<PackageReadmeFile>Readme.md</PackageReadmeFile>
+		<Description>A helper library for dealing with the OneNote Interop API.</Description>
 		<RepositoryUrl>https://github.com/Odotocodot/Linq2OneNote</RepositoryUrl>
-		<Description>A helper library for dealing with the OneNote interop API.</Description>
-		<Copyright>MIT</Copyright>
+		<Copyright>Copyright © 2023 Odotocodot</Copyright>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageTags>OneNote;Interop;LINQ</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageProjectUrl>https://odotocodot.github.io/Linq2OneNote/</PackageProjectUrl>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageId>Linq2OneNote</PackageId>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -17,14 +24,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Interop.Microsoft.Office.Interop.OneNote" Version="1.1.0.2" />
+		<None Include="..\Documentation\images\logo.png" Pack="True" PackagePath="\" />
+		<None Include="..\LICENSE.txt" Pack="True" PackagePath="\" />
+		<None Include="..\README.md" Pack="True" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Readme.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
+		<PackageReference Include="Interop.Microsoft.Office.Interop.OneNote" Version="1.1.0.2" />
 	</ItemGroup>
 </Project>
 
