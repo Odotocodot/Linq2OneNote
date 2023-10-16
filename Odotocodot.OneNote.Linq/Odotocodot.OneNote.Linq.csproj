@@ -13,9 +13,11 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageProjectUrl>https://odotocodot.github.io/Linq2OneNote/</PackageProjectUrl>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<PackageId>Linq2OneNote</PackageId>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<PackageId>Odotocodot.OneNote.Linq</PackageId>
 		<RepositoryType>git</RepositoryType>
+		<Version>1.0.0</Version>
+		<Product />
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
