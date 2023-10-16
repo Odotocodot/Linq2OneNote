@@ -20,7 +20,7 @@ To see an outline of the library view the [class diagram](https://github.com/Odo
 
 ### Getting Started
 
-The main entry point of the library is the static class ``OneNoteApplication`` which has a collection of [methods](https://odotocodot.github.io/Linq2OneNote/Odotocodot.OneNote.Linq.OneNoteApplication) that interact with your OneNote installation.
+The main entry point of the library is the static class ``OneNoteApplication`` which has a collection of [methods](https://odotocodot.github.io/Linq2OneNote/api/Odotocodot.OneNote.Linq.OneNoteApplication.html#methods) that interact with your OneNote installation.
 
 Below is quick example on using the library to search your OneNote pages. 
 
