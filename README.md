@@ -1,20 +1,20 @@
-<h1 align="center"> LINQ to OneNote </h1>
+# LINQ to OneNote
 
 A helper library for dealing with the [OneNote Interop API](https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote)
-([package](https://www.nuget.org/packages/Interop.Microsoft.Office.Interop.OneNote#readme-body-tab)).<br/>
+([package](https://www.nuget.org/packages/Interop.Microsoft.Office.Interop.OneNote#readme-body-tab)).\
 Originally made for [Flow.Launcher.Plugin.OneNote](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote).
 
 ## Installation
 
 1. Install either "OneNote" or "OneNote for Windows 10"
-1. TODO nuget
+1. Get the library from NuGet [here](https://www.nuget.org/packages/Odotocodot.OneNote.Linq/)
 
 > [!IMPORTANT]
 > This library only works for local versions of OneNote, and does not make use of the Microsoft Graph API.
 
 ## Usage
 
-Visit the [API Reference](https://odotocodot.github.io/Linq2OneNote/api/Odotocodot.OneNote.Linq.html) to see the full API, or visit the Flow Launcher [plugin](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote/blob/master/Flow.Launcher.Plugin.OneNote/SearchManager.cs) to see it in action.<br/>
+Visit the [API Reference](https://odotocodot.github.io/Linq2OneNote/api/Odotocodot.OneNote.Linq.html) to see the full API, or visit the Flow Launcher [plugin](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote/blob/master/Flow.Launcher.Plugin.OneNote/SearchManager.cs) to see it in action.\
 To see an outline of the library view the [class diagram](https://github.com/Odotocodot/Linq2OneNote/blob/main/Documentation/images/class_diagram.png).
 
 

@@ -17,6 +17,7 @@
 		<PackageId>Odotocodot.OneNote.Linq</PackageId>
 		<RepositoryType>git</RepositoryType>
 		<Version>1.0.0</Version>
+		<PackageReleaseNotes>Version 1.0.0</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
