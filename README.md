@@ -14,13 +14,13 @@ Originally made for [Flow.Launcher.Plugin.OneNote](https://github.com/Odotocodot
 
 ## Usage
 
-Visit to the [API Reference](https://odotocodot.github.io/Linq2OneNote/api/Odotocodot.OneNote.Linq.html) to see the full API, or visit the Flow Launcher [plugin](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote/blob/master/Flow.Launcher.Plugin.OneNote/SearchManager.cs) to see it in action.<br/>
+Visit the [API Reference](https://odotocodot.github.io/Linq2OneNote/api/Odotocodot.OneNote.Linq.html) to see the full API, or visit the Flow Launcher [plugin](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote/blob/master/Flow.Launcher.Plugin.OneNote/SearchManager.cs) to see it in action.<br/>
 To see an outline of the library view the [class diagram](https://github.com/Odotocodot/Linq2OneNote/blob/main/Documentation/images/class_diagram.png).
 
 
 ### Getting Started
 
-The main entry point of the library is the static class ``OneNoteApplication`` which has a collection of [methods](https://odotocodot.github.io/Linq2OneNote/Odotocodot.OneNote.Linq.OneNoteApplication) that interact with your OneNote installaiton.
+The main entry point of the library is the static class ``OneNoteApplication`` which has a collection of [methods](https://odotocodot.github.io/Linq2OneNote/Odotocodot.OneNote.Linq.OneNoteApplication) that interact with your OneNote installation.
 
 Below is quick example on using the library to search your OneNote pages. 
 
@@ -35,17 +35,17 @@ Console.WriteLine(page.Name);
 page.OpenInOneNote();
 ```
 
-Most functions return an IEnuermable allowing for easy use with LINQ.
+Most functions return an IEnumerable allowing for easy use with LINQ.
 
 ### Memory Management
 
-A COM object is required to use the OneNote Interop API, by default Linq2OneNote acquires an object lazily, i.e. the first time you call a method that requires a COM object, the library gets one.
+A COM object is required to use the OneNote Interop API, by default this is acquired lazily, i.e. the first time you call a method that requires a COM object, the library gets one.
 
-However, acquiring a COM object is _slow_ and once retrieved it is visible in the Task Manager ([screenshot](https://github.com/Odotocodot/Linq2OneNote/blob/main/Documentation/images/task_manager.png)).
+However, acquiring a COM object is _slow_ and once retrieved, it is visible in the Task Manager ([screenshot](https://github.com/Odotocodot/Linq2OneNote/blob/main/Documentation/images/task_manager.png)).
 
-If you want to choose when the this operation occurs, you can call ``OneNoteApplication.InitComObject()`` to forcible acquire the COM object (it does nothing if one has already been attained).<br/>
+If you want to choose when this operation occurs, you can call ``OneNoteApplication.InitComObject()`` to forcible acquire the COM object (it does nothing if one has already been attained).
 
-To free up the memory that the COM object takes up, rather they wait for your application to exit you can call  ``OneNoteApplication.ReleaseComObject()``.
+To free up the memory that the COM object takes up, rather than wait for your application to exit you can call  ``OneNoteApplication.ReleaseComObject()``.
 
 See below for an example.
 
