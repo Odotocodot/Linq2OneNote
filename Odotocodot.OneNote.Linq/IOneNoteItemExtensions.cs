@@ -86,13 +86,20 @@ namespace Odotocodot.OneNote.Linq
         /// <seealso cref="OneNoteSection.IsInRecycleBin"/>
         /// <seealso cref="OneNoteSection.IsDeletedPages"/>
         /// <seealso cref="OneNotePage.IsInRecycleBin"/>
-        public static bool IsInRecycleBin(this IOneNoteItem item) => item switch
+        public static bool IsInRecycleBin(this IOneNoteItem item)
         {
-            OneNoteSectionGroup sectionGroup => sectionGroup.IsRecycleBin,
-            OneNoteSection section => section.IsInRecycleBin || section.IsDeletedPages, //If IsDeletedPages is true IsInRecycleBin is always true
-            OneNotePage page => page.IsInRecycleBin,
-            _ => false,
-        };
+            switch (item)
+            {
+                case OneNoteSectionGroup sectionGroup:
+                    return sectionGroup.IsRecycleBin;
+                case OneNoteSection section:
+                    return section.IsInRecycleBin || section.IsDeletedPages; //If IsDeletedPages is true IsInRecycleBin is always true
+                case OneNotePage page:
+                    return page.IsInRecycleBin;
+                default:
+                    return false;
+            }
+        }
 
         /// <summary>
         /// Get the recycle bin <see cref="OneNoteSectionGroup">section group</see> for the specified <paramref name="notebook"/> if it exists.
