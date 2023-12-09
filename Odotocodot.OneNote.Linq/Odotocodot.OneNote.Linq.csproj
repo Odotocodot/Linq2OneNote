@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0-windows</TargetFramework>
+		<TargetFramework>net5.0-windows</TargetFramework>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Linq to OneNote</Title>
 		<Authors>Odotocodot</Authors>
@@ -31,6 +31,9 @@
 		<None Include="..\README.md" Pack="True" PackagePath="\" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="$(AssemblyName).Playground" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Interop.Microsoft.Office.Interop.OneNote" Version="1.1.0.2" />
 		<PackageReference Include="System.Collections.Immutable" Version="7.0.0" />

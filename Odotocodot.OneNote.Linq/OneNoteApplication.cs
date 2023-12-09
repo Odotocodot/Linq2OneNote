@@ -127,7 +127,6 @@ namespace Odotocodot.OneNote.Linq
             ValidateSearch(search);
 
             OneNote.FindPages(null, search, out string xml);
-            var rootElement = XElement.Parse(xml);
             return Parser.ParseNotebooks(xml).GetPages();
         }
 
