@@ -15,63 +15,83 @@ namespace Odotocodot.OneNote.Linq
         private static readonly XName SectionXName = XName.Get("Section", NamespaceUri);
         private static readonly XName PageXName = XName.Get("Page", NamespaceUri);
 
-        private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser = new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>()
+        private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser = new()
         {
             {NotebookXName, ParseNotebook},
             {SectionGroupXName, ParseSectionGroup},
             {SectionXName, ParseSection},
             {PageXName, ParsePage}
         };
+        
+        private static readonly Dictionary<string, Action<OneNotePage, XAttribute>> pageSetters = new()
+        {
+            { "ID", (item, attribute) => item.ID = attribute.Value },
+            { "name", (item, attribute) => item.Name = attribute.Value },
+            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
+            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+            
+            { "dateTime", (page, attribute) => page.Created = (DateTime)attribute },
+            { "pageLevel", (page, attribute) => page.Level = (int)attribute },
+            { "isInRecycleBin", (page, attribute) => page.IsInRecycleBin = (bool)attribute }
+        };
+        
+        private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters = new()
+        {
+            { "ID", (item, attribute) => item.ID = attribute.Value },
+            { "name", (item, attribute) => item.Name = attribute.Value },
+            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
+            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+            
+            { "path", (section, attribute) => section.Path = attribute.Value },
+            { "color", (section, attribute) => section.Color = GetColor(attribute) },
+            { "encrypted", (section, attribute) => section.Encrypted = (bool)attribute },
+            { "locked", (section, attribute) => section.Locked = (bool)attribute },
+            { "isInRecycleBin", (section, attribute) => section.IsInRecycleBin = (bool)attribute },
+            { "isDeletedPages", (section, attribute) => section.IsDeletedPages = (bool)attribute }
+        };
 
+        private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters = new()
+        {
+            { "ID", (item, attribute) => item.ID = attribute.Value },
+            { "name", (item, attribute) => item.Name = attribute.Value },
+            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
+            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+
+            { "path", (sectionGroup, attribute) => sectionGroup.Path = attribute.Value },
+            { "isRecycleBin", (sectionGroup, attribute) => sectionGroup.IsRecycleBin = (bool)attribute }
+        };
+        
+        private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters = new()
+        {
+            { "ID", (item, attribute) => item.ID = attribute.Value },
+            { "name", (item, attribute) => item.Name = attribute.Value },
+            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
+            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+
+            { "nickname", (notebook, attribute) => notebook.NickName = attribute.Value },
+            { "path", (notebook, attribute) => notebook.Path = attribute.Value },
+            { "color", (notebook, attribute) => notebook.Color = GetColor(attribute) }
+        };
+        
         //Unknown at runtime
         internal static IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
         {
             var root = XElement.Parse(xml);
             return runtimeParser[root.Name](root, parent);   
         }
-
-
+        
         private static OneNotePage ParsePage(XElement element, IOneNoteItem parent)
         {
             var page = new OneNotePage();
-            //Technically 'faster' than the XElement.GetAttribute method
+            
             foreach (var attribute in element.Attributes())
             {
-                switch (attribute.Name.LocalName)
+                if (pageSetters.TryGetValue(attribute.Name.LocalName, out var setter))
                 {
-                    case "ID":
-                        page.ID = attribute.Value;
-                        break;
-                    case "name":
-                        page.Name = attribute.Value;
-                        break;
-                    case "dateTime":
-                        page.Created = (DateTime)attribute;
-                        break;
-                    case "lastModifiedTime":
-                        page.LastModified = (DateTime)attribute;
-                        break;
-                    case "pageLevel":
-                        page.Level = (int)attribute;
-                        break;
-                    case "isUnread":
-                        page.IsUnread = (bool)attribute;
-                        break;
-                    case "isInRecycleBin":
-                        page.IsInRecycleBin = (bool)attribute;
-                        break;
+                    setter(page, attribute);
                 }
             }
-            // if (parent == null)
-            // {
-            //     page.notebook = new Lazy<OneNoteNotebook>(OneNoteApplication.GetNotebook());
-            // }
-            // else
-            // {
-            //     page.Section = (OneNoteSection)parent;
-            //     page.Notebook = parent.Notebook;
-            //     page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
-            // }
+            
             page.Section = (OneNoteSection)parent;
             page.Notebook = parent.Notebook;
             page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
@@ -81,44 +101,11 @@ namespace Odotocodot.OneNote.Linq
         private static OneNoteSection ParseSection(XElement element, IOneNoteItem parent)
         {
             var section = new OneNoteSection();
-            //Technically 'faster' than the XElement.GetAttribute method
             foreach (var attribute in element.Attributes())
             {
-                switch (attribute.Name.LocalName)
+                if (sectionSetters.TryGetValue(attribute.Name.LocalName, out var setter))
                 {
-                    case "name":
-                        section.Name = attribute.Value;
-                        break;
-                    case "ID":
-                        section.ID = attribute.Value;
-                        break;
-                    case "path":
-                        section.Path = attribute.Value;
-                        break;
-                    case "isUnread":
-                        section.IsUnread = (bool)attribute;
-                        break;
-                    case "color":
-                        if (attribute.Value != "none")
-                            section.Color = ColorTranslator.FromHtml(attribute.Value);
-                        else
-                            section.Color = null;
-                        break;
-                    case "lastModifiedTime":
-                        section.LastModified = (DateTime)attribute;
-                        break;
-                    case "encrypted":
-                        section.Encrypted = (bool)attribute;
-                        break;
-                    case "locked":
-                        section.Locked = (bool)attribute;
-                        break;
-                    case "isInRecycleBin":
-                        section.IsInRecycleBin = (bool)attribute;
-                        break;
-                    case "isDeletedPages":
-                        section.IsDeletedPages = (bool)attribute;
-                        break;
+                    setter(section, attribute);
                 }
             }
             
@@ -130,32 +117,17 @@ namespace Odotocodot.OneNote.Linq
             return section;
         }
 
+        private static Color? GetColor(XAttribute attribute) 
+            => attribute.Value == "none" ? null : ColorTranslator.FromHtml(attribute.Value);
+
         private static OneNoteSectionGroup ParseSectionGroup(XElement element, IOneNoteItem parent)
         {
             var sectionGroup = new OneNoteSectionGroup();
-            //Technically 'faster' than the XElement.GetAttribute method
             foreach (var attribute in element.Attributes())
             {
-                switch (attribute.Name.LocalName)
+                if (sectionGroupSetters.TryGetValue(attribute.Name.LocalName, out var setter))
                 {
-                    case "name":
-                        sectionGroup.Name = attribute.Value;
-                        break;
-                    case "ID":
-                        sectionGroup.ID = attribute.Value;
-                        break;
-                    case "path":
-                        sectionGroup.Path = attribute.Value;
-                        break;
-                    case "lastModifiedTime":
-                        sectionGroup.LastModified = (DateTime)attribute;
-                        break;
-                    case "isUnread":
-                        sectionGroup.IsUnread = (bool)attribute;
-                        break;
-                    case "isRecycleBin":
-                        sectionGroup.IsRecycleBin = (bool)attribute;
-                        break;
+                    setter(sectionGroup, attribute);
                 }
             }
             sectionGroup.Notebook = parent.Notebook;
@@ -172,35 +144,11 @@ namespace Odotocodot.OneNote.Linq
         private static OneNoteNotebook ParseNotebook(XElement element, IOneNoteItem _)
         {
             var notebook = new OneNoteNotebook();
-            //Technically 'faster' than the XElement.GetAttribute method
             foreach (var attribute in element.Attributes())
             {
-                switch (attribute.Name.LocalName)
+                if (notebookSetters.TryGetValue(attribute.Name.LocalName, out var setter))
                 {
-                    case "name":
-                        notebook.Name = attribute.Value;
-                        break;
-                    case "nickname":
-                        notebook.NickName = attribute.Value;
-                        break;
-                    case "ID":
-                        notebook.ID = attribute.Value;
-                        break;
-                    case "path":
-                        notebook.Path = attribute.Value;
-                        break;
-                    case "lastModifiedTime":
-                        notebook.LastModified = (DateTime)attribute;
-                        break;
-                    case "color":
-                        if (attribute.Value != "none")
-                            notebook.Color = ColorTranslator.FromHtml(attribute.Value);
-                        else
-                            notebook.Color = null;
-                        break;
-                    case "isUnread":
-                        notebook.IsUnread = (bool)attribute;
-                        break;
+                    setter(notebook, attribute);
                 }
             }
             notebook.Notebook = notebook;

@@ -249,20 +249,32 @@ namespace Odotocodot.OneNote.Linq
         //TODO: change to return ID
 
         /// <summary>
-        /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="section"/>.
+        /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="section"/>.<br/>
+        /// If <paramref name="section"/> is <see langword="null"/>, this method creates a page in the default quick notes location.
         /// </summary>        
         /// <param name="section">The section to create the page in.</param>
         /// <param name="name">The title of the page.</param>
         /// <param name="openImmediately">Whether to open the newly created page in OneNote immediately.</param>
         public static void CreatePage(OneNoteSection section, string name, bool openImmediately)
         {
-            OneNote.GetHierarchy(null, HierarchyScope.hsNotebooks, out string oneNoteXMLHierarchy);
-            var one = XElement.Parse(oneNoteXMLHierarchy).GetNamespaceOfPrefix("one");
+            string sectionID;
+            if (section != null)
+            {
+                sectionID = section.ID;
+            }
+            else
+            {
+                var path = GetUnfiledNotesSection();
+                OneNote.OpenHierarchy(path, null, out sectionID, CreateFileType.cftNone);
+            }
 
-            OneNote.CreateNewPage(section.ID, out string pageID, NewPageStyle.npsBlankPageWithTitle);
+            OneNote.CreateNewPage(sectionID, out string pageID, NewPageStyle.npsBlankPageWithTitle);
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
-
             XDocument doc = XDocument.Parse(xml);
+            
+            OneNote.GetHierarchy(null, HierarchyScope.hsNotebooks, out string oneNoteXMLHierarchy);
+            XNamespace one = XElement.Parse(oneNoteXMLHierarchy).GetNamespaceOfPrefix("one");
+            
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;
 

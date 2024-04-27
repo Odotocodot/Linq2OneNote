@@ -34,11 +34,6 @@ namespace Odotocodot.OneNote.Linq.Playground
 			public void SwitchCase()
 			{
 				 Consume(Parser.ParseNotebooks(xml));
-			}			
-			[Benchmark]
-			public void Dictionary()
-			{
-				 Consume(ParserDict.ParseNotebooks(xml));
 			}
 		}
 
