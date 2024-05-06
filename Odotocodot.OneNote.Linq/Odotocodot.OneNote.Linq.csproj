@@ -33,7 +33,9 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="$(AssemblyName).Playground" />
+		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
 	</ItemGroup>
+	
 	<ItemGroup>
 		<PackageReference Include="Interop.Microsoft.Office.Interop.OneNote" Version="1.1.0.2" />
 	</ItemGroup>
