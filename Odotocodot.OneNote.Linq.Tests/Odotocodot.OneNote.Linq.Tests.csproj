@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Inputs\**.xml" />
-    <Content Include="Inputs\**.xml">
+    <None Remove="Inputs\*.xml" />
+    <Content Include="Inputs\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
