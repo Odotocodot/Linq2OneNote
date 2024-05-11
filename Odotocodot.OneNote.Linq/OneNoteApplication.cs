@@ -187,7 +187,7 @@ namespace Odotocodot.OneNote.Linq
         /// Gets the content of the specified <paramref name="page"/>.
         /// </summary>       
         /// <param name="page">The page to retrieve content from.</param>
-        /// <returns>A <see langword="string"/> in the OneNote XML format.</returns>
+        /// <returns>An <see langword="string"/> in the OneNote XML format.</returns>
         public static string GetPageContent(OneNotePage page)
         {
             OneNote.GetPageContent(page.ID, out string xml);
@@ -221,25 +221,26 @@ namespace Odotocodot.OneNote.Linq
             var doc = XDocument.Parse(xml);
             var element = doc.Descendants()
                              .FirstOrDefault(e => (string)e.Attribute("ID") == item.ID);
-            if (element != null)
+            
+            if (element == null) 
+                return;
+            
+            element.Attribute("name").SetValue(newName);
+            OneNote.UpdateHierarchy(doc.ToString());
+            switch (item)
             {
-                element.Attribute("name").SetValue(newName);
-                OneNote.UpdateHierarchy(doc.ToString());
-                switch (item)
-                {
-                    case OneNoteNotebook nb:
-                        nb.Name = newName;
-                        break;
-                    case OneNoteSectionGroup sg:
-                        sg.Name = newName;
-                        break;
-                    case OneNoteSection s:
-                        s.Name = newName;
-                        break;
-                    case OneNotePage p:
-                        p.Name = newName;
-                        break;
-                }
+                case OneNoteNotebook nb:
+                    nb.Name = newName;
+                    break;
+                case OneNoteSectionGroup sg:
+                    sg.Name = newName;
+                    break;
+                case OneNoteSection s:
+                    s.Name = newName;
+                    break;
+                case OneNotePage p:
+                    p.Name = newName;
+                    break;
             }
         }
         #endregion
@@ -402,9 +403,9 @@ namespace Odotocodot.OneNote.Linq
             return path;
         }
         /// <summary>
-        /// Retrieves the path on disk to the back up folder location.
+        /// Retrieves the path on disk to the backup folder location.
         /// </summary>        
-        /// <returns>The path on disk to the back up folder location.</returns>
+        /// <returns>The path on disk to the backup folder location.</returns>
         public static string GetBackUpLocation()
         {
             OneNote.GetSpecialLocation(SpecialLocation.slBackUpFolder, out string path);
