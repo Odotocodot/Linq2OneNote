@@ -21,6 +21,15 @@ namespace Odotocodot.OneNote.Linq
 
         private static Lazy<Application> lazyOneNote = GetLazyOneNote();
         private static Application OneNote => lazyOneNote.Value;
+        
+        /// <summary>
+        /// Use this only if you know what you are doing.
+        /// The COM Object instance of the OneNote application.
+        /// </summary>
+        /// <seealso cref="HasComObject"/>
+        /// <seealso cref="InitComObject"/>
+        /// <seealso cref="ReleaseComObject"/>
+        public static Application ComObject => OneNote;
 
         /// <summary>
         /// Indicates whether the class has a usable <see cref="Application">COM Object instance</see>.
