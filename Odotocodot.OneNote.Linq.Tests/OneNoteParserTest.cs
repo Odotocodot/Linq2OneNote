@@ -8,9 +8,9 @@ using NUnit.Framework;
 namespace Odotocodot.OneNote.Linq.Tests
 {
 	[TestFixture]
-	[TestSubject(typeof(Parser))]
-	[TestOf(typeof(Parser))]
-	public class ParserTests
+	[TestSubject(typeof(OneNoteParser))]
+	[TestOf(typeof(OneNoteParser))]
+	public class OneNoteParserTests
 	{
 		[Test]
 		public void ParsePage()
@@ -23,7 +23,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 				Notebook = notebook
 			};
 
-			var item = Parser.ParseUnknown(xml, section);
+			var item = OneNoteParser.ParseUnknown(xml, section);
 			
 			Assert.Multiple(() =>
 			{
@@ -40,7 +40,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 				
 				Assert.AreSame(section, page.Section);
 				Assert.AreSame(notebook, page.Notebook);
-				Assert.AreEqual($"Test Notebook{Parser.RelativePathSeparator}Test Section{Parser.RelativePathSeparator}Important Info",
+				Assert.AreEqual($"Test Notebook{OneNoteParser.RelativePathSeparator}Test Section{OneNoteParser.RelativePathSeparator}Important Info",
 					page.RelativePath);
 			});
 
@@ -51,7 +51,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 		{
 			var xml = File.ReadAllText(@"Inputs\Section.xml");
 			var notebook = new OneNoteNotebook(){ Name = "Test Notebook" };
-			var item = Parser.ParseUnknown(xml, notebook);
+			var item = OneNoteParser.ParseUnknown(xml, notebook);
 			Assert.Multiple(() =>
 			{
 				Assert.IsInstanceOf<OneNoteSection>(item);
@@ -71,7 +71,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 
 				Assert.AreSame(notebook, section.Parent);
 				Assert.IsNull(section.Notebook);
-				Assert.AreEqual($"Test Notebook{Parser.RelativePathSeparator}Locked Section", section.RelativePath);
+				Assert.AreEqual($"Test Notebook{OneNoteParser.RelativePathSeparator}Locked Section", section.RelativePath);
 				
 				Assert.IsEmpty(section.Pages);
 			});
@@ -82,7 +82,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 		{
 			var xml = File.ReadAllText(@"Inputs\SectionGroup.xml");
 			var notebook = new OneNoteNotebook() { Name = "Test Notebook" };
-			var item = Parser.ParseUnknown(xml, notebook);
+			var item = OneNoteParser.ParseUnknown(xml, notebook);
 			
 			Assert.Multiple(() =>
 			{
@@ -100,7 +100,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 				Assert.AreSame(notebook, sectionGroup.Parent);
 				Assert.IsNull(sectionGroup.Notebook);
 				
-				Assert.AreEqual($"Test Notebook{Parser.RelativePathSeparator}Section Group 1", sectionGroup.RelativePath);
+				Assert.AreEqual($"Test Notebook{OneNoteParser.RelativePathSeparator}Section Group 1", sectionGroup.RelativePath);
 				
 				Assert.IsEmpty(sectionGroup.Sections);
 				Assert.IsEmpty(sectionGroup.SectionGroups);
@@ -112,7 +112,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 		public void ParseNotebook()
 		{
 			var xml = File.ReadAllText(@"Inputs\Notebook.xml");
-			var item = Parser.ParseUnknown(xml, null);
+			var item = OneNoteParser.ParseUnknown(xml, null);
 			
 			Assert.Multiple(() =>
 			{
@@ -142,7 +142,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 			// var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Inputs", "Notebooks.xml");
 			var xml = File.ReadAllText(@"Inputs\Notebooks.xml");
 			
-			var result = Parser.ParseNotebooks(xml);
+			var result = OneNoteParser.ParseNotebooks(xml);
 			var items = result.Traverse(item => item.GetType() == itemType);
 			
 			Assert.AreEqual(expectedCount, items.Count());

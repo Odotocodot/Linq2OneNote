@@ -73,7 +73,7 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The directory separator used in <see cref="IOneNoteItem.RelativePath"/>.
         /// </summary>
-        public const char RelativePathSeparator = Parser.RelativePathSeparator;
+        public const char RelativePathSeparator = OneNoteParser.RelativePathSeparator;
 
         #region COM Object Methods
 
@@ -121,7 +121,7 @@ namespace Odotocodot.OneNote.Linq
         public static IEnumerable<OneNoteNotebook> GetNotebooks()
         {
             OneNote.GetHierarchy(null, HierarchyScope.hsPages, out string xml);
-            return Parser.ParseNotebooks(xml);
+            return OneNoteParser.ParseNotebooks(xml);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Odotocodot.OneNote.Linq
             ValidateSearch(search);
 
             OneNote.FindPages(null, search, out string xml);
-            return Parser.ParseNotebooks(xml).GetPages();
+            return OneNoteParser.ParseNotebooks(xml).GetPages();
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Odotocodot.OneNote.Linq
 
             OneNote.FindPages(scope.ID, search, out string xml);
 
-            return Parser.ParseUnknown(xml, scope).GetPages();
+            return OneNoteParser.ParseUnknown(xml, scope).GetPages();
         }
 
         //TODO: Open FindByID

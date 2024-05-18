@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// A static class containing extension methods for the <see cref="IOneNoteItem"/> object.
     /// </summary>
-    public static class IOneNoteItemExtensions
+    public static class OneNoteItemExtensions
     {
         /// <summary>
         /// Returns a flattened collection of OneNote items, that contains the children of every OneNote item from the <paramref name="source"/>.
@@ -15,7 +15,7 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="source">The source OneNote item.</param>
         /// <returns>An <see cref="IEnumerable{T}">IEnumerable</see>&lt;<see cref="IOneNoteItem"/>&gt; containing the 
         /// child items of the <paramref name="source"/>.</returns>
-        /// <remarks>This method uses a non recursive depth first traversal algorithm.</remarks>
+        /// <remarks>This method uses a non-recursive depth first traversal algorithm.</remarks>
         public static IEnumerable<IOneNoteItem> Traverse(this IOneNoteItem source)
         {
             var stack = new Stack<IOneNoteItem>();

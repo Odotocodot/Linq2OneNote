@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Odotocodot.OneNote.Linq
 {
-    internal static class Parser
+    internal static class OneNoteParser
     {
         internal const char RelativePathSeparator = '\\';
         private const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
