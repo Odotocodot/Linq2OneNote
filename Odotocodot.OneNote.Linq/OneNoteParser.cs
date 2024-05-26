@@ -9,7 +9,7 @@ namespace Odotocodot.OneNote.Linq
     internal static class OneNoteParser
     {
         internal const char RelativePathSeparator = '\\';
-        private const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
+        internal const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
         private static readonly XName NotebookXName = XName.Get("Notebook", NamespaceUri);
         private static readonly XName SectionGroupXName = XName.Get("SectionGroup", NamespaceUri);
         private static readonly XName SectionXName = XName.Get("Section", NamespaceUri);

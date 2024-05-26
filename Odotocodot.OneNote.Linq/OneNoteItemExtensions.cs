@@ -74,6 +74,8 @@ namespace Odotocodot.OneNote.Linq
         /// <inheritdoc cref="OneNoteApplication.GetPageContent(OneNotePage)"/>
         public static string GetPageContent(this OneNotePage page) => OneNoteApplication.GetPageContent(page);
 
+        /// <inheritdoc cref="OneNoteApplication.UpdatePageContent(OneNotePage, string)"/>
+        public static void UpdatePageContent(this OneNotePage page, string xml) => OneNoteApplication.UpdatePageContent(page, xml);
         /// <summary>
         /// Returns a value that indicates whether the <paramref name="item"/> is in or is a recycle bin.
         /// </summary>

@@ -12,7 +12,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// A static wrapper class around the <see cref="Application"/> class, allowing for <see cref="Lazy{T}">lazy</see> acquirement and
     /// release of a OneNote COM object. In addition to exposing the
-    /// <see href="https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote"> OneNote's API</see>
+    /// <a href="https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote"> OneNote's API</a>
     /// </summary>
     /// <remarks>A <see cref="Application">OneNote COM object</see> is required to access any of the OneNote API.</remarks>
     public static class OneNoteApplication
@@ -202,6 +202,15 @@ namespace Odotocodot.OneNote.Linq
             OneNote.GetPageContent(page.ID, out string xml);
             return xml;
         }
+        
+        /// <summary>
+        /// Updates the content of the specified <paramref name="page"/> with the provided <paramref name="xml"/>.
+        /// </summary>
+        /// <remarks>The <paramref name="xml"/> must match the OneNote XML format, the schema can be
+        /// found <a href="https://github.com/idvorkin/onom/blob/eb9ce52764e9ad639b2c9b4bca0622ee6221106f/OneNoteObjectModel/onenote.xsd">here</a>.</remarks>
+        /// <param name="page">The page to update the content from.</param>
+        /// <param name="xml">An <see langword="string"/> in the OneNote XML format. </param>
+        public static void UpdatePageContent(OneNotePage page, string xml) => OneNote.UpdatePageContent(xml);
 
         #region Experimental API Methods
 
@@ -282,8 +291,7 @@ namespace Odotocodot.OneNote.Linq
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
             XDocument doc = XDocument.Parse(xml);
             
-            OneNote.GetHierarchy(null, HierarchyScope.hsNotebooks, out string oneNoteXMLHierarchy);
-            XNamespace one = XElement.Parse(oneNoteXMLHierarchy).GetNamespaceOfPrefix("one");
+            XNamespace one = XNamespace.Get(OneNoteParser.NamespaceUri);
             
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;
@@ -295,7 +303,7 @@ namespace Odotocodot.OneNote.Linq
         }
 
         /// <summary>
-        /// Creates a quick note page located currently set quick notes location.
+        /// Creates a quick note page located at the users quick notes location.
         /// </summary>       
         /// <param name="openImmediately"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='openImmediately']"/></param>
         public static void CreateQuickNote(bool openImmediately)
@@ -307,6 +315,14 @@ namespace Odotocodot.OneNote.Linq
             if (openImmediately)
                 OneNote.NavigateTo(pageID);
         }
+        /// <summary>
+        /// Creates a quick note page with the title specified by <paramref name="name"/>, located at the users quick notes location.
+        /// </summary>
+        /// <remarks>This is identical to calling <see cref="CreatePage(OneNoteSection, string, bool)"/> with the
+        /// section paramater set to null</remarks>
+        /// <param name="name"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='name']"/></param>
+        /// <param name="openImmediately"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='openImmediately']"/></param>
+        public static void CreateQuickNote(string name, bool openImmediately) => CreatePage(null, name, openImmediately);
 
         private static void CreateItemBase<T>(IOneNoteItem parent, string name, bool openImmediately) where T : IOneNoteItem
         {
