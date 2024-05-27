@@ -151,7 +151,6 @@ namespace Odotocodot.OneNote.Linq
                     setter(notebook, attribute);
                 }
             }
-            notebook.Notebook = notebook;
             notebook.Sections = element.Elements(SectionXName)
                                        .Select(e => ParseSection(e, notebook));
             notebook.SectionGroups = element.Elements(SectionGroupXName)
