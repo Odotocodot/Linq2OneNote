@@ -9,8 +9,8 @@
 		<RepositoryUrl>https://github.com/Odotocodot/Linq2OneNote</RepositoryUrl>
 		<Copyright>Copyright © 2023 Odotocodot</Copyright>
 		<PackageIcon>logo.png</PackageIcon>
-		<PackageTags>OneNote;Interop;LINQ</PackageTags>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>OneNote;Interop;LINQ;linqpad-samples</PackageTags>
+		<PackageReadmeFile>NuGet.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageProjectUrl>https://odotocodot.github.io/Linq2OneNote/</PackageProjectUrl>
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
@@ -28,7 +28,7 @@
 	<ItemGroup>
 		<None Include="..\Documentation\images\logo.png" Pack="True" PackagePath="\" />
 		<None Include="..\LICENSE.txt" Pack="True" PackagePath="\" />
-		<None Include="..\README.md" Pack="True" PackagePath="\" />
+		<None Include="..\Odotocodot.OneNote.Linq\NuGet.md" Pack="True" PackagePath="\" />
 		<None Include="..\CHANGELOG.md" Pack="True" PackagePath="\" />
 	</ItemGroup>
 

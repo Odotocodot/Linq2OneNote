@@ -1,18 +1,7 @@
-<h1 align="center">
-    <img src="https://github.com/Odotocodot/Linq2OneNote/assets/48138990/4b6025ab-6aa7-4d5e-aac6-2328961daeb5" alt="logo" width=40 height=40>
-LINQ to OneNote
-    <img src="https://github.com/Odotocodot/Linq2OneNote/assets/48138990/9f6b5f41-ed6a-4840-8766-fd5890c6bb7c" alt="logo mini" width=40 height=40>
-</h1>
+# LINQ to OneNote
 
 A helper library for dealing with the [OneNote Interop API](https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote).
 Originally made for [Flow.Launcher.Plugin.OneNote](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote).
-
-## Installation
-
-Get the library from NuGet [here](https://www.nuget.org/packages/Odotocodot.OneNote.Linq/):
-```
-dotnet add package Odotocodot.OneNote.Linq
-```
 
 ## Usage
 

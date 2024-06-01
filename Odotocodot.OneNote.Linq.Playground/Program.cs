@@ -33,7 +33,7 @@ namespace Odotocodot.OneNote.Linq.Playground
 			[Benchmark]
 			public void SwitchCase()
 			{
-				 Consume(OneNoteParser.ParseNotebooks(xml));
+				 Consume(XmlParser.ParseNotebooks(xml));
 			}
 		}
 
