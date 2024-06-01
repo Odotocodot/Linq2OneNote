@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Odotocodot.OneNote.Linq.Tests
 {
 	[TestFixture]
-	[TestOf(typeof(OneNoteParser))]
+	[TestOf(typeof(XmlParser))]
 	[TestOf(typeof(OneNoteSection))]
 	public class ParserSectionTests : BaseParserTest<OneNoteSection>
 	{
@@ -18,9 +18,9 @@ namespace Odotocodot.OneNote.Linq.Tests
 			name = "Locked Section";
 			isUnread = false;
 			lastModified = new DateTime(2023, 06, 17, 11, 00, 52);
-			relativePath = $"Test Notebook{OneNoteParser.RelativePathSeparator}Locked Section";
+			relativePath = $"Test Notebook{XmlParser.RelativePathSeparator}Locked Section";
 			parent = notebook;
-			item = OneNoteParser.ParseUnknown(xml, notebook);
+			item = XmlParser.ParseUnknown(xml, notebook);
 		}
 
 		[Test]

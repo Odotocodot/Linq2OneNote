@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Odotocodot.OneNote.Linq.Tests
 {
 	[TestFixture]
-	[TestOf(typeof(OneNoteParser))]
+	[TestOf(typeof(XmlParser))]
 	public class ParserTests
 	{
 		[Test]
@@ -18,7 +18,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 		{
 			var xml = File.ReadAllText(@"Inputs\Notebooks.xml");
 			
-			var result = OneNoteParser.ParseNotebooks(xml);
+			var result = XmlParser.ParseNotebooks(xml);
 			var items = result.Traverse(item => item.GetType() == itemType);
 			
 			Assert.AreEqual(expectedCount, items.Count());

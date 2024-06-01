@@ -73,7 +73,7 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The directory separator used in <see cref="IOneNoteItem.RelativePath"/>.
         /// </summary>
-        public const char RelativePathSeparator = OneNoteParser.RelativePathSeparator;
+        public const char RelativePathSeparator = XmlParser.RelativePathSeparator;
 
         #region COM Object Methods
 
@@ -83,8 +83,7 @@ namespace Odotocodot.OneNote.Linq
         /// Forcible initialises the static class by acquiring a <see cref="Application">OneNote COM object</see>. Does nothing if a COM object is already accessible.
         /// </summary>
         /// <exception cref="COMException">Thrown if an error occurred when trying to get the 
-        /// <see cref="Application">OneNote COM object</see> or the number of attempts in doing 
-        /// so exceeded the limit.</exception>
+        /// <see cref="Application">OneNote COM object</see>.</exception>
         /// <seealso cref="HasComObject"/>
         /// <seealso cref="ReleaseComObject"/>
         public static void InitComObject()
@@ -121,7 +120,7 @@ namespace Odotocodot.OneNote.Linq
         public static IEnumerable<OneNoteNotebook> GetNotebooks()
         {
             OneNote.GetHierarchy(null, HierarchyScope.hsPages, out string xml);
-            return OneNoteParser.ParseNotebooks(xml);
+            return XmlParser.ParseNotebooks(xml);
         }
 
         /// <summary>
@@ -136,7 +135,7 @@ namespace Odotocodot.OneNote.Linq
             ValidateSearch(search);
 
             OneNote.FindPages(null, search, out string xml);
-            return OneNoteParser.ParseNotebooks(xml).GetPages();
+            return XmlParser.ParseNotebooks(xml).GetPages();
         }
 
         /// <summary>
@@ -157,7 +156,7 @@ namespace Odotocodot.OneNote.Linq
 
             OneNote.FindPages(scope.ID, search, out string xml);
 
-            return OneNoteParser.ParseUnknown(xml, scope).GetPages();
+            return XmlParser.ParseUnknown(xml, scope).GetPages();
         }
 
         //TODO: Open FindByID
@@ -217,14 +216,12 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// Deletes the hierarchy <paramref name="item"/> from the OneNote notebook hierarchy.
         /// </summary>
-
         /// <param name="item"><inheritdoc cref="OpenInOneNote(IOneNoteItem)" path="/param[@name='item']"/></param>
         internal static void DeleteItem(IOneNoteItem item) => OneNote.DeleteHierarchy(item.ID);
 
         /// <summary>
         /// Closes the <paramref name="notebook"/>.
         /// </summary>
-        
         /// <param name="notebook">The specified OneNote notebook.</param>
         internal static void CloseNotebook(OneNoteNotebook notebook) => OneNote.CloseNotebook(notebook.ID);
 
@@ -291,7 +288,7 @@ namespace Odotocodot.OneNote.Linq
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
             XDocument doc = XDocument.Parse(xml);
             
-            XNamespace one = XNamespace.Get(OneNoteParser.NamespaceUri);
+            XNamespace one = XNamespace.Get(XmlParser.NamespaceUri);
             
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;
@@ -374,7 +371,6 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// Creates a <see cref="OneNoteSection">section</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="parent"/> <see cref="OneNoteNotebook"> notebook</see>.
         /// </summary>
-        
         /// <param name="parent">The hierarchy item to create the section in.</param>
         /// <param name="name">The name of the new section.</param>
         /// <param name="openImmediately">Whether to open the newly created section in OneNote immediately.</param>

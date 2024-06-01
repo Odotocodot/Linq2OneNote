@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Odotocodot.OneNote.Linq.Tests
 {
 	[TestFixture]
-	[TestOf(typeof(OneNoteParser))]
+	[TestOf(typeof(XmlParser))]
 	[TestOf(typeof(OneNoteNotebook))]
 	public class ParserNotebookTests : BaseParserTest<OneNoteNotebook>
 	{
@@ -19,7 +19,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 			lastModified = new DateTime(2023, 10, 04, 15, 15, 45);
 			relativePath = name;
 			parent = null;
-			item = OneNoteParser.ParseUnknown(xml, null);
+			item = XmlParser.ParseUnknown(xml, null);
 			notebook = (OneNoteNotebook)item;
 		}
 		[Test]
