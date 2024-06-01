@@ -20,6 +20,9 @@ namespace Odotocodot.OneNote.Linq.Tests
 
 		[OneTimeSetUp]
 		public abstract void OneTimeSetUp();
+
+		[OneTimeTearDown]
+		public void OneTimeTearDown() => OneNoteApplication.ReleaseComObject();
 		
 		[Test]
 		public void TypeCheck() => Assert.IsInstanceOf<T>(item);
