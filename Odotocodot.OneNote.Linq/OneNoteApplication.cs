@@ -158,9 +158,7 @@ namespace Odotocodot.OneNote.Linq
 
             return XmlParser.ParseUnknown(xml, scope).GetPages();
         }
-
-        //TODO: Open FindByID
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -261,9 +259,7 @@ namespace Odotocodot.OneNote.Linq
         #endregion
 
         #region Creating New OneNote Items Methods
-
-        //TODO: change to return ID
-
+        
         /// <summary>
         /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="section"/>.<br/>
         /// If <paramref name="section"/> is <see langword="null"/>, this method creates a page in the default quick notes location.

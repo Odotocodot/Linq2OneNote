@@ -11,11 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added and refactored parser tests.
 - Exposed UpdatePageContent method.
 - LinqPad samples
+- Added FindByID method to find a hierarchy item by its ID (Currently slow).
 
 ### Changed
 - Updated logo!
 - OneNoteNotebook.Notebook returns itself rather than null.
 - Updated documentation to include examples and more information on the library.
+- The methods that create hierarchy items e.g. CreatePage, CreateSection, CreateSectionGroup, CreateNotebook now return the ID of the created item. Can be used with the new FindByID.
 
 ### Deprecated
 ### Removed

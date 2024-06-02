@@ -130,6 +130,18 @@ namespace Odotocodot.OneNote.Linq
         public static IEnumerable<OneNotePage> GetPages(this IEnumerable<IOneNoteItem> source)
             => source.Traverse(i => i is OneNotePage).Cast<OneNotePage>();
 
+
+        /// <summary>
+        /// Finds the <see cref="IOneNoteItem"/> with the corresponding <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The <see cref="IOneNoteItem.ID"/> of the OneNote hierarchy <see cref="IOneNoteItem">item</see> to find.</param>
+        /// <returns>The <see cref="IOneNoteItem"></see> with the specified ID if found; otherwise, <see langword="null"/>.</returns>
+        /// <remarks>
+        /// This method currently uses <see cref="OneNoteApplication.GetNotebooks()"/> which returns the whole hierarchy to find the ID. So be weary of performance.
+        /// </remarks>
+        public static IOneNoteItem FindByID(string id) =>
+            OneNoteApplication.GetNotebooks().Traverse(i => i.ID == id).FirstOrDefault();
+
         /// <summary>
         /// Checks if two <see cref="IOneNoteItem"/>s are equal in OneNote.<br/>
         /// Shorthand for comparing the <see cref="IOneNoteItem.ID">ID</see> of OneNote hierarchy items. E.g.
