@@ -271,7 +271,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="section">The section to create the page in.</param>
         /// <param name="name">The title of the page.</param>
         /// <param name="openImmediately">Whether to open the newly created page in OneNote immediately.</param>
-        public static void CreatePage(OneNoteSection section, string name, bool openImmediately)
+        /// <returns>The <see cref="OneNotePage.ID"/> of the newly created page.</returns>
+        public static string CreatePage(OneNoteSection section, string name, bool openImmediately)
         {
             string sectionID;
             if (section != null)
@@ -297,13 +298,16 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(pageID);
+            
+            return pageID;
         }
 
         /// <summary>
         /// Creates a quick note page located at the users quick notes location.
         /// </summary>       
         /// <param name="openImmediately"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='openImmediately']"/></param>
-        public static void CreateQuickNote(bool openImmediately)
+        /// <returns>The <see cref="OneNotePage.ID"/> of the newly created quick note page.</returns>
+        public static string CreateQuickNote(bool openImmediately)
         {
             var path = GetUnfiledNotesSection();
             OneNote.OpenHierarchy(path, null, out string sectionID, CreateFileType.cftNone);
@@ -311,6 +315,8 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(pageID);
+
+            return pageID;
         }
         /// <summary>
         /// Creates a quick note page with the title specified by <paramref name="name"/>, located at the users quick notes location.
@@ -319,9 +325,10 @@ namespace Odotocodot.OneNote.Linq
         /// section paramater set to null</remarks>
         /// <param name="name"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='name']"/></param>
         /// <param name="openImmediately"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='openImmediately']"/></param>
-        public static void CreateQuickNote(string name, bool openImmediately) => CreatePage(null, name, openImmediately);
+        /// <returns>The <see cref="OneNotePage.ID"/> of the newly created quick note page.</returns>
+        public static string CreateQuickNote(string name, bool openImmediately) => CreatePage(null, name, openImmediately);
 
-        private static void CreateItemBase<T>(IOneNoteItem parent, string name, bool openImmediately) where T : IOneNoteItem
+        private static string CreateItemBase<T>(IOneNoteItem parent, string name, bool openImmediately) where T : IOneNoteItem
         {
             string path = string.Empty;
             CreateFileType createFileType = CreateFileType.cftNone;
@@ -355,6 +362,8 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(newItemID);
+            
+            return newItemID;
         }
 
         /// <summary>
@@ -365,7 +374,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="openImmediately">Whether to open the newly created section in OneNote immediately.</param>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section name.</exception>
         /// <seealso cref="IsSectionNameValid(string)"/>
-        public static void CreateSection(OneNoteSectionGroup parent, string name, bool openImmediately)
+        /// <returns>The <see cref="OneNoteSection.ID"/> of the newly created section.</returns>
+        public static string CreateSection(OneNoteSectionGroup parent, string name, bool openImmediately)
             => CreateItemBase<OneNoteSection>(parent, name, openImmediately);
 
         /// <summary>
@@ -376,7 +386,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="openImmediately">Whether to open the newly created section in OneNote immediately.</param>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section name.</exception>
         /// <seealso cref="IsSectionNameValid(string)"/>
-        public static void CreateSection(OneNoteNotebook parent, string name, bool openImmediately)
+        /// <returns><inheritdoc cref="CreateSection(OneNoteSectionGroup, string, bool)" path="/returns"/></returns>
+        public static string CreateSection(OneNoteNotebook parent, string name, bool openImmediately)
             => CreateItemBase<OneNoteSection>(parent, name, openImmediately);
 
         /// <summary>
@@ -387,7 +398,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="openImmediately">Whether to open the newly created section group in OneNote immediately.</param>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section group name.</exception>
         /// <seealso cref="IsSectionGroupNameValid(string)"/>
-        public static void CreateSectionGroup(OneNoteSectionGroup parent, string name, bool openImmediately)
+        /// <returns>The <see cref="OneNoteSectionGroup.ID"/> of the newly created section group.</returns>
+        public static string CreateSectionGroup(OneNoteSectionGroup parent, string name, bool openImmediately)
             => CreateItemBase<OneNoteSectionGroup>(parent, name, openImmediately);
 
         /// <summary>
@@ -397,7 +409,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="name">The name of the new section group.</param>
         /// <param name="openImmediately">Whether to open the newly created section group in OneNote immediately.</param>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section group name.</exception>
-        public static void CreateSectionGroup(OneNoteNotebook parent, string name, bool openImmediately)
+        /// <returns><inheritdoc cref="CreateSectionGroup(OneNoteNotebook, string, bool)" path="/returns"/></returns>
+        public static string CreateSectionGroup(OneNoteNotebook parent, string name, bool openImmediately)
             => CreateItemBase<OneNoteSectionGroup>(parent, name, openImmediately);
 
 
@@ -407,7 +420,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="name">The name of the new notebook.</param>
         /// <param name="openImmediately">Whether to open the newly created notebook in OneNote immediately.</param>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid notebook name.</exception>
-        public static void CreateNotebook(string name, bool openImmediately)
+        /// <returns>The <see cref="OneNoteNotebook.ID"/> of the newly created notebook.</returns>
+        public static string CreateNotebook(string name, bool openImmediately)
             => CreateItemBase<OneNoteNotebook>(null, name, openImmediately);
 
         #endregion
