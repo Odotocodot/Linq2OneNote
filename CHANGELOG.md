@@ -11,6 +11,7 @@
 
 ### Changed
 - Updated logo!
+- Renamed IOneNoteItemExtensions to OneNoteItemExtensions.
 - OneNoteNotebook.Notebook returns itself rather than null.
 - Updated documentation to include examples and more information on the library.
 - The methods that create hierarchy items e.g. CreatePage, CreateSection, CreateSectionGroup, CreateNotebook now return the ID of the created item. Can be used with the new FindByID.

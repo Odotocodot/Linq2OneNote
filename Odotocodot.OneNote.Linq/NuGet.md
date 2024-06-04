@@ -1,4 +1,3 @@
-![logo](https://github.com/Odotocodot/Linq2OneNote/assets/48138990/bf168880-0bb7-47ac-80dd-e0825a1e021a)
 # LINQ to OneNote
 
 A helper library for dealing with the [OneNote Interop API](https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote).

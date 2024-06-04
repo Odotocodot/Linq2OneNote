@@ -1,3 +1,9 @@
+<Query Kind="Statements">
+  <NuGetReference>Odotocodot.OneNote.Linq</NuGetReference>
+  <Namespace>Odotocodot.OneNote.Linq</Namespace>
+  <IncludeUncapsulator>false</IncludeUncapsulator>
+</Query>
+
 using Odotocodot.OneNote.Linq;
 
 var pages = OneNoteApplication.GetNotebooks()
