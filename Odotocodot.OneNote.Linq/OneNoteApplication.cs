@@ -199,15 +199,16 @@ namespace Odotocodot.OneNote.Linq
             OneNote.GetPageContent(page.ID, out string xml);
             return xml;
         }
-        
+
         /// <summary>
-        /// Updates the content of the specified <paramref name="page"/> with the provided <paramref name="xml"/>.
+        /// Updates the content of a OneNote page with the provided <paramref name="xml"/>. 
+        /// The chosen page depends on the ID provided in the <paramref name="xml"/>. 
+        /// An example can be seen <a href="https://learn.microsoft.com/en-us/office/client-developer/onenote/application-interface-onenote#updatepagecontent-method">here</a> at the Microsoft OneNote API documentation.
         /// </summary>
         /// <remarks>The <paramref name="xml"/> must match the OneNote XML format, the schema can be
         /// found <a href="https://github.com/idvorkin/onom/blob/eb9ce52764e9ad639b2c9b4bca0622ee6221106f/OneNoteObjectModel/onenote.xsd">here</a>.</remarks>
-        /// <param name="page">The page to update the content from.</param>
         /// <param name="xml">An <see langword="string"/> in the OneNote XML format. </param>
-        public static void UpdatePageContent(OneNotePage page, string xml) => OneNote.UpdatePageContent(xml);
+        public static void UpdatePageContent(string xml) => OneNote.UpdatePageContent(xml);
 
         #region Experimental API Methods
 
