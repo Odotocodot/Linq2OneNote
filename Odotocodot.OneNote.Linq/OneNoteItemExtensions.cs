@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// A static class containing extension methods for the <see cref="IOneNoteItem"/> object.
     /// </summary>
-    public static class IOneNoteItemExtensions
+    public static class OneNoteItemExtensions
     {
         /// <summary>
         /// Returns a flattened collection of OneNote items, that contains the children of every OneNote item from the <paramref name="source"/>.
@@ -15,7 +15,7 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="source">The source OneNote item.</param>
         /// <returns>An <see cref="IEnumerable{T}">IEnumerable</see>&lt;<see cref="IOneNoteItem"/>&gt; containing the 
         /// child items of the <paramref name="source"/>.</returns>
-        /// <remarks>This method uses a non recursive depth first traversal algorithm.</remarks>
+        /// <remarks>This method uses a non-recursive depth first traversal algorithm.</remarks>
         public static IEnumerable<IOneNoteItem> Traverse(this IOneNoteItem source)
         {
             var stack = new Stack<IOneNoteItem>();
@@ -127,6 +127,18 @@ namespace Odotocodot.OneNote.Linq
         /// <inheritdoc cref="GetPages(IOneNoteItem)"/>
         public static IEnumerable<OneNotePage> GetPages(this IEnumerable<IOneNoteItem> source)
             => source.Traverse(i => i is OneNotePage).Cast<OneNotePage>();
+
+
+        /// <summary>
+        /// Finds the <see cref="IOneNoteItem"/> with the corresponding <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The <see cref="IOneNoteItem.ID"/> of the OneNote hierarchy <see cref="IOneNoteItem">item</see> to find.</param>
+        /// <returns>The <see cref="IOneNoteItem"></see> with the specified ID if found; otherwise, <see langword="null"/>.</returns>
+        /// <remarks>
+        /// This method currently uses <see cref="OneNoteApplication.GetNotebooks()"/> which returns the whole hierarchy to find the ID. So be weary of performance.
+        /// </remarks>
+        public static IOneNoteItem FindByID(string id) =>
+            OneNoteApplication.GetNotebooks().Traverse(i => i.ID == id).FirstOrDefault();
 
         /// <summary>
         /// Checks if two <see cref="IOneNoteItem"/>s are equal in OneNote.<br/>

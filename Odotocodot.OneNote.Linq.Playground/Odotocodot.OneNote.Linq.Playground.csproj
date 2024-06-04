@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>disable</Nullable>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.11" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Odotocodot.OneNote.Linq\Odotocodot.OneNote.Linq.csproj" />
+    </ItemGroup>
+
+</Project>

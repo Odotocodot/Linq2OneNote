@@ -1,80 +1,320 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5" id="gradient_1">
-      <stop offset="0%" stop-color="#C965EB" />
-      <stop offset="100%" stop-color="#C767E5" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="48px"
+   height="48px"
+   viewBox="0 0 48 48"
+   version="1.1"
+   id="svg18"
+   sodipodi:docname="Linq to OneNote V2 Copy.svg"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="8"
+     inkscape:cx="77.875"
+     inkscape:cy="34.0625"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="2552"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg18">
+    <inkscape:grid
+       id="grid18"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.5"
+       spacingy="0.5"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="10"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs13">
+    <linearGradient
+       gradientUnits="objectBoundingBox"
+       x1="0"
+       y1="0.5"
+       x2="1"
+       y2="0.5"
+       id="gradient_1">
+      <stop
+         offset="0%"
+         stop-color="#C965EB"
+         id="stop1" />
+      <stop
+         offset="100%"
+         stop-color="#C767E5"
+         id="stop2" />
     </linearGradient>
-    <linearGradient gradientUnits="objectBoundingBox" x1="0.5" y1="1" x2="0.5" y2="0" id="gradient_2">
-      <stop offset="0%" stop-color="#7819A2" />
-      <stop offset="100%" stop-color="#771AA9" />
+    <linearGradient
+       gradientUnits="objectBoundingBox"
+       x1="0.5"
+       y1="1"
+       x2="0.5"
+       y2="0"
+       id="gradient_2">
+      <stop
+         offset="0%"
+         stop-color="#7819A2"
+         id="stop3" />
+      <stop
+         offset="100%"
+         stop-color="#771AA9"
+         id="stop4" />
     </linearGradient>
-    <linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0.49999988" x2="1" y2="0.49999988" id="gradient_3">
-      <stop offset="0%" stop-color="#AE4CD5" />
-      <stop offset="100%" stop-color="#AC4AD5" />
+    <linearGradient
+       gradientUnits="objectBoundingBox"
+       x1="0"
+       y1="0.49999988"
+       x2="1"
+       y2="0.49999988"
+       id="gradient_3">
+      <stop
+         offset="0%"
+         stop-color="#AE4CD5"
+         id="stop5" />
+      <stop
+         offset="100%"
+         stop-color="#AC4AD5"
+         id="stop6" />
     </linearGradient>
-    <linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0.50000024" x2="1" y2="0.50000024" id="gradient_4">
-      <stop offset="0%" stop-color="#912FBD" />
-      <stop offset="100%" stop-color="#9332BF" />
+    <linearGradient
+       gradientUnits="objectBoundingBox"
+       x1="0"
+       y1="0.50000024"
+       x2="1"
+       y2="0.50000024"
+       id="gradient_4">
+      <stop
+         offset="0%"
+         stop-color="#912FBD"
+         id="stop7" />
+      <stop
+         offset="100%"
+         stop-color="#9332BF"
+         id="stop8" />
     </linearGradient>
-    <linearGradient gradientUnits="objectBoundingBox" x1="0.029300004" y1="0.029300034" x2="0.97069997" y2="0.9707001" id="gradient_5">
-      <stop offset="0%" stop-color="#8521B0" />
-      <stop offset="100%" stop-color="#64129A" />
+    <linearGradient
+       gradientUnits="objectBoundingBox"
+       x1="0.029300004"
+       y1="0.029300034"
+       x2="0.97069997"
+       y2="0.9707001"
+       id="gradient_5">
+      <stop
+         offset="0%"
+         stop-color="#8521B0"
+         id="stop9" />
+      <stop
+         offset="100%"
+         stop-color="#64129A"
+         id="stop10" />
     </linearGradient>
-    <path d="M48 0L48 0L48 48L0 48L0 0L48 0Z" id="path_1" />
-    <path d="M30 0L2 0C0.895 0 0 0.895 0 2L0 34C0 35.105 0.895 36 2 36L23 36L23 9.003L32 9.003L32 2C32 0.895 31.105 0 30 0L30 0Z" id="path_2" />
-    <path d="M4 17L4 27L6 27L6 20L10 27L12 27L12 17L10 17L10 24L6 17L4 17Z" id="path_3" />
-    <path d="M15 22C15 19.2386 16.7909 17 19 17C21.2091 17 23 19.2386 23 22C23 24.7614 21.2091 27 19 27C16.7909 27 15 24.7614 15 22Z" id="path_4" />
-    <path d="M15 4L23 4L23 6L20 6L20 12L23 12L23 14L15 14L15 12L18 12L18 6L15 6L15 4Z" id="path_5" />
-    <clipPath id="clip_1">
-      <use xlink:href="#path_1" clip-rule="evenodd" fill-rule="evenodd" />
+    <path
+       d="M48 0L48 0L48 48L0 48L0 0L48 0Z"
+       id="path_1" />
+    <path
+       d="M37.5 0L2.5 0C1.11875 0 0 1.19333 0 2.66667L0 45.3333C0 46.8067 1.11875 48 2.5 48L28.75 48L28.75 12.004L40 12.004L40 2.66667C40 1.19333 38.8812 0 37.5 0L37.5 0Z"
+       id="path_2" />
+    <path
+       d="M0.0281774 12.9832L0.00312252 21.0008Q0.00281532 21.0991 0.0217296 21.1956Q0.0406439 21.292 0.0780499 21.3829Q0.115456 21.4738 0.16991 21.5557Q0.224365 21.6375 0.293767 21.7071Q0.363169 21.7768 0.444841 21.8315Q0.526513 21.8862 0.617304 21.9239Q0.708095 21.9616 0.804502 21.9808Q0.900908 22 0.999211 22L1.00098 22Q1.09937 22 1.19588 21.9808Q1.29238 21.9616 1.38329 21.924Q1.47419 21.8863 1.556 21.8316Q1.63782 21.777 1.70739 21.7074Q1.77697 21.6378 1.83163 21.556Q1.8863 21.4742 1.92395 21.3833Q1.96161 21.2924 1.9808 21.1959Q2 21.0994 2 21.001L2 15L7.70097 21.6511Q7.77131 21.7332 7.85758 21.7983Q7.94384 21.8634 8.04204 21.9086Q8.14023 21.9538 8.24582 21.9769Q8.3514 22 8.45949 22L9.00098 22Q9.09937 22 9.19588 21.9808Q9.29238 21.9616 9.38329 21.924Q9.47419 21.8863 9.556 21.8316Q9.63782 21.777 9.70739 21.7074Q9.77697 21.6378 9.83163 21.556Q9.8863 21.4742 9.92395 21.3833Q9.96161 21.2924 9.9808 21.1959Q10 21.0994 10 21.001L10 12.999Q10 12.9006 9.9808 12.8041Q9.96161 12.7076 9.92395 12.6167Q9.8863 12.5258 9.83163 12.444Q9.77697 12.3622 9.70739 12.2926Q9.63782 12.223 9.556 12.1684Q9.47419 12.1137 9.38329 12.076Q9.29238 12.0384 9.19588 12.0192Q9.09937 12 9.00098 12L8.99902 12Q8.90063 12 8.80412 12.0192Q8.70762 12.0384 8.61671 12.076Q8.52581 12.1137 8.444 12.1684Q8.36218 12.223 8.29261 12.2926Q8.22303 12.3622 8.16836 12.444Q8.1137 12.5258 8.07605 12.6167Q8.03839 12.7076 8.0192 12.8041Q8 12.9006 8 12.999L8 19L2.29903 12.3489Q2.22869 12.2668 2.14242 12.2017Q2.05616 12.1366 1.95796 12.0914Q1.85977 12.0462 1.75418 12.0231Q1.6486 12 1.54051 12L1.0145 12Q0.91755 12 0.822456 12.0189Q0.727361 12.0378 0.637761 12.0748Q0.548162 12.1118 0.467488 12.1656Q0.386813 12.2194 0.318152 12.2878Q0.249491 12.3562 0.195471 12.4368Q0.141451 12.5173 0.104139 12.6067Q0.0668284 12.6962 0.0476543 12.7913Q0.0284803 12.8863 0.0281774 12.9832Z"
+       id="path_3" />
+    <path
+       d="M12 17C12 14.2386 14.2386 12 17 12C19.7614 12 22 14.2386 22 17C22 19.7614 19.7614 22 17 22C14.2386 22 12 19.7614 12 17Z"
+       id="path_4" />
+    <path
+       d="M12.999 0L21.001 0Q21.0994 0 21.1959 0.019196Q21.2924 0.0383919 21.3833 0.0760461Q21.4742 0.1137 21.556 0.168366Q21.6378 0.223031 21.7074 0.292607Q21.777 0.362183 21.8316 0.443996Q21.8863 0.525808 21.924 0.616714Q21.9616 0.707619 21.9808 0.804124Q22 0.900628 22 0.999023L22 1.00098Q22 1.09937 21.9808 1.19588Q21.9616 1.29238 21.924 1.38329Q21.8863 1.47419 21.8316 1.556Q21.777 1.63782 21.7074 1.70739Q21.6378 1.77697 21.556 1.83163Q21.4742 1.8863 21.3833 1.92395Q21.2924 1.96161 21.1959 1.9808Q21.0994 2 21.001 2L18 2L18 8L21.001 8Q21.0994 8 21.1959 8.0192Q21.2924 8.03839 21.3833 8.07605Q21.4742 8.1137 21.556 8.16837Q21.6378 8.22303 21.7074 8.29261Q21.777 8.36219 21.8316 8.444Q21.8863 8.52581 21.924 8.61672Q21.9616 8.70762 21.9808 8.80413Q22 8.90063 22 8.99903L22 9.00098Q22 9.09937 21.9808 9.19588Q21.9616 9.29238 21.924 9.38329Q21.8863 9.47419 21.8316 9.55601Q21.777 9.63782 21.7074 9.7074Q21.6378 9.77697 21.556 9.83164Q21.4742 9.8863 21.3833 9.92396Q21.2924 9.96161 21.1959 9.98081Q21.0994 10 21.001 10L12.999 10Q12.9006 10 12.8041 9.98081Q12.7076 9.96161 12.6167 9.92395Q12.5258 9.8863 12.444 9.83164Q12.3622 9.77697 12.2926 9.70739Q12.223 9.63782 12.1684 9.556Q12.1137 9.47419 12.076 9.38329Q12.0384 9.29238 12.0192 9.19588Q12 9.09937 12 9.00098L12 8.99903Q12 8.90063 12.0192 8.80412Q12.0384 8.70762 12.076 8.61671Q12.1137 8.52581 12.1684 8.444Q12.223 8.36218 12.2926 8.29261Q12.3622 8.22303 12.444 8.16837Q12.5258 8.1137 12.6167 8.07605Q12.7076 8.03839 12.8041 8.0192Q12.9006 8 12.999 8L16 8L16 2L12.999 2Q12.9006 2 12.8041 1.9808Q12.7076 1.96161 12.6167 1.92395Q12.5258 1.8863 12.444 1.83163Q12.3622 1.77697 12.2926 1.70739Q12.223 1.63782 12.1684 1.556Q12.1137 1.47419 12.076 1.38329Q12.0384 1.29238 12.0192 1.19588Q12 1.09937 12 1.00098L12 0.999023Q12 0.900628 12.0192 0.804124Q12.0384 0.707619 12.076 0.616714Q12.1137 0.525808 12.1684 0.443996Q12.223 0.362183 12.2926 0.292607Q12.3622 0.223031 12.444 0.168366Q12.5258 0.1137 12.6167 0.0760461Q12.7076 0.0383919 12.8041 0.019196Q12.9006 0 12.999 0Z"
+       id="path_5" />
+    <clipPath
+       id="clip_1">
+      <use
+         xlink:href="#path_1"
+         clip-rule="evenodd"
+         fill-rule="evenodd"
+         id="use10" />
     </clipPath>
-    <clipPath id="clip_2">
-      <use xlink:href="#path_2" clip-rule="evenodd" fill-rule="evenodd" />
+    <clipPath
+       id="clip_2">
+      <use
+         xlink:href="#path_2"
+         clip-rule="evenodd"
+         fill-rule="evenodd"
+         id="use11" />
     </clipPath>
-    <clipPath id="clip_3">
-      <use xlink:href="#path_3" />
+    <clipPath
+       id="clip_3">
+      <use
+         xlink:href="#path_3"
+         id="use12" />
     </clipPath>
-    <clipPath id="clip_4">
-      <use xlink:href="#path_4" />
-    </clipPath>
-    <clipPath id="clip_5">
-      <use xlink:href="#path_5" />
+    <clipPath
+       id="clip_4">
+      <use
+         xlink:href="#path_4"
+         id="use13" />
     </clipPath>
   </defs>
-  <g id="Linq to OneNote V2" clip-path="url(#clip_1)">
-    <path d="M48 0L48 0L48 48L0 48L0 0L48 0Z" id="Linq-to-OneNote-V2" fill="none" stroke="none" />
-    <g id="Shape-+-Shape-+-Shape-Mask" transform="translate(12 6)">
-      <path d="M30 0L2 0C0.895 0 0 0.895 0 2L0 34C0 35.105 0.895 36 2 36L23 36L23 9.003L32 9.003L32 2C32 0.895 31.105 0 30 0L30 0Z" id="Mask" fill="url(#gradient_1)" stroke="none" />
-      <g clip-path="url(#clip_2)">
-        <path d="M15.4785 1L0 1L0 36L15.4785 36C18.528 36 21 33.5967 21 30.6319L21 6.36812C21 3.40333 18.528 1 15.4785 1L15.4785 1Z" id="Shape" fill="#000000" fill-opacity="0.05" stroke="none" />
-        <path d="M15.5715 35L0 35L0 1.32999L15.5715 1.32999C18.2 1.32999 20.33 3.40512 20.33 5.96598L20.33 30.364C20.3285 32.9249 18.1985 35 15.5715 35L15.5715 35Z" id="Shape" fill="#000000" fill-opacity="0.07" stroke="none" />
-        <path d="M15.6944 34L0 34L0 1.67001L15.6944 1.67001C17.8903 1.67001 19.67 3.40677 19.67 5.54967L19.67 30.1204C19.6716 32.2633 17.8903 34 15.6944 34L15.6944 34Z" id="Shape" fill="#000000" fill-opacity="0.09" stroke="none" />
+  <g
+     id="Linq to OneNote V2 Copy">
+    <path
+       d="M48 0L48 0L48 48L0 48L0 0L48 0Z"
+       id="Linq-to-OneNote-V2-Copy"
+       fill="none"
+       stroke="none" />
+    <g
+       id="Shape-+-Shape-+-Shape-Mask"
+       transform="translate(8 0)"
+       clip-path="url(#clip_1)">
+      <path
+         d="M37.5 0L2.5 0C1.11875 0 0 1.19333 0 2.66667L0 45.3333C0 46.8067 1.11875 48 2.5 48L28.75 48L28.75 12.004L40 12.004L40 2.66667C40 1.19333 38.8812 0 37.5 0L37.5 0Z"
+         id="Mask"
+         fill="url(#gradient_1)"
+         stroke="none" />
+      <g
+         clip-path="url(#clip_2)"
+         id="g13">
+        <path
+           d="M 18.426762,7 H 0 V 41 H 18.426762 C 22.057142,41 25,38.665294 25,35.785253 V 12.214747 C 25,9.3346695 22.057142,7 18.426762,7 Z"
+           id="3"
+           fill="#000000"
+           fill-opacity="0.05"
+           stroke="none"
+           style="stroke-width:0.832993" />
+        <path
+           d="M 18.636805,40 H 0 V 7.334 h 18.636805 c 3.1459,0 5.695195,2.01326 5.695195,4.497759 V 35.502263 C 24.3303,37.986777 21.780887,40 18.636805,40 Z"
+           id="2"
+           fill="#000000"
+           fill-opacity="0.07"
+           stroke="none"
+           style="stroke-width:0.834684" />
+        <path
+           d="M 18.882748,39 H 0 V 7.667 h 18.882748 c 2.642025,0 4.783251,1.6832021 4.783251,3.760019 V 35.239966 C 23.667899,37.316855 21.524773,39 18.882748,39 Z"
+           id="1"
+           fill="#000000"
+           fill-opacity="0.09"
+           stroke="none"
+           style="stroke-width:0.836439" />
       </g>
     </g>
-    <path d="M35 33.054L35 42L42 42C43.105 42 44 41.105 44 40L44 33.055L35 33.054L35 33.054L35 33.054Z" id="Shape" fill="url(#gradient_2)" stroke="none" />
-    <path d="M35 15.003L44 15.003L44 24.005L35 24.005L35 15.003L35 15.003Z" id="Shape" fill="url(#gradient_3)" stroke="none" />
-    <path d="M35 24.005L44 24.005L44 33.055L35 33.055L35 24.005L35 24.005Z" id="Shape" fill="url(#gradient_4)" stroke="none" />
-    <g id="Group" transform="translate(4 8)">
-      <path d="M24.3 31L2.7 31C1.20825 31 0 29.6127 0 27.9L0 3.1C0 1.38725 1.20825 0 2.7 0L24.3 0C25.7917 0 27 1.38725 27 3.1L27 27.9C27 29.6127 25.7917 31 24.3 31L24.3 31Z" id="Shape-3" fill="url(#gradient_5)" stroke="none" />
-      <path d="M23 27L19 22" id="Vector-10" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" />
-      <g id="Vector-9">
-        <g clip-path="url(#clip_3)">
-          <use xlink:href="#path_3" fill="none" stroke="#FFFFFF" stroke-width="4" />
+    <path
+       d="M36 36L36 47.946L45.3333 47.946C46.8067 47.946 48 46.7509 48 45.2753L48 36.0013L36 36L36 36L36 36Z"
+       id="Shape"
+       fill="url(#gradient_2)"
+       stroke="none"
+       clip-path="url(#clip_1)" />
+    <path
+       d="M36 12.003L48 12.003L48 24.005L36 24.005L36 12.003L36 12.003Z"
+       id="path13"
+       fill="url(#gradient_3)"
+       stroke="none"
+       clip-path="url(#clip_1)" />
+    <path
+       d="M36 24L48 24L48 36.05L36 36.05L36 24L36 24Z"
+       id="path14"
+       fill="url(#gradient_4)"
+       stroke="none"
+       clip-path="url(#clip_1)" />
+    <g
+       id="Group"
+       transform="translate(1 8)"
+       clip-path="url(#clip_1)">
+      <path
+         d="M 27,30 H 3 C 1.3425,30 0,28.6575 0,27 V 3 C 0,1.3425 1.3425,0 3,0 h 24 c 1.6575,0 3,1.3425 3,3 v 24 c 0,1.6575 -1.3425,3 -3,3 z"
+         id="Shape-3"
+         fill="url(#gradient_5)"
+         stroke="none"
+         style="display:inline"
+         sodipodi:nodetypes="sssssssss" />
+    </g>
+    <g
+       id="g18"
+       transform="translate(5 12)"
+       clip-path="url(#clip_1)">
+      <path
+         d="M17 17L21 21"
+         id="Line-2-Copy"
+         fill="none"
+         fill-rule="evenodd"
+         stroke="#FFFFFF"
+         stroke-width="2"
+         stroke-linecap="round" />
+      <g
+         id="Vector-8-Copy">
+        <g
+           clip-path="url(#clip_3)"
+           id="g14">
+          <use
+             xlink:href="#path_3"
+             fill="none"
+             stroke="#FFFFFF"
+             stroke-width="4"
+             id="use14" />
         </g>
       </g>
-      <g id="Oval-2">
-        <use stroke="none" fill="#FF2222" fill-opacity="0" xlink:href="#path_4" fill-rule="evenodd" />
-        <g clip-path="url(#clip_4)">
-          <use xlink:href="#path_4" fill="none" stroke="#FFFFFF" stroke-width="4" />
+      <g
+         id="Oval-2-Copy">
+        <use
+           stroke="none"
+           fill="#FF2222"
+           fill-opacity="0"
+           xlink:href="#path_4"
+           fill-rule="evenodd"
+           id="use15" />
+        <g
+           clip-path="url(#clip_4)"
+           id="g16">
+          <use
+             xlink:href="#path_4"
+             fill="none"
+             stroke="#FFFFFF"
+             stroke-width="4"
+             id="use16" />
         </g>
       </g>
-      <g id="Vector-8">
-        <g clip-path="url(#clip_5)">
-          <use xlink:href="#path_5" fill="none" stroke="#FFFFFF" stroke-width="4" />
-        </g>
+      <g
+         id="Vector-6-Copy">
+        <use
+           xlink:href="#path_5"
+           fill="none"
+           stroke="#FFFFFF"
+           stroke-width="0"
+           id="use17" />
+        <use
+           stroke="none"
+           fill="#FFFFFF"
+           xlink:href="#path_5"
+           fill-rule="evenodd"
+           id="use18" />
       </g>
-      <path d="M5 5L5 13L11 13" id="Vector-5" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square" />
+      <path
+         d="M1 1L1 9L9 9"
+         id="Vector-5-Copy"
+         fill="none"
+         fill-rule="evenodd"
+         stroke="#FFFFFF"
+         stroke-width="2"
+         stroke-linecap="round"
+         stroke-linejoin="round" />
     </g>
   </g>
 </svg>

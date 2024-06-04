@@ -22,8 +22,9 @@ namespace Odotocodot.OneNote.Linq
         /// <inheritdoc/>
         /// <remarks>For a notebook the relative path is equal to its <see cref="Name"/></remarks>
         public string RelativePath => Name;
+
         /// <inheritdoc/>
-        public OneNoteNotebook Notebook { get; internal set; }
+        public OneNoteNotebook Notebook => this;
         /// <summary>
         /// The direct children of this notebook. <br/>
         /// Equivalent to concatenating <see cref="SectionGroups"/> and <see cref="Sections"/>.
