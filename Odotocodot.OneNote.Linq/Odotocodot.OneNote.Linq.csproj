@@ -25,6 +25,12 @@
 		<DebugType>None</DebugType>
 	</PropertyGroup>
 
+	<Target Name="SetPackageReleaseNotes" BeforeTargets="GenerateNuspec">
+		<PropertyGroup>
+			<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../CHANGELOG.md"))</PackageReleaseNotes>
+		</PropertyGroup>
+	</Target>
+	
 	<ItemGroup>
 		<None Include="..\Documentation\images\logo.png" Pack="True" PackagePath="\" />
 		<None Include="..\LICENSE.txt" Pack="True" PackagePath="\" />

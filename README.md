@@ -19,7 +19,7 @@ dotnet add package Odotocodot.OneNote.Linq
 Visit the [API Reference](https://odotocodot.github.io/Linq2OneNote/api/Odotocodot.OneNote.Linq.html) to see the full API, or visit the Flow Launcher [plugin](https://github.com/Odotocodot/Flow.Launcher.Plugin.OneNote/blob/master/Flow.Launcher.Plugin.OneNote/SearchManager.cs) to see it in action.\
 To see an outline of the library view the [class diagram](https://github.com/Odotocodot/Linq2OneNote/blob/main/Documentation/images/class_diagram.png).
 
-See the [documentation](https://odotocodot.github.io/Linq2OneNote/) for more information!
+:star: See the [documentation](https://odotocodot.github.io/Linq2OneNote/) for more information and examples! :star:
 
 ### Quick Start
 
