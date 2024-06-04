@@ -15,15 +15,17 @@ namespace Odotocodot.OneNote.Linq
         private static readonly XName SectionXName = XName.Get("Section", NamespaceUri);
         private static readonly XName PageXName = XName.Get("Page", NamespaceUri);
 
-        private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser = new()
+        private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
+            new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>
         {
             {NotebookXName, ParseNotebook},
             {SectionGroupXName, ParseSectionGroup},
             {SectionXName, ParseSection},
             {PageXName, ParsePage}
         };
-        
-        private static readonly Dictionary<string, Action<OneNotePage, XAttribute>> pageSetters = new()
+
+        private static readonly Dictionary<string, Action<OneNotePage, XAttribute>> pageSetters =
+            new Dictionary<string, Action<OneNotePage, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
             { "name", (item, attribute) => item.Name = attribute.Value },
@@ -35,7 +37,8 @@ namespace Odotocodot.OneNote.Linq
             { "isInRecycleBin", (page, attribute) => page.IsInRecycleBin = (bool)attribute }
         };
         
-        private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters = new()
+        private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters = 
+            new Dictionary<string, Action<OneNoteSection, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
             { "name", (item, attribute) => item.Name = attribute.Value },
@@ -50,7 +53,8 @@ namespace Odotocodot.OneNote.Linq
             { "isDeletedPages", (section, attribute) => section.IsDeletedPages = (bool)attribute }
         };
 
-        private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters = new()
+        private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters = 
+            new Dictionary<string, Action<OneNoteSectionGroup, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
             { "name", (item, attribute) => item.Name = attribute.Value },
@@ -61,7 +65,8 @@ namespace Odotocodot.OneNote.Linq
             { "isRecycleBin", (sectionGroup, attribute) => sectionGroup.IsRecycleBin = (bool)attribute }
         };
         
-        private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters = new()
+        private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters = 
+            new Dictionary<string, Action<OneNoteNotebook, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
             { "name", (item, attribute) => item.Name = attribute.Value },
@@ -117,8 +122,13 @@ namespace Odotocodot.OneNote.Linq
             return section;
         }
 
-        private static Color? GetColor(XAttribute attribute) 
-            => attribute.Value == "none" ? null : ColorTranslator.FromHtml(attribute.Value);
+        private static Color? GetColor(XAttribute attribute)
+        {
+            if (attribute.Value == "none")
+                return null;
+            
+            return ColorTranslator.FromHtml(attribute.Value);
+        }
 
         private static OneNoteSectionGroup ParseSectionGroup(XElement element, IOneNoteItem parent)
         {
