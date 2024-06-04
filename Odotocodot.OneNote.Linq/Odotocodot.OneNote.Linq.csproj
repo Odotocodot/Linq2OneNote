@@ -16,20 +16,15 @@
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<PackageId>Odotocodot.OneNote.Linq</PackageId>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.0.0</Version>
-		<PackageReleaseNotes>Version 1.0.0</PackageReleaseNotes>
+		<Version>1.1.0</Version>
+		<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../CHANGELOG.md"))</PackageReleaseNotes>
+
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DebugSymbols>false</DebugSymbols>
 		<DebugType>None</DebugType>
 	</PropertyGroup>
-
-	<Target Name="SetPackageReleaseNotes" BeforeTargets="GenerateNuspec">
-		<PropertyGroup>
-			<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../CHANGELOG.md"))</PackageReleaseNotes>
-		</PropertyGroup>
-	</Target>
 	
 	<ItemGroup>
 		<None Include="..\Documentation\images\logo.png" Pack="True" PackagePath="\" />
