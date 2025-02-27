@@ -28,7 +28,10 @@ namespace Odotocodot.OneNote.Linq
         /// The direct children of this section group. <br/>
         /// Equivalent to concatenating <see cref="SectionGroups"/> and <see cref="Sections"/>.
         /// </summary>
-        public IEnumerable<IOneNoteItem> Children => ((IEnumerable<IOneNoteItem>)Sections).Concat(SectionGroups);
+        public IEnumerable<IOneNoteItem> Children => children ?? ((IEnumerable<IOneNoteItem>)Sections).Concat(SectionGroups);
+
+        internal List<IOneNoteItem> children;
+
         /// <summary>
         /// The full path to the section group.
         /// </summary>
@@ -44,10 +47,10 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The sections that this section group contains (direct children only). 
         /// </summary>
-        public IEnumerable<OneNoteSection> Sections { get; internal set; }
+        public IEnumerable<OneNoteSection> Sections { get; internal set; } = Enumerable.Empty<OneNoteSection>();
         /// <summary>
         /// The section groups that this section group contains (direct children only).
         /// </summary>
-        public IEnumerable<OneNoteSectionGroup> SectionGroups { get; internal set; }
+        public IEnumerable<OneNoteSectionGroup> SectionGroups { get; internal set; } = Enumerable.Empty<OneNoteSectionGroup>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -24,7 +25,23 @@ namespace Odotocodot.OneNote.Linq
         public string RelativePath { get; internal set; }
         /// <inheritdoc/>
         public OneNoteNotebook Notebook { get; internal set; }
-        IEnumerable<IOneNoteItem> IOneNoteItem.Children => Pages;
+        IEnumerable<IOneNoteItem> IOneNoteItem.Children
+        {
+            get
+            {
+                if (children == null)
+                {
+                    return Pages;
+                }
+                else
+                {
+
+                    return children;
+                }
+            }
+        }
+
+        internal List<IOneNoteItem> children;
         /// <summary>
         /// The full path to the section.
         /// </summary>
@@ -64,6 +81,6 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The collection of pages within this section, equal to <see cref="IOneNoteItem.Children"/> for a section.
         /// </summary>
-        public IEnumerable<OneNotePage> Pages { get; internal set; }
+        public IEnumerable<OneNotePage> Pages { get; internal set; } = Enumerable.Empty<OneNotePage>();
     }
 }
