@@ -2,11 +2,12 @@ using System;
 using System.Drawing;
 using System.IO;
 using NUnit.Framework;
+using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq.Tests
 {
-	[TestFixture]
-	[TestOf(typeof(XmlParser))]
+    [TestFixture]
+	[TestOf(typeof(XElementXmlParser))]
 	[TestOf(typeof(OneNoteNotebook))]
 	public class ParserNotebookTests : BaseParserTest<OneNoteNotebook>
 	{
@@ -19,7 +20,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 			lastModified = new DateTime(2023, 10, 04, 15, 15, 45);
 			relativePath = name;
 			parent = null;
-			item = XmlParser.ParseUnknown(xml, null);
+			item = XElementXmlParser.ParseUnknown(xml, null);
 			notebook = (OneNoteNotebook)item;
 		}
 		[Test]

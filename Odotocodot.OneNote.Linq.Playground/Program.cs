@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Running;
+using Odotocodot.OneNote.Linq.Parsers;
 using System.IO;
 
 namespace Odotocodot.OneNote.Linq.Playground
@@ -9,31 +10,18 @@ namespace Odotocodot.OneNote.Linq.Playground
     {
         public static void Main(string[] args)
         {
-            //var xml = File.ReadAllText("Notebooks.xml");
-            //var notebooks = XmlParser2.Parse(xml);
-            //foreach (var item in notebooks.Traverse())
-            //{
-            //    System.Console.WriteLine(item.Name);
-            //}
-
-            //Console.WriteLine("=====================================");
-
-            //notebooks = XmlParser.ParseNotebooks(xml);
-            //foreach (var item in notebooks.Traverse())
-            //{
-            //    System.Console.WriteLine(item.Name);
-            //}
-
-            BenchmarkRunner.Run<ParserBenchmarks>();
+            BenchmarkRunner.Run<XmlParserBenchmarks>();
         }
 
         [MarkdownExporter]
         [MinColumn, MaxColumn]
         [MemoryDiagnoser]
-        public class ParserBenchmarks
+        public class XmlParserBenchmarks
         {
             private string xml;
-            private readonly Consumer consumer = new Consumer();
+            private readonly Consumer consumer = new();
+            private readonly XElementXmlParser xElementParser = new();
+            private readonly XmlReaderXmlParser xmlReaderParser = new();
             [GlobalSetup]
             public void GlobalSetup()
             {
@@ -41,15 +29,15 @@ namespace Odotocodot.OneNote.Linq.Playground
             }
 
             [Benchmark(Baseline = true)]
-            public void XmlParserV1()
+            public void XElement()
             {
-                XmlParser.ParseNotebooks(xml).GetPages().Consume(consumer);
+                xElementParser.ParseNotebooks(xml).GetPages().Consume(consumer);
             }
 
             [Benchmark]
-            public void XmlParserV2()
+            public void XmlReader()
             {
-                XmlParser2.ParseNotebooks(xml).GetPages().Consume(consumer);
+                xmlReaderParser.ParseNotebooks(xml).GetPages().Consume(consumer);
             }
         }
 

@@ -2,11 +2,12 @@ using System;
 using System.Drawing;
 using System.IO;
 using NUnit.Framework;
+using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq.Tests
 {
-	[TestFixture]
-	[TestOf(typeof(XmlParser))]
+    [TestFixture]
+	[TestOf(typeof(XElementXmlParser))]
 	[TestOf(typeof(OneNoteSection))]
 	public class ParserSectionTests : BaseParserTest<OneNoteSection>
 	{
@@ -18,9 +19,9 @@ namespace Odotocodot.OneNote.Linq.Tests
 			name = "Locked Section";
 			isUnread = false;
 			lastModified = new DateTime(2023, 06, 17, 11, 00, 52);
-			relativePath = $"Test Notebook{XmlParser.RelativePathSeparator}Locked Section";
+			relativePath = $"Test Notebook{XElementXmlParser.RelativePathSeparator}Locked Section";
 			parent = notebook;
-			item = XmlParser.ParseUnknown(xml, notebook);
+			item = XElementXmlParser.ParseUnknown(xml, notebook);
 		}
 
 		[Test]

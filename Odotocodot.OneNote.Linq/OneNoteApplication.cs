@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.OneNote;
+using Odotocodot.OneNote.Linq.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Xml.Linq;
-using Microsoft.Office.Interop.OneNote;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -21,7 +22,7 @@ namespace Odotocodot.OneNote.Linq
 
         private static Lazy<Application> lazyOneNote = GetLazyOneNote();
         private static Application OneNote => lazyOneNote.Value;
-        
+
         /// <summary>
         /// Use this only if you know what you are doing.
         /// The COM Object instance of the OneNote application.
@@ -73,7 +74,9 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The directory separator used in <see cref="IOneNoteItem.RelativePath"/>.
         /// </summary>
-        public const char RelativePathSeparator = XmlParser.RelativePathSeparator;
+        public const char RelativePathSeparator = XmlParserHelpers.RelativePathSeparator;
+
+        private static readonly IXmlParser xmlParser = new XElementXmlParser();
 
         #region COM Object Methods
 
@@ -120,7 +123,7 @@ namespace Odotocodot.OneNote.Linq
         public static IEnumerable<OneNoteNotebook> GetNotebooks()
         {
             OneNote.GetHierarchy(null, HierarchyScope.hsPages, out string xml);
-            return XmlParser.ParseNotebooks(xml);
+            return xmlParser.ParseNotebooks(xml);
         }
 
         /// <summary>
@@ -135,7 +138,7 @@ namespace Odotocodot.OneNote.Linq
             ValidateSearch(search);
 
             OneNote.FindPages(null, search, out string xml);
-            return XmlParser.ParseNotebooks(xml).GetPages();
+            return xmlParser.ParseNotebooks(xml).GetPages();
         }
 
         /// <summary>
@@ -149,16 +152,16 @@ namespace Odotocodot.OneNote.Linq
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="search"/> or <paramref name="scope"/> is <see langword="null"/>.</exception>
         public static IEnumerable<OneNotePage> FindPages(string search, IOneNoteItem scope)
         {
-            if(scope is null)
+            if (scope is null)
                 throw new ArgumentNullException(nameof(scope));
 
             ValidateSearch(search);
 
             OneNote.FindPages(scope.ID, search, out string xml);
 
-            return XmlParser.ParseUnknown(xml, scope).GetPages();
+            return xmlParser.ParseUnknown(xml, scope).GetPages();
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -235,10 +238,10 @@ namespace Odotocodot.OneNote.Linq
             var doc = XDocument.Parse(xml);
             var element = doc.Descendants()
                              .FirstOrDefault(e => (string)e.Attribute("ID") == item.ID);
-            
-            if (element == null) 
+
+            if (element == null)
                 return;
-            
+
             element.Attribute("name").SetValue(newName);
             OneNote.UpdateHierarchy(doc.ToString());
             switch (item)
@@ -260,7 +263,7 @@ namespace Odotocodot.OneNote.Linq
         #endregion
 
         #region Creating New OneNote Items Methods
-        
+
         /// <summary>
         /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="section"/>.<br/>
         /// If <paramref name="section"/> is <see langword="null"/>, this method creates a page in the default quick notes location.
@@ -285,9 +288,9 @@ namespace Odotocodot.OneNote.Linq
             OneNote.CreateNewPage(sectionID, out string pageID, NewPageStyle.npsBlankPageWithTitle);
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
             XDocument doc = XDocument.Parse(xml);
-            
-            XNamespace one = XNamespace.Get(XmlParser.NamespaceUri);
-            
+
+            XNamespace one = XNamespace.Get(XElementXmlParser.NamespaceUri);
+
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;
 
@@ -295,7 +298,7 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(pageID);
-            
+
             return pageID;
         }
 
@@ -319,7 +322,7 @@ namespace Odotocodot.OneNote.Linq
         /// Creates a quick note page with the title specified by <paramref name="name"/>, located at the users quick notes location.
         /// </summary>
         /// <remarks>This is identical to calling <see cref="CreatePage(OneNoteSection, string, bool)"/> with the
-        /// section paramater set to null</remarks>
+        /// section parameter set to null</remarks>
         /// <param name="name"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='name']"/></param>
         /// <param name="openImmediately"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='openImmediately']"/></param>
         /// <returns>The <see cref="OneNotePage.ID"/> of the newly created quick note page.</returns>
@@ -359,7 +362,7 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(newItemID);
-            
+
             return newItemID;
         }
 

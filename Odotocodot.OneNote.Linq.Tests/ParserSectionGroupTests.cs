@@ -1,11 +1,12 @@
 using System;
 using System.IO;
 using NUnit.Framework;
+using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq.Tests
 {
-	[TestFixture]
-	[TestOf(typeof(XmlParser))]
+    [TestFixture]
+	[TestOf(typeof(XElementXmlParser))]
 	[TestOf(typeof(OneNoteSectionGroup))]
 	public class ParserSectionGroupTests : BaseParserTest<OneNoteSectionGroup>
 	{
@@ -17,9 +18,9 @@ namespace Odotocodot.OneNote.Linq.Tests
 			name = "Section Group 1";
 			isUnread = false;
 			lastModified = new DateTime(2023, 10, 04, 20, 48, 19);
-			relativePath = $"Test Notebook{XmlParser.RelativePathSeparator}Section Group 1";
+			relativePath = $"Test Notebook{XElementXmlParser.RelativePathSeparator}Section Group 1";
 			parent = notebook;
-			item = XmlParser.ParseUnknown(xml, notebook);
+			item = XElementXmlParser.ParseUnknown(xml, notebook);
 		}
 
 		[Test]

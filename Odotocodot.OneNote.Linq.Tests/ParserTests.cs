@@ -2,11 +2,12 @@ using System;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq.Tests
 {
-	[TestFixture]
-	[TestOf(typeof(XmlParser))]
+    [TestFixture]
+	[TestOf(typeof(XElementXmlParser))]
 	public class ParserTests
 	{
 		[Test]
@@ -18,7 +19,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 		{
 			var xml = File.ReadAllText(@"Inputs\Notebooks.xml");
 			
-			var result = XmlParser.ParseNotebooks(xml);
+			var result = XElementXmlParser.ParseNotebooks(xml);
 			var items = result.Traverse(item => item.GetType() == itemType);
 			
 			Assert.AreEqual(expectedCount, items.Count());

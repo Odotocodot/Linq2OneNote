@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
+using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq.Tests
 {
-	[TestFixture]
-	[TestOf(typeof(XmlParser))]
+    [TestFixture]
+	[TestOf(typeof(XElementXmlParser))]
 	[TestOf(typeof(OneNotePage))]
 	public class ParserPageTests : BaseParserTest<OneNotePage>
 	{
@@ -23,9 +24,9 @@ namespace Odotocodot.OneNote.Linq.Tests
 			name = "Important Info";
 			isUnread = true;
 			lastModified = new DateTime(2022, 12, 1, 18, 10, 34);
-			relativePath = $"Test Notebook{XmlParser.RelativePathSeparator}Test Section{XmlParser.RelativePathSeparator}Important Info";
+			relativePath = $"Test Notebook{XElementXmlParser.RelativePathSeparator}Test Section{XElementXmlParser.RelativePathSeparator}Important Info";
 			parent = section;
-			item = XmlParser.ParseUnknown(xml, section);
+			item = XElementXmlParser.ParseUnknown(xml, section);
 		}
 		
 		

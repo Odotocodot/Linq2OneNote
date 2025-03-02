@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
+using static Odotocodot.OneNote.Linq.Parsers.XmlParserHelpers;
 
-namespace Odotocodot.OneNote.Linq
+namespace Odotocodot.OneNote.Linq.Parsers
 {
-    internal static class XmlParser
+    internal class XElementXmlParser : IXmlParser
     {
-        internal const char RelativePathSeparator = '\\';
         internal const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
         private static readonly XName NotebookXName = XName.Get("Notebook", NamespaceUri);
         private static readonly XName SectionGroupXName = XName.Get("SectionGroup", NamespaceUri);
@@ -18,10 +18,10 @@ namespace Odotocodot.OneNote.Linq
         private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
             new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>
         {
-            {NotebookXName, ParseNotebook},
-            {SectionGroupXName, ParseSectionGroup},
-            {SectionXName, ParseSection},
-            {PageXName, ParsePage}
+            { NotebookXName, ParseNotebook},
+            { SectionGroupXName, ParseSectionGroup},
+            { SectionXName, ParseSection},
+            { PageXName, ParsePage}
         };
 
         private static readonly Dictionary<string, Action<OneNotePage, XAttribute>> pageSetters =
@@ -31,20 +31,20 @@ namespace Odotocodot.OneNote.Linq
             { "name", (item, attribute) => item.Name = attribute.Value },
             { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
             { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
-            
+
             { "dateTime", (page, attribute) => page.Created = (DateTime)attribute },
             { "pageLevel", (page, attribute) => page.Level = (int)attribute },
             { "isInRecycleBin", (page, attribute) => page.IsInRecycleBin = (bool)attribute }
         };
-        
-        private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters = 
+
+        private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters =
             new Dictionary<string, Action<OneNoteSection, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
             { "name", (item, attribute) => item.Name = attribute.Value },
             { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
             { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
-            
+
             { "path", (section, attribute) => section.Path = attribute.Value },
             { "color", (section, attribute) => section.Color = GetColor(attribute) },
             { "encrypted", (section, attribute) => section.Encrypted = (bool)attribute },
@@ -53,7 +53,7 @@ namespace Odotocodot.OneNote.Linq
             { "isDeletedPages", (section, attribute) => section.IsDeletedPages = (bool)attribute }
         };
 
-        private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters = 
+        private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters =
             new Dictionary<string, Action<OneNoteSectionGroup, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
@@ -64,8 +64,8 @@ namespace Odotocodot.OneNote.Linq
             { "path", (sectionGroup, attribute) => sectionGroup.Path = attribute.Value },
             { "isRecycleBin", (sectionGroup, attribute) => sectionGroup.IsRecycleBin = (bool)attribute }
         };
-        
-        private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters = 
+
+        private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters =
             new Dictionary<string, Action<OneNoteNotebook, XAttribute>>
         {
             { "ID", (item, attribute) => item.ID = attribute.Value },
@@ -77,18 +77,18 @@ namespace Odotocodot.OneNote.Linq
             { "path", (notebook, attribute) => notebook.Path = attribute.Value },
             { "color", (notebook, attribute) => notebook.Color = GetColor(attribute) }
         };
-        
+
         //Unknown at runtime
-        internal static IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
+        public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
         {
             var root = XElement.Parse(xml);
-            return runtimeParser[root.Name](root, parent);   
+            return runtimeParser[root.Name](root, parent);
         }
-        
+
         private static OneNotePage ParsePage(XElement element, IOneNoteItem parent)
         {
             var page = new OneNotePage();
-            
+
             foreach (var attribute in element.Attributes())
             {
                 if (pageSetters.TryGetValue(attribute.Name.LocalName, out var setter))
@@ -96,7 +96,7 @@ namespace Odotocodot.OneNote.Linq
                     setter(page, attribute);
                 }
             }
-            
+
             page.Section = (OneNoteSection)parent;
             page.Notebook = parent.Notebook;
             page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
@@ -113,7 +113,7 @@ namespace Odotocodot.OneNote.Linq
                     setter(section, attribute);
                 }
             }
-            
+
             section.Parent = parent;
             section.Notebook = parent.Notebook;
             section.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{section.Name}";
@@ -126,7 +126,7 @@ namespace Odotocodot.OneNote.Linq
         {
             if (attribute.Value == "none")
                 return null;
-            
+
             return ColorTranslator.FromHtml(attribute.Value);
         }
 
@@ -167,8 +167,8 @@ namespace Odotocodot.OneNote.Linq
                                             .Select(e => ParseSectionGroup(e, notebook));
             return notebook;
         }
-        internal static IEnumerable<OneNoteNotebook> ParseNotebooks(string xml) => XElement.Parse(xml)
-                                                                                           .Elements(NotebookXName)
-                                                                                           .Select(e => ParseNotebook(e, null));
+        public IEnumerable<OneNoteNotebook> ParseNotebooks(string xml) => XElement.Parse(xml)
+                                                                                  .Elements(NotebookXName)
+                                                                                  .Select(e => ParseNotebook(e, null));
     }
 }

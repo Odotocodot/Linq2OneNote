@@ -5,11 +5,10 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
-namespace Odotocodot.OneNote.Linq
+namespace Odotocodot.OneNote.Linq.Parsers
 {
-    internal static class XmlParser2
+    internal class XmlReaderXmlParser : IXmlParser
     {
-        internal const char RelativePathSeparator = '\\';
         private static readonly Dictionary<string, Action<OneNoteNotebook, XmlReader>> notebookSetters =
             new Dictionary<string, Action<OneNoteNotebook, XmlReader>>
         {
@@ -64,8 +63,7 @@ namespace Odotocodot.OneNote.Linq
             { "isInRecycleBin", (page, reader) => page.IsInRecycleBin = bool.Parse(reader.Value) }
         };
 
-
-        public static IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
+        public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
         {
             //TODO: refactor, this is essentially repeated code. Also test.
             IOneNoteItem item = null;
@@ -104,7 +102,7 @@ namespace Odotocodot.OneNote.Linq
 
                                     sectionGroup.Parent = parentSg;
                                     sectionGroup.Notebook = parentSg.Notebook;
-                                    sectionGroup.RelativePath = $"{parentSg.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
+                                    sectionGroup.RelativePath = $"{parentSg.RelativePath}{XmlParserHelpers.RelativePathSeparator}{sectionGroup.Name}";
                                     stack.Push(sectionGroup);
                                     break;
                                 case "Section":
@@ -121,7 +119,7 @@ namespace Odotocodot.OneNote.Linq
 
                                     section.Parent = parentS;
                                     section.Notebook = notebook;
-                                    section.RelativePath = $"{parentS.RelativePath}{RelativePathSeparator}{section.Name}";
+                                    section.RelativePath = $"{parentS.RelativePath}{XmlParserHelpers.RelativePathSeparator}{section.Name}";
                                     break;
                                 case "Page":
                                     var page = new OneNotePage();
@@ -139,7 +137,7 @@ namespace Odotocodot.OneNote.Linq
 
                                     page.Section = section;
                                     page.Notebook = notebook;
-                                    page.RelativePath = $"{section.RelativePath}{RelativePathSeparator}{page.Name}";
+                                    page.RelativePath = $"{section.RelativePath}{XmlParserHelpers.RelativePathSeparator}{page.Name}";
                                     break;
                                 default:
                                     break;
@@ -157,7 +155,7 @@ namespace Odotocodot.OneNote.Linq
             }
             return item;
         }
-        public static IEnumerable<OneNoteNotebook> ParseNotebooks(string xml)
+        public IEnumerable<OneNoteNotebook> ParseNotebooks(string xml)
         {
             var notebooks = new List<OneNoteNotebook>();
             using (MemoryStream streamReader = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
@@ -191,7 +189,7 @@ namespace Odotocodot.OneNote.Linq
 
                                     sectionGroup.Parent = parentSg;
                                     sectionGroup.Notebook = parentSg.Notebook;
-                                    sectionGroup.RelativePath = $"{parentSg.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
+                                    sectionGroup.RelativePath = $"{parentSg.RelativePath}{XmlParserHelpers.RelativePathSeparator}{sectionGroup.Name}";
                                     stack.Push(sectionGroup);
                                     break;
                                 case "Section":
@@ -203,7 +201,7 @@ namespace Odotocodot.OneNote.Linq
 
                                     section.Parent = parentS;
                                     section.Notebook = notebook;
-                                    section.RelativePath = $"{parentS.RelativePath}{RelativePathSeparator}{section.Name}";
+                                    section.RelativePath = $"{parentS.RelativePath}{XmlParserHelpers.RelativePathSeparator}{section.Name}";
                                     break;
                                 case "Page":
                                     var page = new OneNotePage();
@@ -216,7 +214,7 @@ namespace Odotocodot.OneNote.Linq
 
                                     page.Section = section;
                                     page.Notebook = notebook;
-                                    page.RelativePath = $"{section.RelativePath}{RelativePathSeparator}{page.Name}";
+                                    page.RelativePath = $"{section.RelativePath}{XmlParserHelpers.RelativePathSeparator}{page.Name}";
                                     break;
                                 default:
                                     break;
@@ -266,8 +264,11 @@ namespace Odotocodot.OneNote.Linq
                 notebook.children.Add(item);
             }
         }
+    }
 
-        private static bool TryPeek<T>(this Stack<T> stack, out T item)
+    internal static class StackExtensions
+    {
+        internal static bool TryPeek<T>(this Stack<T> stack, out T item)
         {
             if (stack.Count > 0)
             {
@@ -278,6 +279,4 @@ namespace Odotocodot.OneNote.Linq
             return false;
         }
     }
-
-
 }
