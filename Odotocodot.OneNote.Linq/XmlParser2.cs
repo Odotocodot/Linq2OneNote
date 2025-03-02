@@ -65,6 +65,98 @@ namespace Odotocodot.OneNote.Linq
         };
 
 
+        public static IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
+        {
+            //TODO: refactor, this is essentially repeated code. Also test.
+            IOneNoteItem item = null;
+            using (MemoryStream streamReader = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            {
+                using (XmlReader reader = XmlReader.Create(streamReader))
+                {
+                    OneNoteNotebook notebook = null;
+                    OneNoteSectionGroup sectionGroup = null;
+                    OneNoteSection section = null;
+                    Stack<OneNoteSectionGroup> stack = new Stack<OneNoteSectionGroup>();
+                    reader.MoveToContent();
+                    while (reader.Read())
+                    {
+                        if (reader.NodeType == XmlNodeType.Element)
+                        {
+                            switch (reader.LocalName)
+                            {
+                                case "Notebook":
+                                    notebook = new OneNoteNotebook();
+                                    SetValues(reader, notebook, notebookSetters);
+                                    item = notebook;
+                                    stack.Clear();
+                                    break;
+                                case "SectionGroup":
+                                    sectionGroup = new OneNoteSectionGroup();
+                                    SetValues(reader, sectionGroup, sectionGroupSetters);
+                                    AddToParent(notebook, sectionGroup, stack);
+
+                                    IOneNoteItem parentSg = stack.TryPeek(out var sg) ? sg : (IOneNoteItem)notebook;
+
+                                    if (item == null)
+                                    {
+                                        item = sectionGroup;
+                                    }
+
+                                    sectionGroup.Parent = parentSg;
+                                    sectionGroup.Notebook = parentSg.Notebook;
+                                    sectionGroup.RelativePath = $"{parentSg.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
+                                    stack.Push(sectionGroup);
+                                    break;
+                                case "Section":
+                                    section = new OneNoteSection();
+                                    SetValues(reader, section, sectionSetters);
+                                    AddToParent(notebook, section, stack);
+
+                                    IOneNoteItem parentS = stack.TryPeek(out var sg1) ? sg1 : (IOneNoteItem)notebook;
+
+                                    if (item == null)
+                                    {
+                                        item = section;
+                                    }
+
+                                    section.Parent = parentS;
+                                    section.Notebook = notebook;
+                                    section.RelativePath = $"{parentS.RelativePath}{RelativePathSeparator}{section.Name}";
+                                    break;
+                                case "Page":
+                                    var page = new OneNotePage();
+                                    SetValues(reader, page, pageSetters);
+                                    if (section.children == null)
+                                    {
+                                        section.children = new List<IOneNoteItem>();
+                                    }
+                                    section.children.Add(page);
+
+                                    if (item == null)
+                                    {
+                                        item = page;
+                                    }
+
+                                    page.Section = section;
+                                    page.Notebook = notebook;
+                                    page.RelativePath = $"{section.RelativePath}{RelativePathSeparator}{page.Name}";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName == "SectionGroup")
+                        {
+                            if (stack.Count > 0)
+                            {
+                                stack.Pop();
+                            }
+                        }
+                    }
+                }
+            }
+            return item;
+        }
         public static IEnumerable<OneNoteNotebook> ParseNotebooks(string xml)
         {
             var notebooks = new List<OneNoteNotebook>();
@@ -145,7 +237,7 @@ namespace Odotocodot.OneNote.Linq
 
         private static void SetValues<T>(XmlReader reader, T item, Dictionary<string, Action<T, XmlReader>> itemSetters)
         {
-            while (reader.MoveToNextAttribute()) // Try change to MoveToAttribute and AttributeCount
+            while (reader.MoveToNextAttribute()) // Could change to MoveToAttribute and AttributeCount
             {
                 if (itemSetters.TryGetValue(reader.Name, out var setter))
                 {
