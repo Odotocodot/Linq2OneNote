@@ -146,7 +146,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 			var section = notebook.Sections.Single(s => s.Name == "Section 2");
 			var name = GenerateName();
 			OneNoteApplication.CreatePage(section, name, false);
-			Assert.IsTrue(CheckItemIExist<OneNotePage>(name));
+            Assert.That(CheckItemIExist<OneNotePage>(name), Is.True);
 		}
 	}
 }
