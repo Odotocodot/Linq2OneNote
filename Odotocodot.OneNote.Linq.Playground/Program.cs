@@ -22,10 +22,11 @@ namespace Odotocodot.OneNote.Linq.Playground
             private readonly Consumer consumer = new();
             private readonly XElementXmlParser xElementParser = new();
             private readonly XmlReaderXmlParser xmlReaderParser = new();
+            private readonly XmlReaderSubTreeXmlParser subTreeParser = new();
             [GlobalSetup]
             public void GlobalSetup()
             {
-                xml = File.ReadAllText("Notebooks.xml");
+                xml = File.ReadAllText("Inputs\\Notebooks.xml");
             }
 
             [Benchmark(Baseline = true)]
@@ -38,6 +39,11 @@ namespace Odotocodot.OneNote.Linq.Playground
             public void XmlReader()
             {
                 xmlReaderParser.ParseNotebooks(xml).GetPages().Consume(consumer);
+            }
+            [Benchmark]
+            public void XmlReaderUsingSubTree()
+            {
+                subTreeParser.ParseNotebooks(xml).GetPages().Consume(consumer);
             }
         }
 

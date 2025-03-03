@@ -9,6 +9,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 {
     [TestFixture(typeof(XElementXmlParser))]
     [TestFixture(typeof(XmlReaderXmlParser))]
+    [TestFixture(typeof(XmlReaderSubTreeXmlParser))]
     internal class ParserTests<TXmlParser> where TXmlParser : IXmlParser
     {
         private IXmlParser xmlParser;
