@@ -14,7 +14,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
         {
             { "ID", (item, reader) => item.ID = reader.Value },
             { "name", (item, reader) => item.Name = reader.Value },
-            { "lastModifiedTime", (item, reader) => item.LastModified = DateTime.Parse(reader.Value) },
+            { "lastModifiedTime", (item, reader) => item.LastModified = XmlConvert.ToDateTime(reader.Value, XmlDateTimeSerializationMode.Unspecified) },
             { "isUnread", (item, reader) => item.IsUnread = bool.Parse(reader.Value)},
 
             { "nickname", (notebook, reader) => notebook.NickName = reader.Value },
@@ -27,7 +27,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
         {
             { "ID", (item, reader) => item.ID = reader.Value },
             { "name", (item, reader) => item.Name = reader.Value },
-            { "lastModifiedTime", (item, reader) => item.LastModified = DateTime.Parse(reader.Value) },
+            { "lastModifiedTime", (item, reader) => item.LastModified = XmlConvert.ToDateTime(reader.Value, XmlDateTimeSerializationMode.Unspecified) },
             { "isUnread", (item, reader) => item.IsUnread = bool.Parse(reader.Value)},
 
             { "path", (sectionGroup, reader) => sectionGroup.Path = reader.Value },
@@ -39,7 +39,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
         {
             { "ID", (item, reader) => item.ID = reader.Value },
             { "name", (item, reader) => item.Name = reader.Value },
-            { "lastModifiedTime", (item, reader) => item.LastModified = DateTime.Parse(reader.Value) },
+            { "lastModifiedTime", (item, reader) => item.LastModified = XmlConvert.ToDateTime(reader.Value, XmlDateTimeSerializationMode.Unspecified) },
             { "isUnread", (item, reader) => item.IsUnread = bool.Parse(reader.Value)},
 
             { "path", (section, reader) => section.Path = reader.Value },
@@ -67,16 +67,15 @@ namespace Odotocodot.OneNote.Linq.Parsers
         {
             //TODO: refactor, this is essentially repeated code. Also test.
             IOneNoteItem item = null;
-            using (MemoryStream streamReader = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
             {
-                using (XmlReader reader = XmlReader.Create(streamReader))
+                using (XmlReader reader = XmlReader.Create(stream))
                 {
                     OneNoteNotebook notebook = null;
-                    OneNoteSectionGroup sectionGroup = null;
                     OneNoteSection section = null;
                     Stack<OneNoteSectionGroup> stack = new Stack<OneNoteSectionGroup>();
                     reader.MoveToContent();
-                    while (reader.Read())
+                    while (!reader.EOF)
                     {
                         if (reader.NodeType == XmlNodeType.Element)
                         {
@@ -86,19 +85,20 @@ namespace Odotocodot.OneNote.Linq.Parsers
                                     notebook = new OneNoteNotebook();
                                     SetValues(reader, notebook, notebookSetters);
                                     item = notebook;
-                                    stack.Clear();
                                     break;
                                 case "SectionGroup":
-                                    sectionGroup = new OneNoteSectionGroup();
+                                    var sectionGroup = new OneNoteSectionGroup();
+                                    if (item == null)
+                                    {
+                                        item = sectionGroup;
+                                        notebook = parent.Notebook;
+
+                                    }
                                     SetValues(reader, sectionGroup, sectionGroupSetters);
                                     AddToParent(notebook, sectionGroup, stack);
 
                                     IOneNoteItem parentSg = stack.TryPeek(out var sg) ? sg : (IOneNoteItem)notebook;
 
-                                    if (item == null)
-                                    {
-                                        item = sectionGroup;
-                                    }
 
                                     sectionGroup.Parent = parentSg;
                                     sectionGroup.Notebook = parentSg.Notebook;
@@ -107,15 +107,17 @@ namespace Odotocodot.OneNote.Linq.Parsers
                                     break;
                                 case "Section":
                                     section = new OneNoteSection();
+                                    if (item == null)
+                                    {
+                                        item = section;
+
+                                        notebook = parent.Notebook;
+                                    }
                                     SetValues(reader, section, sectionSetters);
                                     AddToParent(notebook, section, stack);
 
                                     IOneNoteItem parentS = stack.TryPeek(out var sg1) ? sg1 : (IOneNoteItem)notebook;
 
-                                    if (item == null)
-                                    {
-                                        item = section;
-                                    }
 
                                     section.Parent = parentS;
                                     section.Notebook = notebook;
@@ -123,6 +125,12 @@ namespace Odotocodot.OneNote.Linq.Parsers
                                     break;
                                 case "Page":
                                     var page = new OneNotePage();
+                                    if (item == null)
+                                    {
+                                        item = page;
+                                        section = (OneNoteSection)parent;
+                                        notebook = parent.Notebook;
+                                    }
                                     SetValues(reader, page, pageSetters);
                                     if (section.children == null)
                                     {
@@ -130,16 +138,10 @@ namespace Odotocodot.OneNote.Linq.Parsers
                                     }
                                     section.children.Add(page);
 
-                                    if (item == null)
-                                    {
-                                        item = page;
-                                    }
 
                                     page.Section = section;
                                     page.Notebook = notebook;
                                     page.RelativePath = $"{section.RelativePath}{XmlParserHelpers.RelativePathSeparator}{page.Name}";
-                                    break;
-                                default:
                                     break;
                             }
                         }
@@ -150,6 +152,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
                                 stack.Pop();
                             }
                         }
+                        else
+                            reader.Read();
                     }
                 }
             }
@@ -158,9 +162,9 @@ namespace Odotocodot.OneNote.Linq.Parsers
         public IEnumerable<OneNoteNotebook> ParseNotebooks(string xml)
         {
             var notebooks = new List<OneNoteNotebook>();
-            using (MemoryStream streamReader = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(xml)))
             {
-                using (XmlReader reader = XmlReader.Create(streamReader))
+                using (XmlReader reader = XmlReader.Create(stream))
                 {
                     OneNoteNotebook notebook = null;
                     OneNoteSectionGroup sectionGroup = null;
