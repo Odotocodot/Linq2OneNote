@@ -94,7 +94,7 @@ namespace Odotocodot.OneNote.Linq.Tests
                 "{C55815E0-8F65-4790-8408-2E2C1EC74AB2}{1}{B0}",
                 false,
                 new DateTime(2023, 10, 04, 20, 48, 19),
-                $@"{notebookStub.Name}{XmlParserHelpers.RelativePathSeparator}{expectedName}",
+                $@"{notebookStub.Name}{XmlParserUtlis.RelativePathSeparator}{expectedName}",
                 notebookStub,
                 notebookStub);
 
@@ -120,7 +120,7 @@ namespace Odotocodot.OneNote.Linq.Tests
                 "{6BB816F6-D431-4430-B7A2-F9DEB7A28F67}{1}{B0}",
                 false,
                 new DateTime(2023, 06, 17, 11, 00, 52),
-                $@"{notebookStub.Name}{XmlParserHelpers.RelativePathSeparator}{expectedName}",
+                $@"{notebookStub.Name}{XmlParserUtlis.RelativePathSeparator}{expectedName}",
                 notebookStub,
                 notebookStub);
 
@@ -143,7 +143,7 @@ namespace Odotocodot.OneNote.Linq.Tests
             var xml = File.ReadAllText(@"Inputs\Page.xml");
             var sectionStub = new OneNoteSection
             {
-                RelativePath = $@"{notebookStub.Name}{XmlParserHelpers.RelativePathSeparator}Test Section",
+                RelativePath = $@"{notebookStub.Name}{XmlParserUtlis.RelativePathSeparator}Test Section",
                 Notebook = notebookStub
             };
             var item = xmlParser.ParseUnknown(xml, sectionStub);
@@ -154,7 +154,7 @@ namespace Odotocodot.OneNote.Linq.Tests
                 "{1B9CDD3C-6836-4DC6-9C44-0EDC06A9B8CB}{1}{E19481616267573963101920151005250203326127411}",
                 true,
                 new DateTime(2022, 12, 01, 18, 10, 34),
-                $@"{notebookStub.Name}{XmlParserHelpers.RelativePathSeparator}Test Section{XmlParserHelpers.RelativePathSeparator}{expectedName}",
+                $@"{notebookStub.Name}{XmlParserUtlis.RelativePathSeparator}Test Section{XmlParserUtlis.RelativePathSeparator}{expectedName}",
                 sectionStub,
                 notebookStub);
 

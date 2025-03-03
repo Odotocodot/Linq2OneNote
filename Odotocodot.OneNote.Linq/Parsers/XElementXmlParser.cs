@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
-using static Odotocodot.OneNote.Linq.Parsers.XmlParserHelpers;
 
 namespace Odotocodot.OneNote.Linq.Parsers
 {
     internal class XElementXmlParser : IXmlParser
     {
-        internal const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
-        private static readonly XName NotebookXName = XName.Get("Notebook", NamespaceUri);
-        private static readonly XName SectionGroupXName = XName.Get("SectionGroup", NamespaceUri);
-        private static readonly XName SectionXName = XName.Get("Section", NamespaceUri);
-        private static readonly XName PageXName = XName.Get("Page", NamespaceUri);
+        private static readonly XName NotebookXName = XName.Get(XmlParserUtlis.Names.Notebook, XmlParserUtlis.NamespaceUri);
+        private static readonly XName SectionGroupXName = XName.Get(XmlParserUtlis.Names.SectionGroup, XmlParserUtlis.NamespaceUri);
+        private static readonly XName SectionXName = XName.Get(XmlParserUtlis.Names.Section, XmlParserUtlis.NamespaceUri);
+        private static readonly XName PageXName = XName.Get(XmlParserUtlis.Names.Page, XmlParserUtlis.NamespaceUri);
 
         private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
             new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>
@@ -23,126 +20,57 @@ namespace Odotocodot.OneNote.Linq.Parsers
             { SectionXName, ParseSection},
             { PageXName, ParsePage}
         };
-
-        private static readonly Dictionary<string, Action<OneNotePage, XAttribute>> pageSetters =
-            new Dictionary<string, Action<OneNotePage, XAttribute>>
-        {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
-
-            { "dateTime", (page, attribute) => page.Created = (DateTime)attribute },
-            { "pageLevel", (page, attribute) => page.Level = (int)attribute },
-            { "isInRecycleBin", (page, attribute) => page.IsInRecycleBin = (bool)attribute }
-        };
-
-        private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters =
-            new Dictionary<string, Action<OneNoteSection, XAttribute>>
-        {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
-
-            { "path", (section, attribute) => section.Path = attribute.Value },
-            { "color", (section, attribute) => section.Color = GetColor(attribute) },
-            { "encrypted", (section, attribute) => section.Encrypted = (bool)attribute },
-            { "locked", (section, attribute) => section.Locked = (bool)attribute },
-            { "isInRecycleBin", (section, attribute) => section.IsInRecycleBin = (bool)attribute },
-            { "isDeletedPages", (section, attribute) => section.IsDeletedPages = (bool)attribute }
-        };
-
-        private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters =
-            new Dictionary<string, Action<OneNoteSectionGroup, XAttribute>>
-        {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
-
-            { "path", (sectionGroup, attribute) => sectionGroup.Path = attribute.Value },
-            { "isRecycleBin", (sectionGroup, attribute) => sectionGroup.IsRecycleBin = (bool)attribute }
-        };
-
-        private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters =
-            new Dictionary<string, Action<OneNoteNotebook, XAttribute>>
-        {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
-
-            { "nickname", (notebook, attribute) => notebook.NickName = attribute.Value },
-            { "path", (notebook, attribute) => notebook.Path = attribute.Value },
-            { "color", (notebook, attribute) => notebook.Color = GetColor(attribute) }
-        };
-
+        
         //Unknown at runtime
         public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
         {
             var root = XElement.Parse(xml);
             return runtimeParser[root.Name](root, parent);
         }
+        
+        private static void ParseAttributes<T>(XElement element, T item, Dictionary<string, Action<T, string>> setters)
+        {
+            foreach (var attribute in element.Attributes())
+            {
+                if (setters.TryGetValue(attribute.Name.LocalName, out var setter))
+                {
+                    setter(item, attribute.Value);
+                }
+            }
+        }
 
         private static OneNotePage ParsePage(XElement element, IOneNoteItem parent)
         {
             var page = new OneNotePage();
-
-            foreach (var attribute in element.Attributes())
-            {
-                if (pageSetters.TryGetValue(attribute.Name.LocalName, out var setter))
-                {
-                    setter(page, attribute);
-                }
-            }
+            ParseAttributes(element, page, XmlParserUtlis.pageSetters);
 
             page.Section = (OneNoteSection)parent;
             page.Notebook = parent.Notebook;
-            page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
+            page.RelativePath = $"{parent.RelativePath}{XmlParserUtlis.RelativePathSeparator}{page.Name}";
             return page;
         }
 
         private static OneNoteSection ParseSection(XElement element, IOneNoteItem parent)
         {
             var section = new OneNoteSection();
-            foreach (var attribute in element.Attributes())
-            {
-                if (sectionSetters.TryGetValue(attribute.Name.LocalName, out var setter))
-                {
-                    setter(section, attribute);
-                }
-            }
+            ParseAttributes(element, section, XmlParserUtlis.sectionSetters);
 
             section.Parent = parent;
             section.Notebook = parent.Notebook;
-            section.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{section.Name}";
+            section.RelativePath = $"{parent.RelativePath}{XmlParserUtlis.RelativePathSeparator}{section.Name}";
             section.Pages = element.Elements(PageXName)
                                    .Select(e => ParsePage(e, section));
             return section;
         }
 
-        private static Color? GetColor(XAttribute attribute)
-        {
-            if (attribute.Value == "none")
-                return null;
-
-            return ColorTranslator.FromHtml(attribute.Value);
-        }
-
         private static OneNoteSectionGroup ParseSectionGroup(XElement element, IOneNoteItem parent)
         {
             var sectionGroup = new OneNoteSectionGroup();
-            foreach (var attribute in element.Attributes())
-            {
-                if (sectionGroupSetters.TryGetValue(attribute.Name.LocalName, out var setter))
-                {
-                    setter(sectionGroup, attribute);
-                }
-            }
+            ParseAttributes(element, sectionGroup, XmlParserUtlis.sectionGroupSetters);
+            
             sectionGroup.Notebook = parent.Notebook;
             sectionGroup.Parent = parent;
-            sectionGroup.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
+            sectionGroup.RelativePath = $"{parent.RelativePath}{XmlParserUtlis.RelativePathSeparator}{sectionGroup.Name}";
             sectionGroup.Sections = element.Elements(SectionXName)
                                            .Select(e => ParseSection(e, sectionGroup));
             sectionGroup.SectionGroups = element.Elements(SectionGroupXName)
@@ -154,13 +82,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
         private static OneNoteNotebook ParseNotebook(XElement element, IOneNoteItem _)
         {
             var notebook = new OneNoteNotebook();
-            foreach (var attribute in element.Attributes())
-            {
-                if (notebookSetters.TryGetValue(attribute.Name.LocalName, out var setter))
-                {
-                    setter(notebook, attribute);
-                }
-            }
+            ParseAttributes(element, notebook, XmlParserUtlis.notebookSetters);
+            
             notebook.Sections = element.Elements(SectionXName)
                                        .Select(e => ParseSection(e, notebook));
             notebook.SectionGroups = element.Elements(SectionGroupXName)

@@ -74,7 +74,7 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The directory separator used in <see cref="IOneNoteItem.RelativePath"/>.
         /// </summary>
-        public const char RelativePathSeparator = XmlParserHelpers.RelativePathSeparator;
+        public const char RelativePathSeparator = XmlParserUtlis.RelativePathSeparator;
 
         private static readonly IXmlParser xmlParser = new XElementXmlParser();
 
@@ -104,7 +104,7 @@ namespace Odotocodot.OneNote.Linq
         /// <seealso cref="HasComObject"/>
         public static void ReleaseComObject()
         {
-            //TODO make thread safe
+            //TODO: make thread safe
             if (HasComObject)
             {
                 Marshal.ReleaseComObject(OneNote);
@@ -289,7 +289,7 @@ namespace Odotocodot.OneNote.Linq
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
             XDocument doc = XDocument.Parse(xml);
 
-            XNamespace one = XNamespace.Get(XElementXmlParser.NamespaceUri);
+            XNamespace one = XNamespace.Get(XmlParserUtlis.NamespaceUri);
 
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;

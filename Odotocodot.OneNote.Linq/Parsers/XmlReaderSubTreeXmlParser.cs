@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Xml;
 
@@ -12,28 +13,29 @@ namespace Odotocodot.OneNote.Linq.Parsers
         {
             var notebooks = new List<OneNoteNotebook>();
 
-            using (var reader = XmlReader.Create(new System.IO.StringReader(xml)))
+            using (var stringReader = new StringReader(xml))
             {
-                while (reader.ReadToFollowing("one:Notebook"))
+                using (var reader = XmlReader.Create(stringReader))
                 {
-                    var notebook = new OneNoteNotebook
+                    while (reader.Read())
                     {
-                        ID = reader.GetAttribute("ID"),
-                        Name = reader.GetAttribute("name"),
-                        NickName = reader.GetAttribute("nickname"),
-                        Path = reader.GetAttribute("path"),
-                        LastModified = DateTime.Parse(reader.GetAttribute("lastModifiedTime")),
-                        Color = ParseColor(reader.GetAttribute("color")),
-                        Sections = new List<OneNoteSection>(),
-                        SectionGroups = new List<OneNoteSectionGroup>()
-                    };
+                        if (reader.NodeType == XmlNodeType.Element && reader.LocalName == XmlParserUtlis.Names.Notebook)
+                        {
+                            var notebook = new OneNoteNotebook();
+                            XmlReaderXmlParser.ParseAttributes(reader, notebook, XmlParserUtlis.notebookSetters);
+                            // {
+                            //     Sections = new List<OneNoteSection>(),
+                            //     SectionGroups = new List<OneNoteSectionGroup>()
+                            // };
 
-                    using (var notebookReader = reader.ReadSubtree())
-                    {
-                        ParseSectionsAndGroups(notebookReader, notebook);
+                            using (var notebookReader = reader.ReadSubtree())
+                            {
+                                ParseSectionsAndGroups(notebookReader, notebook);
+                            }
+
+                            notebooks.Add(notebook);
+                        }
                     }
-
-                    notebooks.Add(notebook);
                 }
             }
 
@@ -55,30 +57,17 @@ namespace Odotocodot.OneNote.Linq.Parsers
                     {
                         if (currentReader.Name == "one:Section")
                         {
-                            var section = new OneNoteSection
-                            {
-                                ID = currentReader.GetAttribute("ID"),
-                                Name = currentReader.GetAttribute("name"),
-                                Path = currentReader.GetAttribute("path"),
-                                LastModified = DateTime.Parse(currentReader.GetAttribute("lastModifiedTime")),
-                                Color = ParseColor(currentReader.GetAttribute("color")),
-                                Pages = new List<OneNotePage>()
-                            };
-
+                            var section = new OneNoteSection();
+                            XmlReaderXmlParser.ParseAttributes(currentReader, section, XmlParserUtlis.sectionSetters);
+                            //Pages = new List<OneNotePage>()
+                            
                             using (var sectionReader = currentReader.ReadSubtree())
                             {
                                 while (sectionReader.ReadToFollowing("one:Page"))
                                 {
-                                    var page = new OneNotePage
-                                    {
-                                        ID = sectionReader.GetAttribute("ID"),
-                                        Name = sectionReader.GetAttribute("name"),
-                                        Created = DateTime.Parse(sectionReader.GetAttribute("dateTime")),
-                                        LastModified = DateTime.Parse(sectionReader.GetAttribute("lastModifiedTime")),
-                                        Level = int.Parse(sectionReader.GetAttribute("pageLevel")),
-                                        Section = section
-                                    };
-
+                                    var page = new OneNotePage();
+                                    XmlReaderXmlParser.ParseAttributes(sectionReader, page, XmlParserUtlis.pageSetters);
+                                    page.Section = section;
                                     section.Pages = section.Pages.Append(page);
                                 }
                             }
@@ -94,15 +83,10 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         }
                         else if (currentReader.Name == "one:SectionGroup")
                         {
-                            var sectionGroup = new OneNoteSectionGroup
-                            {
-                                ID = currentReader.GetAttribute("ID"),
-                                Name = currentReader.GetAttribute("name"),
-                                Path = currentReader.GetAttribute("path"),
-                                LastModified = DateTime.Parse(currentReader.GetAttribute("lastModifiedTime")),
-                                Sections = new List<OneNoteSection>(),
-                                SectionGroups = new List<OneNoteSectionGroup>()
-                            };
+                            var sectionGroup = new OneNoteSectionGroup();
+                            XmlReaderXmlParser.ParseAttributes(currentReader, sectionGroup, XmlParserUtlis.sectionGroupSetters);
+                            // Sections = new List<OneNoteSection>(),
+                            // SectionGroups = new List<OneNoteSectionGroup>()
 
                             if (parentGroup != null)
                             {
