@@ -6,13 +6,13 @@ using System.Xml.Linq;
 
 namespace Odotocodot.OneNote.Linq.Parsers
 {
+    using static Constants;
     internal class XElementXmlParser : IXmlParser
     {
-        internal const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
-        private static readonly XName NotebookXName = XName.Get("Notebook", NamespaceUri);
-        private static readonly XName SectionGroupXName = XName.Get("SectionGroup", NamespaceUri);
-        private static readonly XName SectionXName = XName.Get("Section", NamespaceUri);
-        private static readonly XName PageXName = XName.Get("Page", NamespaceUri);
+        private static readonly XName NotebookXName = XName.Get(Elements.Notebook, NamespaceUri);
+        private static readonly XName SectionGroupXName = XName.Get(Elements.SectionGroup, NamespaceUri);
+        private static readonly XName SectionXName = XName.Get(Elements.Section, NamespaceUri);
+        private static readonly XName PageXName = XName.Get(Elements.Page, NamespaceUri);
 
         private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
             new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>
@@ -26,55 +26,55 @@ namespace Odotocodot.OneNote.Linq.Parsers
         private static readonly Dictionary<string, Action<OneNotePage, XAttribute>> pageSetters =
             new Dictionary<string, Action<OneNotePage, XAttribute>>
         {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+            { Attributes.ID, (item, attribute) => item.ID = attribute.Value },
+            { Attributes.Name, (item, attribute) => item.Name = attribute.Value },
+            { Attributes.LastModifiedTime, (item, attribute) => item.LastModified = (DateTime)attribute },
+            { Attributes.IsUnread, (item, attribute) => item.IsUnread = (bool)attribute },
 
-            { "dateTime", (page, attribute) => page.Created = (DateTime)attribute },
-            { "pageLevel", (page, attribute) => page.Level = (int)attribute },
-            { "isInRecycleBin", (page, attribute) => page.IsInRecycleBin = (bool)attribute }
+            { Attributes.DateTime, (page, attribute) => page.Created = (DateTime)attribute },
+            { Attributes.PageLevel, (page, attribute) => page.Level = (int)attribute },
+            { Attributes.IsInRecycleBin, (page, attribute) => page.IsInRecycleBin = (bool)attribute }
         };
 
         private static readonly Dictionary<string, Action<OneNoteSection, XAttribute>> sectionSetters =
             new Dictionary<string, Action<OneNoteSection, XAttribute>>
         {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+            { Attributes.ID, (item, attribute) => item.ID = attribute.Value },
+            { Attributes.Name, (item, attribute) => item.Name = attribute.Value },
+            { Attributes.LastModifiedTime, (item, attribute) => item.LastModified = (DateTime)attribute },
+            { Attributes.IsUnread, (item, attribute) => item.IsUnread = (bool)attribute },
 
-            { "path", (section, attribute) => section.Path = attribute.Value },
-            { "color", (section, attribute) => section.Color = GetColor(attribute) },
-            { "encrypted", (section, attribute) => section.Encrypted = (bool)attribute },
-            { "locked", (section, attribute) => section.Locked = (bool)attribute },
-            { "isInRecycleBin", (section, attribute) => section.IsInRecycleBin = (bool)attribute },
-            { "isDeletedPages", (section, attribute) => section.IsDeletedPages = (bool)attribute }
+            { Attributes.Path, (section, attribute) => section.Path = attribute.Value },
+            { Attributes.Color, (section, attribute) => section.Color = GetColor(attribute) },
+            { Attributes.Encrypted, (section, attribute) => section.Encrypted = (bool)attribute },
+            { Attributes.Locked, (section, attribute) => section.Locked = (bool)attribute },
+            { Attributes.IsInRecycleBin, (section, attribute) => section.IsInRecycleBin = (bool)attribute },
+            { Attributes.IsDeletedPages, (section, attribute) => section.IsDeletedPages = (bool)attribute }
         };
 
         private static readonly Dictionary<string, Action<OneNoteSectionGroup, XAttribute>> sectionGroupSetters =
             new Dictionary<string, Action<OneNoteSectionGroup, XAttribute>>
         {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+            { Attributes.ID, (item, attribute) => item.ID = attribute.Value },
+            { Attributes.Name, (item, attribute) => item.Name = attribute.Value },
+            { Attributes.LastModifiedTime, (item, attribute) => item.LastModified = (DateTime)attribute },
+            { Attributes.IsUnread, (item, attribute) => item.IsUnread = (bool)attribute },
 
-            { "path", (sectionGroup, attribute) => sectionGroup.Path = attribute.Value },
-            { "isRecycleBin", (sectionGroup, attribute) => sectionGroup.IsRecycleBin = (bool)attribute }
+            { Attributes.Path, (sectionGroup, attribute) => sectionGroup.Path = attribute.Value },
+            { Attributes.IsRecycleBin, (sectionGroup, attribute) => sectionGroup.IsRecycleBin = (bool)attribute }
         };
 
         private static readonly Dictionary<string, Action<OneNoteNotebook, XAttribute>> notebookSetters =
             new Dictionary<string, Action<OneNoteNotebook, XAttribute>>
         {
-            { "ID", (item, attribute) => item.ID = attribute.Value },
-            { "name", (item, attribute) => item.Name = attribute.Value },
-            { "lastModifiedTime", (item, attribute) => item.LastModified = (DateTime)attribute },
-            { "isUnread", (item, attribute) => item.IsUnread = (bool)attribute },
+            { Attributes.ID, (item, attribute) => item.ID = attribute.Value },
+            { Attributes.Name, (item, attribute) => item.Name = attribute.Value },
+            { Attributes.LastModifiedTime, (item, attribute) => item.LastModified = (DateTime)attribute },
+            { Attributes.IsUnread, (item, attribute) => item.IsUnread = (bool)attribute },
 
-            { "nickname", (notebook, attribute) => notebook.NickName = attribute.Value },
-            { "path", (notebook, attribute) => notebook.Path = attribute.Value },
-            { "color", (notebook, attribute) => notebook.Color = GetColor(attribute) }
+            { Attributes.NickName, (notebook, attribute) => notebook.NickName = attribute.Value },
+            { Attributes.Path, (notebook, attribute) => notebook.Path = attribute.Value },
+            { Attributes.Color, (notebook, attribute) => notebook.Color = GetColor(attribute) }
         };
 
         //Unknown at runtime
