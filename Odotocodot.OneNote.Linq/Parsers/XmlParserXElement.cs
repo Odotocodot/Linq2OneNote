@@ -7,7 +7,7 @@ using System.Xml.Linq;
 namespace Odotocodot.OneNote.Linq.Parsers
 {
     using static Constants;
-    internal class XElementXmlParser : IXmlParser
+    internal class XmlParserXElement : IXmlParser
     {
         private static readonly XName NotebookXName = XName.Get(Elements.Notebook, NamespaceUri);
         private static readonly XName SectionGroupXName = XName.Get(Elements.SectionGroup, NamespaceUri);

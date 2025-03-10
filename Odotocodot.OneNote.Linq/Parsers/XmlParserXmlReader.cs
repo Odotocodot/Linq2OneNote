@@ -163,7 +163,6 @@ namespace Odotocodot.OneNote.Linq.Parsers
             var sectionGroup = new OneNoteSectionGroup();
             sectionGroup.Parent = parent;
             sectionGroup.Notebook = parent.Notebook;
-            //sectionGroup.RelativePath = $"{RelativePath}{Constants.RelativePathSeparator}{sectionGroup.Name}";
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -188,6 +187,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         break;
                 }
             }
+
+            sectionGroup.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
 
             reader.MoveToElement();
             if (reader.IsEmptyElement)
@@ -237,7 +238,6 @@ namespace Odotocodot.OneNote.Linq.Parsers
             var section = new OneNoteSection();
             section.Parent = parent;
             section.Notebook = parent.Notebook;
-            //section.RelativePath = $"{RelativePath}{Constants.RelativePathSeparator}{section.Name}";
             while (reader.MoveToNextAttribute())
             {
                 switch (reader.LocalName)
@@ -275,6 +275,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
             }
 
+            section.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{section.Name}";
+            
             reader.MoveToElement();
             if (reader.IsEmptyElement)
             {
@@ -315,7 +317,6 @@ namespace Odotocodot.OneNote.Linq.Parsers
             var page = new OneNotePage();
             page.Section = parent;
             page.Notebook = parent.Notebook;
-            //page.RelativePath = $"{RelativePath}{Constants.RelativePathSeparator}{page.Name}";
 
             while (reader.MoveToNextAttribute())
             {
@@ -344,6 +345,9 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         break;
                 }
             }
+            
+            page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
+
             reader.Skip();
             return page;
         }
