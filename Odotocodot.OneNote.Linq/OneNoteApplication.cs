@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Xml.Linq;
 using Microsoft.Office.Interop.OneNote;
+using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -73,7 +74,9 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The directory separator used in <see cref="IOneNoteItem.RelativePath"/>.
         /// </summary>
-        public const char RelativePathSeparator = XmlParser.RelativePathSeparator;
+        public const char RelativePathSeparator = XmlParserXElement.RelativePathSeparator;
+
+        private static readonly IXmlParser xmlParser = new XElementXmlParser();
 
         #region COM Object Methods
 
@@ -120,7 +123,7 @@ namespace Odotocodot.OneNote.Linq
         public static IEnumerable<OneNoteNotebook> GetNotebooks()
         {
             OneNote.GetHierarchy(null, HierarchyScope.hsPages, out string xml);
-            return XmlParser.ParseNotebooks(xml);
+            return xmlParser.ParseNotebooks(xml);
         }
 
         /// <summary>
@@ -135,7 +138,7 @@ namespace Odotocodot.OneNote.Linq
             ValidateSearch(search);
 
             OneNote.FindPages(null, search, out string xml);
-            return XmlParser.ParseNotebooks(xml).GetPages();
+            return xmlParser.ParseNotebooks(xml).GetPages();
         }
 
         /// <summary>
@@ -156,7 +159,7 @@ namespace Odotocodot.OneNote.Linq
 
             OneNote.FindPages(scope.ID, search, out string xml);
 
-            return XmlParser.ParseUnknown(xml, scope).GetPages();
+            return xmlParser.ParseUnknown(xml, scope).GetPages();
         }
         
         /// <summary>
@@ -286,7 +289,7 @@ namespace Odotocodot.OneNote.Linq
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
             XDocument doc = XDocument.Parse(xml);
             
-            XNamespace one = XNamespace.Get(XmlParser.NamespaceUri);
+            XNamespace one = XNamespace.Get(XmlParserXElement.NamespaceUri);
             
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;
