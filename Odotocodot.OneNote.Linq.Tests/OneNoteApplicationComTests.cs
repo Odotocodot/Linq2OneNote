@@ -28,14 +28,14 @@ namespace Odotocodot.OneNote.Linq.Tests
 		[Test]
 		public void HasComObject_WhenNotInit_ReturnsFalse()
 		{
-			Assert.IsFalse(OneNoteApplication.HasComObject);
+            Assert.That(OneNoteApplication.HasComObject, Is.False);
 		}
 
 		[Test]
 		public void HasComObject_WhenInit_ReturnsTrue()
 		{
 			OneNoteApplication.InitComObject();
-			Assert.IsTrue(OneNoteApplication.HasComObject);
+            Assert.That(OneNoteApplication.HasComObject, Is.True);
 		}
 
 		[Test]
@@ -43,7 +43,7 @@ namespace Odotocodot.OneNote.Linq.Tests
 		{
 			OneNoteApplication.InitComObject();
 			OneNoteApplication.ReleaseComObject();
-			Assert.IsFalse(OneNoteApplication.HasComObject);
+            Assert.That(OneNoteApplication.HasComObject, Is.False);
 		}
 	}
 }
