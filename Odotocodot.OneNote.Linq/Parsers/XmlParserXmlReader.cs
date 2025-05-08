@@ -276,7 +276,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
             }
 
             section.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{section.Name}";
-            
+
             reader.MoveToElement();
             if (reader.IsEmptyElement)
             {
@@ -315,7 +315,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
         private OneNotePage ParsePage(XmlReader reader, OneNoteSection parent)
         {
             var page = new OneNotePage();
-            page.Section = parent;
+            page.Parent = parent;
             page.Notebook = parent.Notebook;
 
             while (reader.MoveToNextAttribute())
@@ -345,7 +345,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         break;
                 }
             }
-            
+
             page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
 
             reader.Skip();

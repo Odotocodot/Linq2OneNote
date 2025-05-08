@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.OneNote;
+using Odotocodot.OneNote.Linq.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Xml.Linq;
-using Microsoft.Office.Interop.OneNote;
-using Odotocodot.OneNote.Linq.Parsers;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -22,7 +22,7 @@ namespace Odotocodot.OneNote.Linq
 
         private static Lazy<Application> lazyOneNote = GetLazyOneNote();
         private static Application OneNote => lazyOneNote.Value;
-        
+
         /// <summary>
         /// Use this only if you know what you are doing.
         /// The COM Object instance of the OneNote application.
@@ -97,6 +97,8 @@ namespace Odotocodot.OneNote.Linq
             }
         }
 
+
+        private static readonly object lockObj = new object();
         /// <summary>
         /// Releases the <see cref="Application">OneNote COM object</see> freeing memory.
         /// </summary>
@@ -104,11 +106,13 @@ namespace Odotocodot.OneNote.Linq
         /// <seealso cref="HasComObject"/>
         public static void ReleaseComObject()
         {
-            //TODO make thread safe
-            if (HasComObject)
+            lock (lockObj)
             {
-                Marshal.ReleaseComObject(OneNote);
-                lazyOneNote = GetLazyOneNote();
+                if (HasComObject)
+                {
+                    Marshal.ReleaseComObject(OneNote);
+                    lazyOneNote = GetLazyOneNote();
+                }
             }
         }
 
@@ -152,7 +156,7 @@ namespace Odotocodot.OneNote.Linq
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="search"/> or <paramref name="scope"/> is <see langword="null"/>.</exception>
         public static IEnumerable<OneNotePage> FindPages(string search, IOneNoteItem scope)
         {
-            if(scope is null)
+            if (scope is null)
                 throw new ArgumentNullException(nameof(scope));
 
             ValidateSearch(search);
@@ -161,7 +165,7 @@ namespace Odotocodot.OneNote.Linq
 
             return xmlParser.ParseUnknown(xml, scope).GetPages();
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -238,10 +242,10 @@ namespace Odotocodot.OneNote.Linq
             var doc = XDocument.Parse(xml);
             var element = doc.Descendants()
                              .FirstOrDefault(e => (string)e.Attribute("ID") == item.ID);
-            
-            if (element == null) 
+
+            if (element == null)
                 return;
-            
+
             element.Attribute("name").SetValue(newName);
             OneNote.UpdateHierarchy(doc.ToString());
             switch (item)
@@ -263,7 +267,7 @@ namespace Odotocodot.OneNote.Linq
         #endregion
 
         #region Creating New OneNote Items Methods
-        
+
         /// <summary>
         /// Creates a <see cref="OneNotePage">page</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="section"/>.<br/>
         /// If <paramref name="section"/> is <see langword="null"/>, this method creates a page in the default quick notes location.
@@ -288,9 +292,9 @@ namespace Odotocodot.OneNote.Linq
             OneNote.CreateNewPage(sectionID, out string pageID, NewPageStyle.npsBlankPageWithTitle);
             OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
             XDocument doc = XDocument.Parse(xml);
-            
+
             XNamespace one = XNamespace.Get(Constants.NamespaceUri);
-            
+
             XElement xTitle = doc.Descendants(one + "T").First();
             xTitle.Value = name;
 
@@ -298,7 +302,7 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(pageID);
-            
+
             return pageID;
         }
 
@@ -362,7 +366,7 @@ namespace Odotocodot.OneNote.Linq
 
             if (openImmediately)
                 OneNote.NavigateTo(newItemID);
-            
+
             return newItemID;
         }
 

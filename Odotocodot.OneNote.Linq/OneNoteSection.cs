@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Odotocodot.OneNote.Linq.Abstractions;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -7,24 +7,13 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section in OneNote.
     /// </summary>
-    public class OneNoteSection : IOneNoteItem
+    public class OneNoteSection : OneNoteItem, IWritePath, IWriteIsInRecycleBin, IWriteColor
     {
         internal OneNoteSection() { }
+
         /// <inheritdoc/>
-        public string ID { get; internal set; }
-        /// <inheritdoc/>
-        public string Name { get; internal set; }
-        /// <inheritdoc/>
-        public bool IsUnread { get; internal set; }
-        /// <inheritdoc/>
-        public DateTime LastModified { get; internal set; }
-        /// <inheritdoc/>
-        public IOneNoteItem Parent { get; internal set; }
-        /// <inheritdoc/>
-        public string RelativePath { get; internal set; }
-        /// <inheritdoc/>
-        public OneNoteNotebook Notebook { get; internal set; }
-        IEnumerable<IOneNoteItem> IOneNoteItem.Children => Pages;
+        public override IEnumerable<IOneNoteItem> Children => Pages;
+
         /// <summary>
         /// The full path to the section.
         /// </summary>
@@ -65,5 +54,9 @@ namespace Odotocodot.OneNote.Linq
         /// The collection of pages within this section, equal to <see cref="IOneNoteItem.Children"/> for a section.
         /// </summary>
         public IEnumerable<OneNotePage> Pages { get; internal set; }
+
+        Color? IWriteColor.Color { set => Color = value; }
+        string IWritePath.Path { set => Path = value; }
+        bool IWriteIsInRecycleBin.IsInRecycleBin { set => IsInRecycleBin = value; }
     }
 }
