@@ -188,7 +188,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
             }
 
-            sectionGroup.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
+            sectionGroup.RelativePath = $"{parent.RelativePath}{RelativePathSeparatorString}{sectionGroup.Name}";
 
             reader.MoveToElement();
             if (reader.IsEmptyElement)
@@ -275,7 +275,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
             }
 
-            section.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{section.Name}";
+            section.RelativePath = $"{parent.RelativePath}{RelativePathSeparatorString}{section.Name}";
 
             reader.MoveToElement();
             if (reader.IsEmptyElement)
@@ -346,7 +346,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
             }
 
-            page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
+            page.RelativePath = $"{parent.RelativePath}{RelativePathSeparatorString}{page.Name}";
 
             reader.Skip();
             return page;

@@ -1,7 +1,6 @@
 ﻿using Odotocodot.OneNote.Linq.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -11,18 +10,18 @@ namespace Odotocodot.OneNote.Linq.Parsers
 
     internal class XmlParserXElement : IXmlParser
     {
-        internal static readonly XName NotebookXName = XName.Get(Elements.Notebook, NamespaceUri);
-        internal static readonly XName SectionGroupXName = XName.Get(Elements.SectionGroup, NamespaceUri);
-        internal static readonly XName SectionXName = XName.Get(Elements.Section, NamespaceUri);
-        internal static readonly XName PageXName = XName.Get(Elements.Page, NamespaceUri);
+        private static readonly XName NotebookXName = XName.Get(Elements.Notebook, NamespaceUri);
+        private static readonly XName SectionGroupXName = XName.Get(Elements.SectionGroup, NamespaceUri);
+        private static readonly XName SectionXName = XName.Get(Elements.Section, NamespaceUri);
+        private static readonly XName PageXName = XName.Get(Elements.Page, NamespaceUri);
 
-        internal static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
+        private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
             new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>
         {
-            { NotebookXName, (element, _) => ParseNotebook(element)},
-            { SectionGroupXName, ParseSectionGroup},
-            { SectionXName, ParseSection},
-            { PageXName, ParsePage}
+            { NotebookXName, (element, _) => ParseNotebook(element) },
+            { SectionGroupXName, ParseSectionGroup },
+            { SectionXName, ParseSection },
+            { PageXName, ParsePage }
         };
 
         private static void SetAttributes(OneNoteItem item, IEnumerable<XAttribute> attributes)
@@ -93,11 +92,11 @@ namespace Odotocodot.OneNote.Linq.Parsers
             SetAttributes(item, element.Attributes());
             item.Parent = parent;
             item.Notebook = parent?.Notebook;
-            item.RelativePath = $"{parent?.RelativePath}{RelativePathSeparator}{item.Name}";
+            item.RelativePath = $"{parent?.RelativePath}{RelativePathSeparatorString}{item.Name}";
             return item;
         }
 
-        private static T ParseChildren<T>(T item, XElement element) where T : OneNoteItem, IWriteParentOfSectionsAndSectionGroups
+        private static T ParseParentOfSectionAndSectionGroups<T>(T item, XElement element) where T : OneNoteItem, IWriteParentOfSectionsAndSectionGroups
         {
             item.Sections = element.Elements(SectionXName)
                                    .Select(e => ParseSection(e, item));
@@ -106,8 +105,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
             return item;
         }
 
-        private static OneNotePage ParsePage(XElement element, IOneNoteItem parent)
-            => Parse(new OneNotePage(), element, parent);
+        private static OneNotePage ParsePage(XElement element, IOneNoteItem parent) => Parse(new OneNotePage(), element, parent);
 
         private static OneNoteSection ParseSection(XElement element, IOneNoteItem parent)
         {
@@ -118,9 +116,15 @@ namespace Odotocodot.OneNote.Linq.Parsers
         }
 
         private static OneNoteSectionGroup ParseSectionGroup(XElement element, IOneNoteItem parent)
-            => ParseChildren(Parse(new OneNoteSectionGroup(), element, parent), element);
+        {
+            var sectionGroup = Parse(new OneNoteSectionGroup(), element, parent);
+            return ParseParentOfSectionAndSectionGroups(sectionGroup, element);
+        }
 
         private static OneNoteNotebook ParseNotebook(XElement element)
-            => ParseChildren(Parse(new OneNoteNotebook(), element, null), element);
+        {
+            var notebook = Parse(new OneNoteNotebook(), element, null);
+            return ParseParentOfSectionAndSectionGroups(notebook, element);
+        }
     }
 }
