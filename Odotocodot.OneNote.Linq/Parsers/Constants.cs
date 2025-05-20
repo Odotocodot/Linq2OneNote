@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Odotocodot.OneNote.Linq.Parsers
 {
 	internal static class Constants
@@ -32,5 +34,13 @@ namespace Odotocodot.OneNote.Linq.Parsers
 		internal const string NamespaceUri = "http://schemas.microsoft.com/office/onenote/2013/onenote";
 		//TODO: Relative path as a string is needed
 		internal const char RelativePathSeparator = '\\';
+
+		internal static Color? GetColor(in string color)
+		{
+			if (color == "none")
+				return null;
+
+			return ColorTranslator.FromHtml(color);
+		}
 	}
 }

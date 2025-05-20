@@ -8,7 +8,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a notebook in OneNote.
     /// </summary>
-    public class OneNoteNotebook : OneNoteItem, IWritePath, IWriteSectionsAndSectionGroups, IWriteColor
+    public class OneNoteNotebook : OneNoteItem, IWritePath, IWriteParentOfSectionsAndSectionGroups, IWriteColor
     {
         internal OneNoteNotebook() { }
 
@@ -48,7 +48,7 @@ namespace Odotocodot.OneNote.Linq
 
         Color? IWriteColor.Color { set => Color = value; }
         string IWritePath.Path { set => Path = value; }
-        IEnumerable<OneNoteSection> IWriteSectionsAndSectionGroups.Sections { set => Sections = value; }
-        IEnumerable<OneNoteSectionGroup> IWriteSectionsAndSectionGroups.SectionGroups { set => SectionGroups = value; }
+        IEnumerable<OneNoteSection> IWriteParentOfSectionsAndSectionGroups.Sections { set => Sections = value; }
+        IEnumerable<OneNoteSectionGroup> IWriteParentOfSectionsAndSectionGroups.SectionGroups { set => SectionGroups = value; }
     }
 }

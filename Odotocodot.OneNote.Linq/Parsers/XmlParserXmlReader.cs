@@ -105,7 +105,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         notebook.Path = reader.Value;
                         break;
                     case Attributes.Color:
-                        notebook.Color = ColorTranslator.FromHtml(reader.Value);
+                        notebook.Color = GetColor(reader.Value);
                         break;
                     case Attributes.IsUnread:
                         notebook.IsUnread = bool.Parse(reader.Value);

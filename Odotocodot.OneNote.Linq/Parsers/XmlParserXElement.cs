@@ -50,7 +50,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         ((IWriteColor)item).Color = GetColor(attribute.Value);
                         break;
                     case Attributes.IsInRecycleBin:
-                        ((IWriteIsInRecycleBin)item).IsInRecycleBin = bool.Parse(attribute.Value);
+                        ((IWriteIsInRecycleBin)item).IsInRecycleBin = (bool)attribute;
                         break;
                     case Attributes.NickName:
                         ((OneNoteNotebook)item).NickName = attribute.Value;
@@ -59,34 +59,27 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         ((OneNoteSectionGroup)item).IsRecycleBin = (bool)attribute;
                         break;
                     case Attributes.Encrypted:
-                        ((OneNoteSection)item).Encrypted = bool.Parse(attribute.Value);
+                        ((OneNoteSection)item).Encrypted = (bool)attribute;
                         break;
                     case Attributes.Locked:
-                        ((OneNoteSection)item).Locked = bool.Parse(attribute.Value);
+                        ((OneNoteSection)item).Locked = (bool)attribute;
                         break;
                     case Attributes.IsDeletedPages:
-                        ((OneNoteSection)item).IsDeletedPages = bool.Parse(attribute.Value);
+                        ((OneNoteSection)item).IsDeletedPages = (bool)attribute;
                         break;
                     case Attributes.PageLevel:
-                        ((OneNotePage)item).Level = int.Parse(attribute.Value);
+                        ((OneNotePage)item).Level = (int)attribute;
                         break;
                     case Attributes.DateTime:
-                        ((OneNotePage)item).Created = DateTime.Parse(attribute.Value);
+                        ((OneNotePage)item).Created = (DateTime)attribute;
                         break;
                 }
             }
         }
-        private static Color? GetColor(in string color)
-        {
-            if (color == "none")
-                return null;
-
-            return ColorTranslator.FromHtml(color);
-        }
 
         public IEnumerable<OneNoteNotebook> ParseNotebooks(string xml) => XElement.Parse(xml)
                                                                                   .Elements(NotebookXName)
-                                                                                  .Select(e => ParseNotebook(e));
+                                                                                  .Select(ParseNotebook);
 
         public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
         {
@@ -104,7 +97,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
             return item;
         }
 
-        private static T ParseChildren<T>(T item, XElement element) where T : OneNoteItem, IWriteSectionsAndSectionGroups
+        private static T ParseChildren<T>(T item, XElement element) where T : OneNoteItem, IWriteParentOfSectionsAndSectionGroups
         {
             item.Sections = element.Elements(SectionXName)
                                    .Select(e => ParseSection(e, item));

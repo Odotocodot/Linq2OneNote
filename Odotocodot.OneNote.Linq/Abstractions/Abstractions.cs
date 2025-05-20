@@ -3,44 +3,57 @@ using System.Drawing;
 
 namespace Odotocodot.OneNote.Linq.Abstractions
 {
-    public interface IHasSectionsAndSectionGroups
-    {
-        IEnumerable<OneNoteSection> Sections { get; }
-        IEnumerable<OneNoteSectionGroup> SectionGroups { get; }
-    }
-    internal interface IWriteSectionsAndSectionGroups : IHasSectionsAndSectionGroups
-    {
-        IEnumerable<OneNoteSection> Sections { set; }
-        IEnumerable<OneNoteSectionGroup> SectionGroups { set; }
-    }
+	/// <summary>
+	/// Represents a OneNote hierarchy item that can have <see cref="OneNoteSection">sections</see> and/or <see cref="OneNoteSectionGroup">section groups</see> as children.
+	/// </summary>
+	/// <seealso cref="OneNoteNotebook"/>
+	/// <seealso cref="OneNoteSectionGroup"/>
+	public interface IParentOfSectionsAndSectionGroups : IOneNoteItem
+	{
+		/// <summary>
+		/// The sections that this item contains (direct children only). 
+		/// </summary>
+		IEnumerable<OneNoteSection> Sections { get; }
 
-    public interface IHasPath
-    {
-        string Path { get; }
-    }
+		/// <summary>
+		/// The section groups that this item contains (direct children only).
+		/// </summary>
+		IEnumerable<OneNoteSectionGroup> SectionGroups { get; }
+	}
 
-    internal interface IWritePath : IHasPath
-    {
-        string Path { set; }
-    }
+	internal interface IWriteParentOfSectionsAndSectionGroups : IParentOfSectionsAndSectionGroups
+	{
+		IEnumerable<OneNoteSection> Sections { set; }
+		IEnumerable<OneNoteSectionGroup> SectionGroups { set; }
+	}
 
-    public interface IHasColor
-    {
-        Color? Color { get; }
-    }
+	public interface IHasPath : IOneNoteItem
+	{
+		string Path { get; }
+	}
 
-    internal interface IWriteColor : IHasColor
-    {
-        Color? Color { set; }
-    }
+	internal interface IWritePath : IHasPath
+	{
+		string Path { set; }
+	}
 
-    public interface IHasIsInRecycleBin
-    {
-        bool IsInRecycleBin { get; }
-    }
+	public interface IHasColor : IOneNoteItem
+	{
+		Color? Color { get; }
+	}
 
-    internal interface IWriteIsInRecycleBin : IHasIsInRecycleBin
-    {
-        bool IsInRecycleBin { set; }
-    }
+	internal interface IWriteColor : IHasColor
+	{
+		Color? Color { set; }
+	}
+
+	public interface IHasIsInRecycleBin : IOneNoteItem
+	{
+		bool IsInRecycleBin { get; }
+	}
+
+	internal interface IWriteIsInRecycleBin : IHasIsInRecycleBin
+	{
+		bool IsInRecycleBin { set; }
+	}
 }
