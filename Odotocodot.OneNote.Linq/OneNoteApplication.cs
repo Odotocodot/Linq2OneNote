@@ -365,7 +365,7 @@ namespace Odotocodot.OneNote.Linq
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section name.</exception>
         /// <seealso cref="IsSectionNameValid(string)"/>
         /// <returns>The <see cref="OneNoteSection.ID"/> of the newly created section.</returns>
-        public static string CreateSection<TSectionGroupOrNotebook>(TSectionGroupOrNotebook parent, string name, bool open) where TSectionGroupOrNotebook : IParentOfSectionsAndSectionGroups
+        public static string CreateSection<TSectionGroupOrNotebook>(TSectionGroupOrNotebook parent, string name, bool open) where TSectionGroupOrNotebook : INotebookOrSectionGroup
             => CreateItem(parent, name, open, $"{name}.one", CreateFileType.cftSection, IsSectionNameValid, Constants.Elements.Section, in InvalidSectionChars);
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Odotocodot.OneNote.Linq
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section group name.</exception>
         /// <seealso cref="IsSectionGroupNameValid(string)"/>
         /// <returns>The <see cref="OneNoteSectionGroup.ID"/> of the newly created section group.</returns>
-        public static string CreateSectionGroup<TSectionGroupOrNotebook>(TSectionGroupOrNotebook parent, string name, bool open) where TSectionGroupOrNotebook : IParentOfSectionsAndSectionGroups
+        public static string CreateSectionGroup<TSectionGroupOrNotebook>(TSectionGroupOrNotebook parent, string name, bool open) where TSectionGroupOrNotebook : INotebookOrSectionGroup
             => CreateItem(parent, name, open, name, CreateFileType.cftFolder, IsSectionGroupNameValid, Constants.Elements.SectionGroup, in InvalidSectionGroupChars);
 
         /// <summary>

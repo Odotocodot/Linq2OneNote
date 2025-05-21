@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section group in OneNote.
     /// </summary>
-    public class OneNoteSectionGroup : OneNoteItem, IWriteParentOfSectionsAndSectionGroups, IWritePath
+    public class OneNoteSectionGroup : OneNoteItem, IWritableNotebookOrSectionGroup, IWritableHasPath
     {
         internal OneNoteSectionGroup() { }
 
@@ -38,8 +38,8 @@ namespace Odotocodot.OneNote.Linq
         /// </summary>
         public IEnumerable<OneNoteSectionGroup> SectionGroups { get; internal set; }
 
-        string IWritePath.Path { set => Path = value; }
-        IEnumerable<OneNoteSection> IWriteParentOfSectionsAndSectionGroups.Sections { set => Sections = value; }
-        IEnumerable<OneNoteSectionGroup> IWriteParentOfSectionsAndSectionGroups.SectionGroups { set => SectionGroups = value; }
+        string IWritableHasPath.Path { set => Path = value; }
+        IEnumerable<OneNoteSection> IWritableNotebookOrSectionGroup.Sections { set => Sections = value; }
+        IEnumerable<OneNoteSectionGroup> IWritableNotebookOrSectionGroup.SectionGroups { set => SectionGroups = value; }
     }
 }

@@ -8,7 +8,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a page in OneNote.
     /// </summary>
-    public class OneNotePage : OneNoteItem, IWriteIsInRecycleBin
+    public class OneNotePage : OneNoteItem, IWritableHasIsInRecycleBin
     {
         internal OneNotePage() { }
         ///<inheritdoc/>
@@ -34,6 +34,6 @@ namespace Odotocodot.OneNote.Linq
         /// <seealso cref="OneNoteSection.IsDeletedPages"/>
         public bool IsInRecycleBin { get; internal set; }
 
-        bool IWriteIsInRecycleBin.IsInRecycleBin { set => IsInRecycleBin = value; }
+        bool IWritableHasIsInRecycleBin.IsInRecycleBin { set => IsInRecycleBin = value; }
     }
 }

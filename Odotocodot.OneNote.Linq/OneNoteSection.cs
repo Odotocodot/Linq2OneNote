@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section in OneNote.
     /// </summary>
-    public class OneNoteSection : OneNoteItem, IWritePath, IWriteIsInRecycleBin, IWriteColor
+    public class OneNoteSection : OneNoteItem, IWritableHasPath, IWritableHasIsInRecycleBin, IWritableHasColor
     {
         internal OneNoteSection() { }
 
@@ -55,8 +55,8 @@ namespace Odotocodot.OneNote.Linq
         /// </summary>
         public IEnumerable<OneNotePage> Pages { get; internal set; }
 
-        Color? IWriteColor.Color { set => Color = value; }
-        string IWritePath.Path { set => Path = value; }
-        bool IWriteIsInRecycleBin.IsInRecycleBin { set => IsInRecycleBin = value; }
+        Color? IWritableHasColor.Color { set => Color = value; }
+        string IWritableHasPath.Path { set => Path = value; }
+        bool IWritableHasIsInRecycleBin.IsInRecycleBin { set => IsInRecycleBin = value; }
     }
 }

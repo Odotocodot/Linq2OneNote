@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Odotocodot.OneNote.Linq.Abstractions
+namespace Odotocodot.OneNote.Linq
 {
     /// <summary>
     /// Equivalent to <see cref="IOneNoteItem"/>

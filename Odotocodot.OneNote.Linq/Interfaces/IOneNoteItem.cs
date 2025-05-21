@@ -4,9 +4,12 @@ using System.Collections.Generic;
 namespace Odotocodot.OneNote.Linq
 {
     /// <summary>
-    /// The base interface of OneNote hierarchy items types. <br/>
-    /// (These are <see cref="OneNoteNotebook"/>, <see cref="OneNoteSectionGroup"/>, <see cref="OneNoteSection"/> and <see cref="OneNotePage"/>).
+    /// The base interface of OneNote hierarchy items types.
     /// </summary>
+    /// <seealso cref="OneNoteNotebook"/>
+    /// <seealso cref="OneNoteSectionGroup"/>
+    /// <seealso cref="OneNoteSection"/>
+    /// <seealso cref="OneNotePage"/>
     public interface IOneNoteItem
     {
         /// <summary>

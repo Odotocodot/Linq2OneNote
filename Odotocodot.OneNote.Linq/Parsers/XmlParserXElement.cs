@@ -43,13 +43,13 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         item.LastModified = (DateTime)attribute;
                         break;
                     case Attributes.Path:
-                        ((IWritePath)item).Path = attribute.Value;
+                        ((IWritableHasPath)item).Path = attribute.Value;
                         break;
                     case Attributes.Color:
-                        ((IWriteColor)item).Color = GetColor(attribute.Value);
+                        ((IWritableHasColor)item).Color = GetColor(attribute.Value);
                         break;
                     case Attributes.IsInRecycleBin:
-                        ((IWriteIsInRecycleBin)item).IsInRecycleBin = (bool)attribute;
+                        ((IWritableHasIsInRecycleBin)item).IsInRecycleBin = (bool)attribute;
                         break;
                     case Attributes.NickName:
                         ((OneNoteNotebook)item).NickName = attribute.Value;
@@ -96,7 +96,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
             return item;
         }
 
-        private static T ParseParentOfSectionAndSectionGroups<T>(T item, XElement element) where T : OneNoteItem, IWriteParentOfSectionsAndSectionGroups
+        private static T ParseNotebookOrSectionGroupChildren<T>(T item, XElement element) where T : OneNoteItem, IWritableNotebookOrSectionGroup
         {
             item.Sections = element.Elements(SectionXName)
                                    .Select(e => ParseSection(e, item));
@@ -118,13 +118,13 @@ namespace Odotocodot.OneNote.Linq.Parsers
         private static OneNoteSectionGroup ParseSectionGroup(XElement element, IOneNoteItem parent)
         {
             var sectionGroup = Parse(new OneNoteSectionGroup(), element, parent);
-            return ParseParentOfSectionAndSectionGroups(sectionGroup, element);
+            return ParseNotebookOrSectionGroupChildren(sectionGroup, element);
         }
 
         private static OneNoteNotebook ParseNotebook(XElement element)
         {
             var notebook = Parse(new OneNoteNotebook(), element, null);
-            return ParseParentOfSectionAndSectionGroups(notebook, element);
+            return ParseNotebookOrSectionGroupChildren(notebook, element);
         }
     }
 }
