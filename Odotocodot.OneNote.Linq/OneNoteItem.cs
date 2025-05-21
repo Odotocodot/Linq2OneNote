@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 namespace Odotocodot.OneNote.Linq
 {
+
     /// <summary>
     /// Equivalent to <see cref="IOneNoteItem"/>
     /// </summary>
+    /// <seealso cref="IOneNoteItem"/>
     public abstract class OneNoteItem : IOneNoteItem
     {
         internal OneNoteItem() { }

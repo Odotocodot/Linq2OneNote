@@ -53,13 +53,13 @@
       "_disableContribution": true,
       "_disableBreadcrumb" : false,
       "_disableNavbar": false,
-      "_appFooter": "© 2023-2024 Odotocodot   |   Made with <a href=\"https://dotnet.github.io/docfx\">docfx</a>",
+      "_appFooter": "© 2023-2025 Odotocodot   |   Made with <a href=\"https://dotnet.github.io/docfx\">docfx</a>"
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "modern"
+      "modern",
     ],
     "sitemap": {
       "baseUrl": "https://odotocodot.github.io/Linq2OneNote/",
@@ -68,7 +68,7 @@
         "priority": 0.8
       }
     },
-    "postProcessors": [],
+    "postProcessors": ["ExtractSearchIndex"],
     "keepFileLink": false,
     "disableGitFeatures": false,
     "exportViewModel": false,

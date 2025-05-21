@@ -28,14 +28,26 @@ The main entry point of the library is the static class ``OneNoteApplication`` w
 Below is quick example on using the library to search your OneNote pages.
 
 ```csharp
-//Search pages that have "hello there" in the title or content.
-IEnumerable<OneNotePage> pages = OneNoteApplication.FindPages("hello there");
+using System.Linq;
+using Odotocodot.OneNote.Linq;
 
-OneNotePage page = pages.FirstOrDefault();
-
-Console.WriteLine(page.Name);
-
-page.OpenInOneNote();
+namespace Linq2OneNoteExample
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            //Search pages that have "hello there" in the title or content.
+            IEnumerable<OneNotePage> pages = OneNoteApplication.FindPages("hello there");
+            
+            OneNotePage page = pages.FirstOrDefault();
+            
+            Console.WriteLine(page.Name);
+            
+            page.OpenInOneNote();
+        }
+    }
+}
 ```
 
 Most functions return an IEnumerable allowing for easy use with LINQ.

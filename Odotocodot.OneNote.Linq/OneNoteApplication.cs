@@ -45,7 +45,7 @@ namespace Odotocodot.OneNote.Linq
         #region Name Validator Members
 
         /// <summary>
-        /// An array containing the characters that are not allowed in a <see cref="OneNoteNotebook">notebook</see> <see cref="OneNoteNotebook.Name"> name</see>.<br/>
+        /// An array containing the characters that are not allowed in a <see cref="OneNoteNotebook">notebook</see> name.<br/>
         /// These are:&#009;<b>\ / * ? " | &lt; &gt; : % # .</b>
         /// </summary>
         /// <seealso cref="IsNotebookNameValid(string)"/>
@@ -54,7 +54,7 @@ namespace Odotocodot.OneNote.Linq
         public static readonly ImmutableArray<char> InvalidNotebookChars = @"\/*?""|<>:%#.".ToImmutableArray();
 
         /// <summary>
-        /// An array containing the characters that are not allowed in a <see cref="OneNoteSection">section</see> <see cref="OneNoteSection.Name"> name</see>.<br/>
+        /// An array containing the characters that are not allowed in a <see cref="OneNoteSection">section</see> name.<br/>
         /// These are:&#009;<b>\ / * ? " | &lt; &gt; : % # &amp;</b>
         /// </summary>
         /// <seealso cref="IsSectionNameValid(string)"/>
@@ -63,7 +63,7 @@ namespace Odotocodot.OneNote.Linq
         public static readonly ImmutableArray<char> InvalidSectionChars = @"\/*?""|<>:%#&".ToImmutableArray();
 
         /// <summary>
-        /// An array containing the characters that are not allowed in a <see cref="OneNoteSectionGroup">section group</see> <see cref="OneNoteSectionGroup.Name"> name</see>.<br/>
+        /// An array containing the characters that are not allowed in a <see cref="OneNoteSectionGroup">section group</see> name.<br/>
         /// These are:&#009;<b>\ / * ? " | &lt; &gt; : % # &amp;</b>
         /// </summary>
         /// <seealso cref="IsSectionGroupNameValid(string)"/>
@@ -281,7 +281,7 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="section">The section to create the page in.</param>
         /// <param name="name">The title of the page.</param>
         /// <param name="open">Whether to open the newly created page in OneNote immediately.</param>
-        /// <returns>The <see cref="OneNotePage.ID"/> of the newly created page.</returns>
+        /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created page.</returns>
         public static string CreatePage(OneNoteSection section, string name, bool open)
         {
             string sectionID;
@@ -317,7 +317,7 @@ namespace Odotocodot.OneNote.Linq
         /// Creates a quick note page located at the users quick notes location.
         /// </summary>       
         /// <param name="open"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='open']"/></param>
-        /// <returns>The <see cref="OneNotePage.ID"/> of the newly created quick note page.</returns>
+        /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created quick note page.</returns>
         public static string CreateQuickNote(bool open)
         {
             var path = GetUnfiledNotesSection();
@@ -338,7 +338,7 @@ namespace Odotocodot.OneNote.Linq
         /// section paramater set to null</remarks>
         /// <param name="name"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='name']"/></param>
         /// <param name="open"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='open']"/></param>
-        /// <returns>The <see cref="OneNotePage.ID"/> of the newly created quick note page.</returns>
+        /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created quick note page.</returns>
         public static string CreateQuickNote(string name, bool open) => CreatePage(null, name, open);
         
         private static string CreateItem(
@@ -360,28 +360,30 @@ namespace Odotocodot.OneNote.Linq
 
             return newItemID;
         }
-        
+
         /// <summary>
-        /// Creates a <see cref="OneNoteSection">section</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="parent"/> <see cref="OneNoteSectionGroup">section group</see> or <see cref="OneNoteNotebook">notebook</see>.
+        /// Creates a <see cref="OneNoteSection">section</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="parent"/>.
         /// </summary>        
         /// <param name="parent">The hierarchy item to create the section in.</param>
         /// <param name="name">The name of the new section.</param>
         /// <param name="open">Whether to open the newly created section in OneNote immediately.</param>
+        /// <typeparam name="TNotebookOrSectionGroup">Represents a <see cref="OneNoteNotebook">notebook</see> or a <see cref="OneNoteSectionGroup">section group</see>.</typeparam>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section name.</exception>
         /// <seealso cref="IsSectionNameValid(string)"/>
-        /// <returns>The <see cref="OneNoteSection.ID"/> of the newly created section.</returns>
-        public static string CreateSection<TSectionGroupOrNotebook>(TSectionGroupOrNotebook parent, string name, bool open) where TSectionGroupOrNotebook : INotebookOrSectionGroup
+        /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created section.</returns>
+        public static string CreateSection<TNotebookOrSectionGroup>(TNotebookOrSectionGroup parent, string name, bool open) where TNotebookOrSectionGroup : INotebookOrSectionGroup
             => CreateItem(parent, name, open, $"{name}.one", CreateFileType.cftSection, IsSectionNameValid, Constants.Elements.Section, in InvalidSectionChars);
 
         /// <summary>
-        /// Creates a <see cref="OneNoteSectionGroup">section group</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="parent"/> <see cref="OneNoteSectionGroup"> section group</see> or <see cref="OneNoteNotebook">notebook</see>.
+        /// Creates a <see cref="OneNoteSectionGroup">section group</see> with a title equal to <paramref name="name"/> located in the specified <paramref name="parent"/>.
         /// </summary>        
         /// <param name="parent">The hierarchy item to create the section group in.</param>
         /// <param name="name">The name of the new section group.</param>
         /// <param name="open">Whether to open the newly created section group in OneNote immediately.</param>
+        /// <typeparam name="TNotebookOrSectionGroup">Represents a <see cref="OneNoteNotebook">notebook</see> or a <see cref="OneNoteSectionGroup">section group</see>.</typeparam>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid section group name.</exception>
         /// <seealso cref="IsSectionGroupNameValid(string)"/>
-        /// <returns>The <see cref="OneNoteSectionGroup.ID"/> of the newly created section group.</returns>
+        /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created section group.</returns>
         public static string CreateSectionGroup<TNotebookOrSectionGroup>(TNotebookOrSectionGroup parent, string name, bool open) where TNotebookOrSectionGroup : INotebookOrSectionGroup
             => CreateItem(parent, name, open, name, CreateFileType.cftFolder, IsSectionGroupNameValid, Constants.Elements.SectionGroup, in InvalidSectionGroupChars);
 
@@ -392,8 +394,8 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="open">Whether to open the newly created notebook in OneNote immediately.</param>
         /// <exception cref="ArgumentException">Thrown if the <paramref name="name"/> is not a valid notebook name.</exception>
         /// <seealso cref="IsNotebookNameValid(string)"/>
-        /// <returns>The <see cref="OneNoteNotebook.ID"/> of the newly created notebook.</returns>
-        public static string CreateNotebook(string name, bool open) 
+        /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created notebook.</returns>
+        public static string CreateNotebook(string name, bool open)
             => CreateItem(null, name, open, System.IO.Path.Combine(GetDefaultNotebookLocation(), name), CreateFileType.cftNotebook, IsNotebookNameValid, Constants.Elements.Notebook, in InvalidNotebookChars);
 
         #endregion

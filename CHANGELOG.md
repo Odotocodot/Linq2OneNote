@@ -4,7 +4,7 @@
 
 ### What’s Changed
 - Refactored code base
-  - Added abstractions that allow for a reduction in duplicated code, e.g. there is no overloads for the method `CreateSection`. It now accepts both a `OneNoteNotebook` and `OneNoteSectionGroup` as the parent.
+  - Added abstractions that allow for a reduction in duplicated code, e.g. there are no more overloads for the method `CreateSection`. It now accepts both a `OneNoteNotebook` and `OneNoteSectionGroup` as the parent.
   - Refactored tests.
 
 ## [1.1.0] - 2024-06-04
