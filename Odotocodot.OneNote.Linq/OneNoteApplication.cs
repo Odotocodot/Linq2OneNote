@@ -77,6 +77,11 @@ namespace Odotocodot.OneNote.Linq
         /// </summary>
         public const char RelativePathSeparator = Constants.RelativePathSeparator;
 
+        // You never know they might add a new one... (Press X to doubt)
+        // As the docs say:
+        // NOTE: We recommend specifying a version of OneNote (such as xs2013) instead of using xsCurrent or leaving it blank, because this will allow your add-in to work with future versions of OneNote.
+        private const XMLSchema xmlSchema = XMLSchema.xs2013;
+
         private static readonly XmlParserXElement xmlParser = new XmlParserXElement();
 
         #region COM Object Methods
@@ -127,7 +132,7 @@ namespace Odotocodot.OneNote.Linq
         /// <returns>The full hierarchy node structure with <see cref="IEnumerable{T}">IEnumerable</see>&lt;<see cref="OneNoteNotebook"/>&gt; as the root.</returns>
         public static IEnumerable<OneNoteNotebook> GetNotebooks()
         {
-            OneNote.GetHierarchy(null, HierarchyScope.hsPages, out string xml);
+            OneNote.GetHierarchy(null, HierarchyScope.hsPages, out string xml, xmlSchema);
             return xmlParser.ParseNotebooks(xml);
         }
 
@@ -142,7 +147,7 @@ namespace Odotocodot.OneNote.Linq
         {
             ValidateSearch(search);
 
-            OneNote.FindPages(null, search, out string xml);
+            OneNote.FindPages(null, search, out string xml, xsSchema:  xmlSchema);
             return xmlParser.ParseNotebooks(xml).GetPages();
         }
 
@@ -162,7 +167,7 @@ namespace Odotocodot.OneNote.Linq
 
             ValidateSearch(search);
 
-            OneNote.FindPages(scope.ID, search, out string xml);
+            OneNote.FindPages(scope.ID, search, out string xml, xsSchema: xmlSchema);
 
             return xmlParser.ParseUnknown(xml, scope).GetPages();
         }
@@ -204,7 +209,7 @@ namespace Odotocodot.OneNote.Linq
         /// <returns>An <see langword="string"/> in the OneNote XML format.</returns>
         public static string GetPageContent(OneNotePage page)
         {
-            OneNote.GetPageContent(page.ID, out string xml);
+            OneNote.GetPageContent(page.ID, out string xml, xsSchema: xmlSchema);
             return xml;
         }
 
@@ -216,7 +221,7 @@ namespace Odotocodot.OneNote.Linq
         /// <remarks>The <paramref name="xml"/> must match the OneNote XML format, the schema can be
         /// found <a href="https://github.com/idvorkin/onom/blob/eb9ce52764e9ad639b2c9b4bca0622ee6221106f/OneNoteObjectModel/onenote.xsd">here</a>.</remarks>
         /// <param name="xml">An <see langword="string"/> in the OneNote XML format. </param>
-        public static void UpdatePageContent(string xml) => OneNote.UpdatePageContent(xml);
+        public static void UpdatePageContent(string xml) => OneNote.UpdatePageContent(xml, xsSchema: xmlSchema);
 
         #region Experimental API Methods
 
@@ -292,7 +297,7 @@ namespace Odotocodot.OneNote.Linq
 
             OneNote.SyncHierarchy(sectionID);
             OneNote.CreateNewPage(sectionID, out string pageID, NewPageStyle.npsBlankPageWithTitle);
-            OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic);
+            OneNote.GetPageContent(pageID, out string xml, PageInfo.piBasic, xmlSchema);
             XDocument doc = XDocument.Parse(xml);
 
             XNamespace one = XNamespace.Get(Constants.NamespaceUri);
