@@ -1,4 +1,6 @@
 ﻿using Microsoft.Office.Interop.OneNote;
+using Odotocodot.OneNote.Linq.Abstractions;
+using Odotocodot.OneNote.Linq.Internal;
 using Odotocodot.OneNote.Linq.Parsers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Xml.Linq;
-using Odotocodot.OneNote.Linq.Abstractions;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -147,7 +148,7 @@ namespace Odotocodot.OneNote.Linq
         {
             ValidateSearch(search);
 
-            OneNote.FindPages(null, search, out string xml, xsSchema:  xmlSchema);
+            OneNote.FindPages(null, search, out string xml, xsSchema: xmlSchema);
             return xmlParser.ParseNotebooks(xml).GetPages();
         }
 
@@ -330,7 +331,7 @@ namespace Odotocodot.OneNote.Linq
 
             return pageID;
         }
-        
+
         /// <summary>
         /// Creates a quick note page with the title specified by <paramref name="name"/>, located at the users quick notes location.
         /// </summary>
@@ -340,7 +341,7 @@ namespace Odotocodot.OneNote.Linq
         /// <param name="open"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='open']"/></param>
         /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created quick note page.</returns>
         public static string CreateQuickNote(string name, bool open) => CreatePage(null, name, open);
-        
+
         private static string CreateItem(
             IOneNoteItem parent,
             string name,
@@ -353,7 +354,7 @@ namespace Odotocodot.OneNote.Linq
         {
             if (!nameValidator(name))
                 throw new ArgumentException($"Invalid {type.ToLower()} name provided: \"{name}\". {type} names cannot empty, only whitespace or contain the symbols: \t {string.Join(" ", invalidChars)}");
-            
+
             OneNote.OpenHierarchy(path, parent?.ID, out string newItemID, createFileType);
             if (open)
                 OneNote.NavigateTo(newItemID);

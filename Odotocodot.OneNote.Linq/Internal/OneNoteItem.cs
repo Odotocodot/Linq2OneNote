@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Odotocodot.OneNote.Linq
+namespace Odotocodot.OneNote.Linq.Internal
 {
-
     /// <summary>
-    /// Equivalent to <see cref="IOneNoteItem"/>
+    /// Use <see cref="IOneNoteItem"/> instead.
     /// </summary>
     /// <seealso cref="IOneNoteItem"/>
     public abstract class OneNoteItem : IOneNoteItem

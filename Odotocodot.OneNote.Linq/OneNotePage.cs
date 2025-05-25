@@ -1,4 +1,4 @@
-﻿using Odotocodot.OneNote.Linq.Abstractions;
+﻿using Odotocodot.OneNote.Linq.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a page in OneNote.
     /// </summary>
-    public class OneNotePage : OneNoteItem, IWritableHasIsInRecycleBin
+    public class OneNotePage : OneNoteItem, IOneNoteItem, IWritableHasIsInRecycleBin
     {
         internal OneNotePage() { }
         ///<inheritdoc/>

@@ -1,6 +1,7 @@
+using Odotocodot.OneNote.Linq.Abstractions;
 using System.Drawing;
 
-namespace Odotocodot.OneNote.Linq.Abstractions
+namespace Odotocodot.OneNote.Linq.Internal
 {
 	internal interface IWritableHasColor : IHasColor
 	{

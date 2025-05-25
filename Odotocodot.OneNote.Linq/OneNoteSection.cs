@@ -1,4 +1,4 @@
-﻿using Odotocodot.OneNote.Linq.Abstractions;
+﻿using Odotocodot.OneNote.Linq.Internal;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section in OneNote.
     /// </summary>
-    public class OneNoteSection : OneNoteItem, IWritableHasPath, IWritableHasIsInRecycleBin, IWritableHasColor
+    public class OneNoteSection : OneNoteItem, IOneNoteItem, IWritableHasPath, IWritableHasIsInRecycleBin, IWritableHasColor
     {
         internal OneNoteSection() { }
 

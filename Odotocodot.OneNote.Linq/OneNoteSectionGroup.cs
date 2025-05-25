@@ -1,4 +1,4 @@
-﻿using Odotocodot.OneNote.Linq.Abstractions;
+﻿using Odotocodot.OneNote.Linq.Internal;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section group in OneNote.
     /// </summary>
-    public class OneNoteSectionGroup : OneNoteItem, IWritableNotebookOrSectionGroup, IWritableHasPath
+    public class OneNoteSectionGroup : OneNoteItem, IOneNoteItem, IWritableNotebookOrSectionGroup, IWritableHasPath
     {
         internal OneNoteSectionGroup() { }
 

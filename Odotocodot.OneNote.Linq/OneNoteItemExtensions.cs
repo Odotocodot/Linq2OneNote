@@ -30,7 +30,7 @@ namespace Odotocodot.OneNote.Linq
                     stack.Push(child);
             }
         }
-        
+
         /// <summary>
         /// Returns a filtered flattened collection of OneNote items, which contain the children of every OneNote item 
         /// from the <paramref name="source"/>.<br/>

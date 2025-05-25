@@ -1,4 +1,4 @@
-﻿using Odotocodot.OneNote.Linq.Abstractions;
+﻿using Odotocodot.OneNote.Linq.Internal;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a notebook in OneNote.
     /// </summary>
-    public class OneNoteNotebook : OneNoteItem, IWritableHasPath, IWritableNotebookOrSectionGroup, IWritableHasColor
+    public class OneNoteNotebook : OneNoteItem, IOneNoteItem, IWritableHasPath, IWritableNotebookOrSectionGroup, IWritableHasColor
     {
         internal OneNoteNotebook() { }
 

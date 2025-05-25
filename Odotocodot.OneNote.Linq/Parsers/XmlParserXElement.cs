@@ -1,4 +1,4 @@
-﻿using Odotocodot.OneNote.Linq.Abstractions;
+﻿using Odotocodot.OneNote.Linq.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
