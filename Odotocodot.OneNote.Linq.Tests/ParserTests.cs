@@ -45,7 +45,7 @@ namespace Odotocodot.OneNote.Linq.Tests
                 Assert.That(item, Is.EqualTo(expected).UsingPropertiesComparer());
             });
         }
-        
+
         [Test]
         public void ParseNotebook_CorrectProperties()
         {
@@ -61,14 +61,13 @@ namespace Odotocodot.OneNote.Linq.Tests
                 RelativePath = expectedName,
                 Parent = null,
                 Notebook = null,
-                
+                Children = Enumerable.Empty<IOneNoteItem>(),
+
                 NickName = "It's A Notebook",
                 Color = ColorTranslator.FromHtml("#EE9597"),
                 Path = $@"C:\Users\User\Desktop\{expectedName}",
-                Sections = Enumerable.Empty<OneNoteSection>(),
-                SectionGroups = Enumerable.Empty<OneNoteSectionGroup>()
             };
-            
+
             AssertProperties(item, expected);
         }
 
@@ -87,13 +86,12 @@ namespace Odotocodot.OneNote.Linq.Tests
                 RelativePath = $"{notebookStub.Name}{Constants.RelativePathSeparator}{expectedName}",
                 Parent = notebookStub,
                 Notebook = notebookStub,
+                Children = Enumerable.Empty<IOneNoteItem>(),
 
                 IsRecycleBin = false,
-                Path = @$"C:\Users\User\Documents\OneNote Notebooks\{notebookStub.Name}\{expectedName}",
-                Sections = Enumerable.Empty<OneNoteSection>(),
-                SectionGroups = Enumerable.Empty<OneNoteSectionGroup>()
+                Path = @$"C:\Users\User\Documents\OneNote Notebooks\{notebookStub.Name}\{expectedName}"
             };
-            
+
             AssertProperties(item, expected);
         }
 
@@ -112,6 +110,7 @@ namespace Odotocodot.OneNote.Linq.Tests
                 RelativePath = $"{notebookStub.Name}{Constants.RelativePathSeparator}{expectedName}",
                 Parent = notebookStub,
                 Notebook = notebookStub,
+                Children = Enumerable.Empty<IOneNoteItem>(),
 
                 Locked = true,
                 Encrypted = true,
@@ -119,9 +118,8 @@ namespace Odotocodot.OneNote.Linq.Tests
                 Path = @$"C:\Users\User\Documents\OneNote Notebooks\{notebookStub.Name}\{expectedName}.one",
                 IsInRecycleBin = false,
                 IsDeletedPages = false,
-                Pages = Enumerable.Empty<OneNotePage>()
             };
-            
+
             AssertProperties(item, expected);
         }
 
@@ -145,12 +143,13 @@ namespace Odotocodot.OneNote.Linq.Tests
                 RelativePath = $"{notebookStub.Name}{Constants.RelativePathSeparator}Test Section{Constants.RelativePathSeparator}{expectedName}",
                 Parent = sectionStub,
                 Notebook = notebookStub,
-                
+                Children = Enumerable.Empty<IOneNoteItem>(),
+
                 IsInRecycleBin = false,
                 Created = new DateTime(2022, 12, 01, 18, 10, 02),
                 Level = 1
             };
-            
+
             AssertProperties(item, expectedPage);
         }
     }

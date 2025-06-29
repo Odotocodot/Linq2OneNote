@@ -158,7 +158,6 @@ namespace Odotocodot.OneNote.Linq.Tests
             public Action CreateItem { get; init; }
             public Constraint ExpectedThrow { get; init; }
             public Constraint ExpectedBool { get; init; }
-
         }
     }
 }

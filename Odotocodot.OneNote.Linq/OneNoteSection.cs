@@ -1,6 +1,7 @@
 ﻿using Odotocodot.OneNote.Linq.Internal;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -10,9 +11,6 @@ namespace Odotocodot.OneNote.Linq
     public class OneNoteSection : OneNoteItem, IOneNoteItem, IWritableHasPath, IWritableHasIsInRecycleBin, IWritableHasColor
     {
         internal OneNoteSection() { }
-
-        /// <inheritdoc/>
-        public override IEnumerable<IOneNoteItem> Children => Pages;
 
         /// <summary>
         /// The full path to the section.
@@ -53,7 +51,7 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The collection of pages within this section, equal to <see cref="IOneNoteItem.Children"/> for a section.
         /// </summary>
-        public IEnumerable<OneNotePage> Pages { get; internal set; }
+        public IEnumerable<OneNotePage> Pages => Children.Cast<OneNotePage>();
 
         Color? IWritableHasColor.Color { set => Color = value; }
         string IWritableHasPath.Path { set => Path = value; }

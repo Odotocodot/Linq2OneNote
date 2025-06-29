@@ -336,7 +336,7 @@ namespace Odotocodot.OneNote.Linq
         /// Creates a quick note page with the title specified by <paramref name="name"/>, located at the users quick notes location.
         /// </summary>
         /// <remarks>This is identical to calling <see cref="CreatePage(OneNoteSection, string, bool)"/> with the
-        /// section paramater set to null</remarks>
+        /// section parameter set to null</remarks>
         /// <param name="name"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='name']"/></param>
         /// <param name="open"><inheritdoc cref="CreatePage(OneNoteSection, string, bool)" path="/param[@name='open']"/></param>
         /// <returns>The <see cref="OneNoteItem.ID"/> of the newly created quick note page.</returns>

@@ -1,7 +1,5 @@
 ﻿using Odotocodot.OneNote.Linq.Internal;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Odotocodot.OneNote.Linq
 {
@@ -11,8 +9,6 @@ namespace Odotocodot.OneNote.Linq
     public class OneNotePage : OneNoteItem, IOneNoteItem, IWritableHasIsInRecycleBin
     {
         internal OneNotePage() { }
-        ///<inheritdoc/>
-        public override IEnumerable<IOneNoteItem> Children => Enumerable.Empty<IOneNoteItem>();
 
         /// <summary>
         /// The section that owns this page.

@@ -10,6 +10,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
 
     internal class XmlParserXElement : IXmlParser
     {
+        // XName values are atomic, this is for ease
         private static readonly XName NotebookXName = XName.Get(Elements.Notebook, NamespaceUri);
         private static readonly XName SectionGroupXName = XName.Get(Elements.SectionGroup, NamespaceUri);
         private static readonly XName SectionXName = XName.Get(Elements.Section, NamespaceUri);
@@ -18,11 +19,30 @@ namespace Odotocodot.OneNote.Linq.Parsers
         private static readonly Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>> runtimeParser =
             new Dictionary<XName, Func<XElement, IOneNoteItem, IOneNoteItem>>
         {
-            { NotebookXName, (element, _) => ParseNotebook(element) },
-            { SectionGroupXName, ParseSectionGroup },
-            { SectionXName, ParseSection },
-            { PageXName, ParsePage }
+            { NotebookXName, (element, parent) => Parse(new OneNoteNotebook(), element, parent) },
+            { SectionGroupXName, (element, parent) => Parse(new OneNoteSectionGroup(), element, parent) },
+            { SectionXName, (element, parent) => Parse(new OneNoteSection(), element, parent) },
+            { PageXName, (element, parent) => Parse(new OneNotePage(), element, parent) }
         };
+
+        public IEnumerable<OneNoteNotebook> ParseNotebooks(string xml) => XElement.Parse(xml).Elements()
+                                                                                             .Select(e => Parse(new OneNoteNotebook(), e, null));
+
+        public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
+        {
+            var root = XElement.Parse(xml);
+            return runtimeParser[root.Name](root, parent);
+        }
+
+        private static T Parse<T>(T item, XElement element, IOneNoteItem parent) where T : OneNoteItem
+        {
+            SetAttributes(item, element.Attributes());
+            item.Parent = parent;
+            item.Notebook = parent?.Notebook;
+            item.RelativePath = $"{parent?.RelativePath}{RelativePathSeparatorString}{item.Name}";
+            item.Children = element.Elements().Select(e => runtimeParser[e.Name](e, item));
+            return item;
+        }
 
         private static void SetAttributes(OneNoteItem item, IEnumerable<XAttribute> attributes)
         {
@@ -74,57 +94,6 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         break;
                 }
             }
-        }
-
-        public IEnumerable<OneNoteNotebook> ParseNotebooks(string xml) => XElement.Parse(xml)
-                                                                                  .Elements(NotebookXName)
-                                                                                  .Select(ParseNotebook);
-
-        public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
-        {
-            var root = XElement.Parse(xml);
-            return runtimeParser[root.Name](root, parent);
-        }
-
-
-        private static T Parse<T>(T item, XElement element, IOneNoteItem parent) where T : OneNoteItem
-        {
-            SetAttributes(item, element.Attributes());
-            item.Parent = parent;
-            item.Notebook = parent?.Notebook;
-            item.RelativePath = $"{parent?.RelativePath}{RelativePathSeparatorString}{item.Name}";
-            return item;
-        }
-
-        private static T ParseNotebookOrSectionGroupChildren<T>(T item, XElement element) where T : OneNoteItem, IWritableNotebookOrSectionGroup
-        {
-            item.Sections = element.Elements(SectionXName)
-                                   .Select(e => ParseSection(e, item));
-            item.SectionGroups = element.Elements(SectionGroupXName)
-                                        .Select(e => ParseSectionGroup(e, item));
-            return item;
-        }
-
-        private static OneNotePage ParsePage(XElement element, IOneNoteItem parent) => Parse(new OneNotePage(), element, parent);
-
-        private static OneNoteSection ParseSection(XElement element, IOneNoteItem parent)
-        {
-            var section = Parse(new OneNoteSection(), element, parent);
-            section.Pages = element.Elements(PageXName)
-                                   .Select(e => ParsePage(e, section));
-            return section;
-        }
-
-        private static OneNoteSectionGroup ParseSectionGroup(XElement element, IOneNoteItem parent)
-        {
-            var sectionGroup = Parse(new OneNoteSectionGroup(), element, parent);
-            return ParseNotebookOrSectionGroupChildren(sectionGroup, element);
-        }
-
-        private static OneNoteNotebook ParseNotebook(XElement element)
-        {
-            var notebook = Parse(new OneNoteNotebook(), element, null);
-            return ParseNotebookOrSectionGroupChildren(notebook, element);
         }
     }
 }

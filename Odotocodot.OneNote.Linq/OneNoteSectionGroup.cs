@@ -1,4 +1,5 @@
-﻿using Odotocodot.OneNote.Linq.Internal;
+﻿using Odotocodot.OneNote.Linq.Abstractions;
+using Odotocodot.OneNote.Linq.Internal;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,15 +8,10 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a section group in OneNote.
     /// </summary>
-    public class OneNoteSectionGroup : OneNoteItem, IOneNoteItem, IWritableNotebookOrSectionGroup, IWritableHasPath
+    public class OneNoteSectionGroup : OneNoteItem, IOneNoteItem, INotebookOrSectionGroup, IWritableHasPath
     {
         internal OneNoteSectionGroup() { }
 
-        /// <summary>
-        /// The direct children of this section group. <br/>
-        /// Equivalent to concatenating <see cref="SectionGroups"/> and <see cref="Sections"/>.
-        /// </summary>
-        public override IEnumerable<IOneNoteItem> Children => ((IEnumerable<IOneNoteItem>)Sections).Concat(SectionGroups);
         /// <summary>
         /// The full path to the section group.
         /// </summary>
@@ -32,14 +28,12 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// The sections that this section group contains (direct children only). 
         /// </summary>
-        public IEnumerable<OneNoteSection> Sections { get; internal set; }
+        public IEnumerable<OneNoteSection> Sections => Children.OfType<OneNoteSection>();
         /// <summary>
         /// The section groups that this section group contains (direct children only).
         /// </summary>
-        public IEnumerable<OneNoteSectionGroup> SectionGroups { get; internal set; }
+        public IEnumerable<OneNoteSectionGroup> SectionGroups => Children.OfType<OneNoteSectionGroup>();
 
         string IWritableHasPath.Path { set => Path = value; }
-        IEnumerable<OneNoteSection> IWritableNotebookOrSectionGroup.Sections { set => Sections = value; }
-        IEnumerable<OneNoteSectionGroup> IWritableNotebookOrSectionGroup.SectionGroups { set => SectionGroups = value; }
     }
 }

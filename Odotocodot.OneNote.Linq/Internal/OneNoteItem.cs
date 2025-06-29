@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Odotocodot.OneNote.Linq.Internal
 {
@@ -20,7 +21,7 @@ namespace Odotocodot.OneNote.Linq.Internal
         /// <inheritdoc/>
         public DateTime LastModified { get; internal set; }
         /// <inheritdoc/>
-        public abstract IEnumerable<IOneNoteItem> Children { get; }
+        public IEnumerable<IOneNoteItem> Children { get; internal set; } = Enumerable.Empty<IOneNoteItem>();
         /// <inheritdoc/>
         public virtual IOneNoteItem Parent { get; internal set; }
         /// <inheritdoc/>
