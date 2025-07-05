@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Odotocodot.OneNote.Linq.OneNoteItemExtensions">
-    <Position X="0.75" Y="8" Width="4" />
+    <Position X="0.75" Y="8.25" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAACAIAAAAAAAECAAgACAAAAAAAAIAAAAAABAABAAAA=</HashCode>
+      <HashCode>AAACAIAAAAABAECAAgACAAAAAAAAAAAAAAABAABAAAA=</HashCode>
       <FileName>OneNoteItemExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -11,63 +11,68 @@
     <Position X="0.75" Y="1.5" Width="4" />
     <Members>
       <Method Name="CloseNotebook" Hidden="true" />
-      <Method Name="CreateItemBase" Hidden="true" />
       <Method Name="DeleteItem" Hidden="true" />
       <Method Name="GetLazyOneNote" Hidden="true" />
       <Field Name="lazyOneNote" Hidden="true" />
+      <Field Name="lockObj" Hidden="true" />
       <Property Name="OneNote" Hidden="true" />
       <Method Name="RenameItem" Hidden="true" />
       <Method Name="ValidateSearch" Hidden="true" />
+      <Field Name="xmlParser" Hidden="true" />
+      <Field Name="xmlSchema" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>IAQAAAEIACIQARAAQwACAJEAhCEgLACQABAAAACABJA=</HashCode>
+      <HashCode>IARAAAEIgCIQARAAQwACAJAAhCEgLACQABAAAAKABJA=</HashCode>
       <FileName>OneNoteApplication.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Odotocodot.OneNote.Linq.OneNoteNotebook" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="4.5" Width="3.75" />
+    <Position X="5.5" Y="5" Width="3.75" />
     <Members>
-      <Property Name="IOneNoteItem.Parent" Hidden="true" />
+      <Property Name="IWritableHasColor.Color" Hidden="true" />
+      <Property Name="IWritableHasPath.Path" Hidden="true" />
       <Method Name="OneNoteNotebook" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAgAMAAAAEAAQCAABAAAEAAEBAoAAAAAA=</HashCode>
+      <HashCode>AAAAAEACAAAAAAMAAAAARAAAAABAAAEAAEAAgAAAAAA=</HashCode>
       <FileName>OneNoteNotebook.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Odotocodot.OneNote.Linq.OneNotePage" BaseTypeListCollapsed="true">
-    <Position X="8.5" Y="8.25" Width="2.5" />
+    <Position X="8.5" Y="8.5" Width="2.5" />
     <Members>
-      <Property Name="IOneNoteItem.Children" Hidden="true" />
-      <Property Name="IOneNoteItem.Parent" Hidden="true" />
+      <Property Name="IWritableHasIsInRecycleBin.IsInRecycleBin" Hidden="true" />
       <Method Name="OneNotePage" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAEAAgAEAAAAAAAQCAABAAAQBAABAIIBAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQFAAAAAIBAAAA=</HashCode>
       <FileName>OneNotePage.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Odotocodot.OneNote.Linq.OneNoteSection" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="8.25" Width="2.75" />
+    <Position X="5.5" Y="8.5" Width="2.75" />
     <Members>
-      <Property Name="IOneNoteItem.Children" Hidden="true" />
+      <Property Name="IWritableHasColor.Color" Hidden="true" />
+      <Property Name="IWritableHasIsInRecycleBin.IsInRecycleBin" Hidden="true" />
+      <Property Name="IWritableHasPath.Path" Hidden="true" />
       <Method Name="OneNoteSection" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAiAEAAgAMgAAAAQAQCAABAAAAAAAAAoIBAAAA=</HashCode>
+      <HashCode>AAAAAEAiAAAAAAIgAAAABAAAAAAAAAAEAAAAgIBAAAA=</HashCode>
       <FileName>OneNoteSection.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.1" />
   </Class>
   <Class Name="Odotocodot.OneNote.Linq.OneNoteSectionGroup" BaseTypeListCollapsed="true">
-    <Position X="9.5" Y="4.5" Width="3.75" />
+    <Position X="9.5" Y="5" Width="3.75" />
     <Members>
+      <Property Name="IWritableHasPath.Path" Hidden="true" />
       <Method Name="OneNoteSectionGroup" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAEAAAACAAAAgAMAAAAEQAQCAABAAAAAAEAAIAAAAAA=</HashCode>
+      <HashCode>AAEAAEACAAAAAAIAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
       <FileName>OneNoteSectionGroup.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

@@ -1,5 +1,3 @@
-- name: Overview
-  href: ../index.md
 - name: Installation
   href: installation.md
 - name: Samples
@@ -8,7 +6,5 @@
   href: memory_management.md
 - name: Additional Information
   href: extra_information.md
-  
 - name: Changelog
   href: changelog.md
-  

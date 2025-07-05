@@ -10,7 +10,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
 
     internal class XmlParserXElement : IXmlParser
     {
-        // XName values are atomic, this is for ease
+        // XName are atomic, this is for ease
         private static readonly XName NotebookXName = XName.Get(Elements.Notebook, NamespaceUri);
         private static readonly XName SectionGroupXName = XName.Get(Elements.SectionGroup, NamespaceUri);
         private static readonly XName SectionXName = XName.Get(Elements.Section, NamespaceUri);

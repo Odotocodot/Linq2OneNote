@@ -9,7 +9,7 @@ namespace Odotocodot.OneNote.Linq
     /// <summary>
     /// Represents a notebook in OneNote.
     /// </summary>
-    public class OneNoteNotebook : OneNoteItem, IWritableHasPath, INotebookOrSectionGroup, IWritableHasColor
+    public class OneNoteNotebook : OneNoteItem, IOneNoteItem, IWritableHasPath, INotebookOrSectionGroup, IWritableHasColor
     {
         internal OneNoteNotebook() { }
 
