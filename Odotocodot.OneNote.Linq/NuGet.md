@@ -29,6 +29,12 @@ page.OpenInOneNote();
 
 Most functions return an IEnumerable allowing for easy use with LINQ.
 
+### Features
+
+- Search your OneNote pages, and optionally specify a notebook, section group or section to restrict the search to.
+- Traverse your whole OneNote hierarchy.
+- Create a new notebook, section group, section, or page in OneNote.
+- Open a notebook, section group, section, or page in OneNote.
 
 ## Inspired By
 

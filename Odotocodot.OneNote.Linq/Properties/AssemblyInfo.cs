@@ -1,1 +1,0 @@
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Odotocodot.OneNote.Linq.Tests")]

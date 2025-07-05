@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2025-07-05
+
+### What’s Changed
+- Refactored code base
+  - Added abstractions that allow for a reduction in duplicated code, e.g. there are no more overloads for the method `CreateSection`. It now accepts both a `OneNoteNotebook` and `OneNoteSectionGroup` as the parent.
+  - Refactored tests.
+- Fix invalid links in online documentation.
+
 ## [1.1.0] - 2024-06-04
 
 ### Added
@@ -14,6 +22,6 @@
 - Renamed IOneNoteItemExtensions to OneNoteItemExtensions.
 - OneNoteNotebook.Notebook returns itself rather than null.
 - Updated documentation to include examples and more information on the library.
-- The methods that create hierarchy items e.g. CreatePage, CreateSection, CreateSectionGroup, CreateNotebook now return the ID of the created item. Can be used with the new FindByID.
+- The methods that create hierarchy items e.g. `CreatePage`, `CreateSection`, `CreateSectionGroup`, `CreateNotebook` now return the ID of the created item. Can be used with the new `FindByID`.
 
 ## [1.0.0] - 2023-10-16
