@@ -10,7 +10,7 @@ namespace Odotocodot.OneNote.Linq
     public static class OneNoteItemExtensions
     {
         /// <summary>
-        /// Returns a flattened collection of OneNote items, that contains the children of every OneNote item from the <paramref name="source"/>.
+        /// Returns a flattened collection of OneNote items, which contain the children of every OneNote item from the <paramref name="source"/>.
         /// </summary>
         /// <param name="source">The source OneNote item.</param>
         /// <returns>An <see cref="IEnumerable{T}">IEnumerable</see>&lt;<see cref="IOneNoteItem"/>&gt; containing the 
@@ -32,7 +32,7 @@ namespace Odotocodot.OneNote.Linq
         }
 
         /// <summary>
-        /// Returns a filtered flattened collection of OneNote items, that contains the children of every OneNote item 
+        /// Returns a filtered flattened collection of OneNote items, which contain the children of every OneNote item 
         /// from the <paramref name="source"/>.<br/>
         /// Only items that successfully pass the <paramref name="predicate"/> are returned.
         /// </summary>
@@ -143,7 +143,7 @@ namespace Odotocodot.OneNote.Linq
         /// <summary>
         /// Checks if two <see cref="IOneNoteItem"/>s are equal in OneNote.<br/>
         /// Shorthand for comparing the <see cref="IOneNoteItem.ID">ID</see> of OneNote hierarchy items. E.g.
-        /// <code>
+        /// <code lang="C#">
         /// if(left.ID == right.ID)
         /// {
         ///     Console.WriteLine("Equal")

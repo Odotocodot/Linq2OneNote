@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0-windows;net9.0-windows</TargetFrameworks>
+		<TargetFramework>netstandard2.0-windows</TargetFramework>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Linq to OneNote</Title>
 		<Authors>Odotocodot</Authors>
@@ -16,7 +16,7 @@
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<PackageId>Odotocodot.OneNote.Linq</PackageId>
 		<RepositoryType>git</RepositoryType>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../CHANGELOG.md"))</PackageReleaseNotes>
 
 	</PropertyGroup>

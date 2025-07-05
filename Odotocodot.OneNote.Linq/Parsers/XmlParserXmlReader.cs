@@ -9,6 +9,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
 {
     using static Constants;
 
+    /// Faster than XElement parser, that is if you use don't care about lazy IEnumerables
     internal class XmlParserXmlReader : IXmlParser
     {
         public IOneNoteItem ParseUnknown(string xml, IOneNoteItem parent)
@@ -105,7 +106,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         notebook.Path = reader.Value;
                         break;
                     case Attributes.Color:
-                        notebook.Color = ColorTranslator.FromHtml(reader.Value);
+                        notebook.Color = GetColor(reader.Value);
                         break;
                     case Attributes.IsUnread:
                         notebook.IsUnread = bool.Parse(reader.Value);
@@ -120,13 +121,11 @@ namespace Odotocodot.OneNote.Linq.Parsers
             if (reader.IsEmptyElement)
             {
                 reader.Skip();
-                notebook.Sections = Array.Empty<OneNoteSection>();
-                notebook.SectionGroups = Array.Empty<OneNoteSectionGroup>();
+                notebook.Children = Array.Empty<IOneNoteItem>();
                 return notebook;
             }
 
-            var sections = new List<OneNoteSection>();
-            var sectionGroups = new List<OneNoteSectionGroup>();
+            var children = new List<IOneNoteItem>();
             reader.ReadStartElement();
             reader.MoveToContent();
             while (reader.NodeType != XmlNodeType.EndElement && reader.NodeType != XmlNodeType.None)
@@ -135,11 +134,11 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 {
                     if (reader.LocalName == Elements.Section)
                     {
-                        sections.Add(ParseSection(reader, notebook));
+                        children.Add(ParseSection(reader, notebook));
                     }
                     else if (reader.LocalName == Elements.SectionGroup)
                     {
-                        sectionGroups.Add(ParseSectionGroup(reader, notebook));
+                        children.Add(ParseSectionGroup(reader, notebook));
                     }
                     else
                     {
@@ -152,8 +151,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
                 reader.MoveToContent();
             }
-            notebook.Sections = sections;
-            notebook.SectionGroups = sectionGroups;
+
+            notebook.Children = children;
             reader.ReadEndElement();
             return notebook;
         }
@@ -188,19 +187,17 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
             }
 
-            sectionGroup.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{sectionGroup.Name}";
+            sectionGroup.RelativePath = $"{parent.RelativePath}{RelativePathSeparatorString}{sectionGroup.Name}";
 
             reader.MoveToElement();
             if (reader.IsEmptyElement)
             {
                 reader.Skip();
-                sectionGroup.Sections = Array.Empty<OneNoteSection>();
-                sectionGroup.SectionGroups = Array.Empty<OneNoteSectionGroup>();
+                sectionGroup.Children = Array.Empty<IOneNoteItem>();
                 return sectionGroup;
             }
 
-            var sections = new List<OneNoteSection>();
-            var sectionGroups = new List<OneNoteSectionGroup>();
+            var children = new List<IOneNoteItem>();
             reader.ReadStartElement();
             reader.MoveToContent();
             while (reader.NodeType != XmlNodeType.EndElement && reader.NodeType != XmlNodeType.None)
@@ -209,11 +206,11 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 {
                     if (reader.LocalName == Elements.Section)
                     {
-                        sections.Add(ParseSection(reader, sectionGroup));
+                        children.Add(ParseSection(reader, sectionGroup));
                     }
                     else if (reader.LocalName == Elements.SectionGroup)
                     {
-                        sectionGroups.Add(ParseSectionGroup(reader, sectionGroup));
+                        children.Add(ParseSectionGroup(reader, sectionGroup));
                     }
                     else
                     {
@@ -226,8 +223,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
                 reader.MoveToContent();
             }
-            sectionGroup.Sections = sections;
-            sectionGroup.SectionGroups = sectionGroups;
+
+            sectionGroup.Children = children;
             reader.ReadEndElement();
             return sectionGroup;
         }
@@ -275,13 +272,13 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
             }
 
-            section.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{section.Name}";
-            
+            section.RelativePath = $"{parent.RelativePath}{RelativePathSeparatorString}{section.Name}";
+
             reader.MoveToElement();
             if (reader.IsEmptyElement)
             {
                 reader.Skip();
-                section.Pages = Array.Empty<OneNotePage>();
+                section.Children = Array.Empty<IOneNoteItem>();
                 return section;
             }
 
@@ -307,7 +304,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
                 }
                 reader.MoveToContent();
             }
-            section.Pages = pages;
+            section.Children = pages;
             reader.ReadEndElement();
             return section;
         }
@@ -315,7 +312,7 @@ namespace Odotocodot.OneNote.Linq.Parsers
         private OneNotePage ParsePage(XmlReader reader, OneNoteSection parent)
         {
             var page = new OneNotePage();
-            page.Section = parent;
+            page.Parent = parent;
             page.Notebook = parent.Notebook;
 
             while (reader.MoveToNextAttribute())
@@ -345,8 +342,8 @@ namespace Odotocodot.OneNote.Linq.Parsers
                         break;
                 }
             }
-            
-            page.RelativePath = $"{parent.RelativePath}{RelativePathSeparator}{page.Name}";
+
+            page.RelativePath = $"{parent.RelativePath}{RelativePathSeparatorString}{page.Name}";
 
             reader.Skip();
             return page;
