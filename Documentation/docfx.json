@@ -60,8 +60,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "modern",
-      "template"
+      "modern"
     ],
     "sitemap": {
       "baseUrl": "https://odotocodot.github.io/Linq2OneNote/",
