@@ -38,6 +38,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
+        include-hidden-files: true
         # Upload entire repository
         path: Documentation/_site/
     - name: Deploy to GitHub Pages
